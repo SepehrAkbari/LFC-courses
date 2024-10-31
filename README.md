@@ -11,3 +11,8 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 - [CS 212: Object Oriented Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-212)
 - [CS 270: Web Development](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-270)
 - [CS 317: Data Structures and Algorithms](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-317)
+
+During my time, I've also had multiple teaching assistant (TA) jobs:
+
+- [TA - CS 112: Programming (Spring 2024)](https://github.com/SepehrAkbari/LFC-courses/tree/main/Teaching%20Assistant/TA-112-Fall2024)
+- [TA - CS 112: Programming (Fall 2024)](https://github.com/SepehrAkbari/LFC-courses/tree/main/Teaching%20Assistant/TA-112-Spring2024)
