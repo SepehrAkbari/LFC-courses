@@ -4,7 +4,7 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 
 - MATH 110: Calculus I
 - [MATH 150: Probablity & Statistics](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-150)
-- MATH 230: Abstract & Discrete Mathematics
+- [MATH 230: Abstract & Discrete Mathematics](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-230)
 - [MATH 240: Computational Math](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-240)
 - [MATH 250: Statistical Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-250)
 - [CS 107: Web Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-107)
