@@ -16,3 +16,5 @@ During my time, I've also had multiple teaching assistant (TA) jobs:
 
 - [TA - CS 112: Programming (Spring 2024)](https://github.com/SepehrAkbari/LFC-courses/tree/main/Teaching%20Assistant/TA-112-Fall2024)
 - [TA - CS 112: Programming (Fall 2024)](https://github.com/SepehrAkbari/LFC-courses/tree/main/Teaching%20Assistant/TA-112-Spring2024)
+
+###### Expected to graduate Spring 2027.
