@@ -1,0 +1,70 @@
+/*
+  This stylesheet agregates and improves upon chunks of code found in the
+	W3Schools Responsive Web Design Tutorial pages: Introduction → The Viewport → Grid-View → Media Queries → Images
+
+	This is a very minimal stylesheet showing the very basics of how responsive columns work in CSS frameworks.
+*/
+
+* { box-sizing: border-box; }
+
+/* This will apply to any block with class="col-anything" for Any Size Device */
+[class*="col-"] {
+  float: left;
+  padding: 10px;
+}
+
+
+/* All Columns Stack on viewports UNDER 600px -- most phones. */
+
+@media only screen and (max-width: 599px) {
+  /* Don't need anything here for the columns since blocks do width: 100%; by default.
+     But any style classes put in here would only apply on phones.
+  */
+
+
+}
+
+/* Breakpoint #1 - viewports ABOVE 600px wide - most tablet devices. */
+
+@media only screen and (min-width: 600px) {
+  .col-m-1  {width: 8.33%;}
+  .col-m-2  {width: 16.66%;}
+  .col-m-3  {width: 25%;}
+  .col-m-4  {width: 33.33%;}
+  .col-m-5  {width: 41.66%;}
+  .col-m-6  {width: 50%;}
+  .col-m-7  {width: 58.33%;}
+  .col-m-8  {width: 66.66%;}
+  .col-m-9  {width: 75%;}
+  .col-m-10 {width: 83.33%;}
+  .col-m-11 {width: 91.66%;}
+  .col-m-12 {width: 100%;}
+}
+
+
+/* Breakpoint #2 - devices above 768px wide -- desktop monitors, chromebooks */
+
+@media only screen and (min-width: 768px) {
+  .col-1  {width: 8.33%;}
+  .col-2  {width: 16.66%;}
+  .col-3  {width: 25%;}
+  .col-4  {width: 33.33%;}
+  .col-5  {width: 41.66%;}
+  .col-6  {width: 50%;}
+  .col-7  {width: 58.33%;}
+  .col-8  {width: 66.66%;}
+  .col-9  {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
+
+/* Nifty trick to clear the float after any <div class="row"></div> */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+

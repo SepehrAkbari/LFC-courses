@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab16 | Home</title>
+</head>
+<body>
+    <script>
+        let x = "yes";
+
+        while (x == "yes"){
+            document.write("<br>");
+            let f = Number(prompt("Enter the temprature in Fahrenheit:"));
+
+            let c = (5/9) * (f - 32);
+
+            if (c < 0){
+                document.write("The temprature is "+c+" in celcius!"+"<br>");
+                document.write("The weather is below zero!"+"<br>");
+            } else if (c > 0) {
+                document.write("The temprature is "+c+" in celcius!"+"<br>");
+                document.write("The weather is above zero!"+"<br>");
+            } else {
+                document.write("The temprature is "+c+" in celcius!"+"<br>");
+                document.write("The temprature is zero!"+"<br>");
+            }
+
+            x = prompt("Would you like to continue? (yes/no)");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+---
+author: "Sepehr Akbari"
+date: "08 march 2024"
+format: pdf
+---
+
+# Midterm 2: Takehome
+
+## Problem 6
+
+The lengths of a certain breed of cat are normally-distributed with mean $62$ cm and standard deviation $5$ cm.
+
+(a) What is the probability that a randomly-selected cat is at least $60$ cm long? Give both R code and output.
+
+**Answer:**
+
+```{r}
+1 - pnorm(60, 62, 5)
+```
+
+The probability of a randomly-selected cat is at least $60$ cm long is about $66\%$.
+
+(b) The graph below shows this distribution. Do not assume that it is drawn exactly to scale.
+
+![](images/Screenshot%202024-03-07%20at%2002.07.23.png){fig-align="center" width="519"}
+
+The shaded area is symmetric about the mean, has area $0.90$, and ends at $±x$. What is $x$? Carefully explain your process.
+
+**Answer:**
+
+Essentially, we are trying to find the Z-Score corresponding with $x$. Therefore we need to use R's $qnorm$ function.
+
+However, the percentile given in $qnorm(x,\mu,\sigma)$ has to be everything to the left of x, which could be calculated so:
+
+$$ 0.9 + \frac{1 - 0.9}{2} = 0.95 $$ With knowing the area under the curve to the left of $x$, we can then find $x$ using R:
+
+```{r}
+qnorm(0.95, 62, 5)
+```
+
+which is about $70.2$.
+
+{{< pagebreak >}}
+
+## Problem 7
+
+A study asks a random sample of Americans how many cups of co↵ee they drink on a typical weekday. The results are summarized in the following histogram, where the vertical axis represents proportions of respondents.
+
+![](images/Screenshot%202024-03-07%20at%2002.09.34.png){fig-align="center" width="544"}
+
+(a) What is the probability that a randomly-selected person drinks at least $2$ cups of coffee per day?
+
+**Answer:**
+
+To find the probability of a random person drinking **at least** $2$ cups is:
+
+$$ P(2) + P(3) + P(4) + P(5) $$
+
+Which is:
+
+$$ 0.18 + 0.09 + 0.07 + 0.02 = 0.36$$
+
+So the probability is $36\%$.
+
+(b) Let $X$ be a random variable representing the number of cups reported by a randomly-selected individual in the sample. Use R to compute the expected value of $X$. Include all code used, making sure that your work is clear.
+
+**Answer:**
+
+```{r}
+no_cups <- c(0,1,2,3,4,5)
+p_cups <- c(0.37,0.27,0.18,0.09,0.07,0.02)
+
+m <- sum(p_cups * no_cups)
+
+m
+```
+
+Therefore, the expected value of $X$ is $1.28$
+
+(c) Use R to compute the variance and standard deviation of $X$. Include all code used, making sure that your work is clear.
+
+**Answer:**
+
+```{r}
+no_cups <- c(0,1,2,3,4,5)
+p_cups <- c(0.37,0.27,0.18,0.09,0.07,0.02)
+
+m <- sum(p_cups * no_cups)
+
+variance <- sum((no_cups - m) ^ 2 * p_cups)
+variance
+```
+
+The variance of $X$ is about $1.78$.
+
+```{r}
+no_cups <- c(0,1,2,3,4,5)
+p_cups <- c(0.37,0.27,0.18,0.09,0.07,0.02)
+
+m <- sum(p_cups * no_cups)
+
+std <- sqrt(sum((no_cups - m) ^ 2 * p_cups))
+std
+```
+
+The standard deviation of $X$ is about $1.33$.

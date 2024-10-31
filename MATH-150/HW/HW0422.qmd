@@ -1,0 +1,126 @@
+---
+author: "Sepehr Akbari"
+date: "22 April 2024"
+format: pdf
+---
+
+###### Sepehr Akbari
+
+###### April 22nd, 2024
+
+# Regression and correlation in R
+
+For each of the following problems,
+
+(a) Compute the correlation between the variables.
+
+(b) Find the equation of the regression line.
+
+(c) Interpret the slope of the regression line in ordinary human language.
+
+(d) Find the fitted value and residual for the specified observation, or say why doing so would be inappropriate.
+
+Use R for all calculations. Include both code and output with your solutions.
+
+## Problem 1
+
+Using the `garbage weight` data set, available on Moodle, model the weight of plastic waste using the weight of metal waste.
+
+![](images/Screenshot%202024-04-22%20at%2011.52.03.png){fig-align="center"}
+
+Consider an observation with 2.11 pounds of metal waste and 4.69 pounds of plastic waste.
+
+**Answer:**
+
+Loading the dataset:
+
+```{r}
+library(readxl)
+garbage_weight <- read_excel("/Users/sepehrakbari/Documents/LFC/Semester 2/MATH 150/DSs/garbage_weight.xlsx")
+```
+
+(a) correlation between the variables
+
+```{r}
+cor(garbage_weight$PLASTIC, garbage_weight$METAL)
+```
+
+(b) equation of the regression line
+
+```{r}
+model <- lm(PLASTIC ~ METAL, data = garbage_weight)
+
+m <- coef(model)[["METAL"]]
+b <- coef(model)[["(Intercept)"]]
+
+cat("y =",round(m,2),"* x","+",round(b,2))
+```
+
+(c) Interpretation
+
+The analysis reveals a shallow upward trend between the amount of metal and plastic in the garbage. While the correlation is not very strong, on average, a one-unit increase in metal mass is associated with a modest increase of 0.57 units in plastic weight.
+
+(d) fitted value and residual
+
+```{r}
+x_metal <- 2.11
+x_plastic <- 4.69 
+
+f <- ((m * x_metal) + b)
+r <- x_plastic - f
+
+cat("Fitted Value:", f,"\n")
+cat("Risidual:", r,"\n")
+```
+
+## Problem 2
+
+Using the `pokemon sample` data set, available on Moodle, model the attack ratings of Pokemon using their speeds.
+
+![](images/Screenshot 2024-04-22 at 15.32.30.png){fig-align="center"}
+
+Consider a Pokemon with a speed of 150 and an attack of 100.
+
+**Answer:**
+
+Loading the dataset:
+
+```{r}
+library(readxl)
+pokemon_sample <- read_excel("/Users/sepehrakbari/Documents/LFC/Semester 2/MATH 150/DSs/pokemon_sample.xlsx")
+```
+
+(a) correlation between the variables
+
+```{r}
+cor(pokemon_sample$Speed, pokemon_sample$Attack)
+```
+
+(b) equation of the regression line
+
+```{r}
+model <- lm(Attack ~ Speed, data = pokemon_sample)
+
+m <- coef(model)[["Speed"]]
+b <- coef(model)[["(Intercept)"]]
+
+cat("y =",round(m,2),"* x","+",round(b,2))
+```
+
+(c) Interpretation
+
+A slightly positive trend can be observed in the data. On average, for every one-unit increase in speed, there's a modest increase of 0.5 units in attack.
+
+(d) fitted value and residual
+
+```{r}
+x_speed <- 150
+x_attack <- 100
+
+f <- ((m * x_speed) + b)
+r <- x_attack - f
+
+cat("Fitted Value:", f,"\n")
+cat("Risidual:", r,"\n")
+```
+

@@ -1,0 +1,27 @@
+---
+title: "Uniform Random Variables"
+author: "Sepehr Akbari"
+date: "01 march 2024"
+title-block-banner: true
+format: pdf
+---
+
+# Problem 1
+
+Suppose the random variable X has a uniform distribution on the interval [−1, 7].
+
+(a) Compute $P(X > 0)$.
+
+  - All probabilities, excluding $-1$ to $0$. Therefore $\frac{7}{8}$.
+  
+(b) Compute $P(X < 0)$.
+
+  - Only probabilities from $-1$ to $0$. Therefore $\frac{1}{8}$.
+  
+(c) Briefly explain why $P(X = 0)$ is zero.
+
+  - A uniform distribution spreads the probability equally across the entire length. Since any single point (like 0) has no width or length on the ruler, the probability of landing exactly on that point is zero. We can make this more general and say an individual point has a probability of zero.
+  
+(d) Compute $P(X < 2 \lor X ≥ 4)$.
+
+  - This basically means all probabilities, excluding the ones from $2$ to $4$. Therefore $\frac{6}{8}$.

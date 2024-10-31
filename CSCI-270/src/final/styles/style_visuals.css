@@ -1,0 +1,18 @@
+.bg-img-1 {
+    background-image: url('/~akbaris79/csci270/final/visuals/stock/blue-sky2.jpg');
+}
+
+.bg-img-2 {
+    background-image: url('/~akbaris79/csci270/final/visuals/stock/blue-sky1.jpg');
+}
+
+.bg-img-3 {
+    background-image: url('/~akbaris79/csci270/final/visuals/stock/blue-sky3.jpg');
+}
+
+.carousel-image {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 75vh;
+}

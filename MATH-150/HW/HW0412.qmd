@@ -1,0 +1,144 @@
+---
+author: "Sepehr Akbari"
+date: "12 April 2024"
+format: pdf
+---
+
+###### Sepehr Akbari
+
+###### April 12th, 2024
+
+# Hypothesis testing with t
+
+## Instructions
+
+For each of the following problems,
+
+(a) Write null and alternative hypotheses appropriate to this study.
+
+(b) Compute the t-score of the sample mean.
+
+(c) Compute the p-value of the sample mean.
+
+(d) Are the results statistically significant at level $α = 0.05$?
+
+(e) What conclusions, if any, can be drawn from this study? Answer in ordinary human language.
+
+(f) Verify your calculations using the t.test( ) function.
+
+## Problem 1
+
+A fluorescent lamp manufacturer advertises that the mean life of their lamps is $10,000$ hours. You worry that it’s less. Use the lamp data set, available on Moodle, to test this claim at significance level $α = 0.05$.
+
+**Answer:**
+
+Loading the dataset:
+
+```{r}
+library(readxl)
+lamp <- read_excel("/Users/sepehrakbari/Documents/LFC/Semester 2/MATH 150/DSs/lamps.xlsx")
+```
+
+*(a) Null & Alternative Hypotheses*
+
+Null Hypotheses: $H_0 = 10,000$
+
+Alternative Hypotheses: $H_1 < 10,000$
+
+*(b) t-score*
+
+```{r}
+populationMean <- 10000
+mean <- mean(lamp$hours_of_use)
+stndDev <- sd(lamp$hours_of_use)
+count <- length(lamp$hours_of_use)
+
+t_score <- (mean - populationMean) / (stndDev / sqrt(count))
+
+cat("t-score:", t_score, "\n")
+```
+
+*(c) p-value*
+
+```{r}
+p_value <- pt(t_score, count - 1)
+
+cat("p-value:", p_value, "\n")
+```
+
+*(d) statistical significancy test*
+
+```{r}
+alpha <- 0.05 
+
+if (p_value < alpha) {
+  cat("Statistically significant (H1).")
+} else {
+  cat("Not statistically significant (H0).")
+}
+```
+
+*(e) conclusion*
+
+We cannot confirm with this data that the average life of a lamp is less than 10,000 hours. Either the null hypotheses ($H_0 = 10000$) is true, or a larger sample size or a lower significance level might be needed for a clearer picture.
+
+*(f) verification*
+
+```{r}
+t.test(lamp$hours_of_use, mu = 10000, alternative = "less")
+```
+
+## Problem 2
+
+A guidebook says that the average time between eruptions of the Wyoming’s Old Faithful geyser is $75$ minutes. Use built-in R data set faithful to test this clasim at significance level $α = 0.05$.
+
+**Answer:**
+
+*(a) Null & Alternative Hypotheses*
+
+Null Hypotheses: $H_0 = 75$
+
+Alternative Hypotheses: $H_1 \neq 75$
+
+*(b) t-score*
+
+```{r}
+populationMean <- 75
+mean <- mean(faithful$waiting)
+stndDev <- sd(faithful$waiting)
+count <- length(faithful$waiting)
+
+t_score <- (mean - populationMean) / (stndDev / sqrt(count))
+
+cat("t-score:", t_score, "\n")
+```
+
+*(c) p-value*
+
+```{r}
+p_value <- 2 * pt(t_score, count - 1)
+
+cat("p-value:", p_value, "\n")
+```
+
+*(d) statistical significancy test*
+
+```{r}
+alpha <- 0.05 
+
+if (p_value < alpha) {
+  cat("Statistically significant (H1).")
+} else {
+  cat("Not statistically significant (H0).")
+}
+```
+
+*(e) conclusion*
+
+The calculation shows that there is enough evidence supporting that the mean eruption in the Old Faithful geyser is indeed $75$ minutes.
+
+*(f) verification*
+
+```{r}
+t.test(faithful$waiting, mu = 75, alternative = "two.sided")
+```

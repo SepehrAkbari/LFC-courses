@@ -1,0 +1,35 @@
+/* HEADER STYLES */
+
+
+
+/* FOOTER STYLES */
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    min-height: 150px;
+}
+
+.cc-r {
+    text-align: right;
+}
+
+.cc-c {
+    text-align: center;
+}
+
+.cc-l {
+    text-align: left;
+}
+
+@media (max-width: 575.99px) {  
+    .container .row {  
+      padding: 10px;  
+      padding-top: 25px;
+    }
+    
+    footer .container .row .col-sm {  
+      text-align: center; 
+    }
+}
+  

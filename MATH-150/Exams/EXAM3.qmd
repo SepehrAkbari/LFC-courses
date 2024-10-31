@@ -1,0 +1,86 @@
+---
+author: "Sepehr Akbari"
+date: "17 April 2024"
+format: pdf
+---
+
+# Midterm 3: Takehome
+
+## Problem 6
+
+This problem refers to the garbage weight data set, available on Moodle. This set represents a random sample of garbage from $62$ suburban homes.
+
+Loading the dataset (garbage weight):
+
+```{r}
+library(readxl)
+garbage_weight <- read_excel("/Users/sepehrakbari/Documents/LFC/Semester 2/MATH 150/DSs/garbage_weight.xlsx")
+#View(garbage_weight)  
+```
+
+(a) Construct a level $99%$ confidence interval for the average amount of glass waste by direct calculation. Identify the point estimate, margin of error, and interval endpoints. Make sure your work is clear.
+
+```{r}
+mean <- mean(garbage_weight$GLASS)
+standard_deviation <- sd(garbage_weight$GLASS)
+cofidence_level <- 0.995
+size <- length(garbage_weight$GLASS)
+degree_of_freedom <- size - 1
+
+t_star <- qt(cofidence_level, degree_of_freedom)
+margin_of_error <- t_star * standard_deviation / sqrt(size)
+
+lower_endpoint <- mean - margin_of_error
+upper_endpoint <- mean + margin_of_error
+
+cat("Point Estimate (Mean):",mean,"\n")
+cat("Margin of Error:",margin_of_error,"\n")
+cat("The Confidence Interval will be from",lower_endpoint,"to",upper_endpoint,"pound. \n")
+```
+
+(b) Confirm the results of part (a) with a single line of R code. Include both code and output.
+
+```{r}
+t.test(garbage_weight$GLASS, conf.level=0.99)
+```
+
+(c) Carefully interpret your answer using the language developed in class.
+
+Based on the data given, about $99\%$ of suburbon households throw away about $2.7$ to $4.8$ pounds of garbage.
+
+## Problem 7
+
+Does the garbage weight set provide evidence that the average food waste per household is more than $3.5$ pounds? Follow all best practices from class and test at significance level $\alpha= 0.05$.
+
+```{r}
+cat("Null Hypothesis (H0): H0 = 3.5 \n")
+cat("Alternative Hypothesis (H1): H1 > 3.5 (one-sided)\n\n")
+
+population_mean <- mean(garbage_weight$FOOD)
+standard_deviation <- sd(garbage_weight$FOOD)
+size <- length(garbage_weight$FOOD)
+degree_of_freedom <- size - 1 
+sample_mean <- 3.5
+alpha <- 0.05
+
+t_score <- (population_mean - sample_mean) / (standard_deviation / sqrt(size))
+p_value <- 1 - pt(t_score, degree_of_freedom)
+
+cat("t-score is:",t_score,"\n")
+cat("p-value is:",p_value,"\n\n")
+
+if(p_value < alpha) {
+  cat("There is sufficient evidance to show that
+the average food waste per household is greater than 3.5 pounds.")
+}else{
+  cat("There is insufficient evidance to show that
+the average food waste per household is greater than 3.5 pounds.")
+}
+cat(" We draw no conclusions however.")
+```
+
+Or we can use R's t.test() function to calculate or justify our answer:
+
+```{r}
+t.test(garbage_weight$FOOD, mu = 3.5, alternative = "greater")
+```

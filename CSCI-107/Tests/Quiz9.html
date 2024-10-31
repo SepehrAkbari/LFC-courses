@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz #9</title>
+</head>
+<body>
+    <h2>Quiz #9 - Username generator</h2>
+    <hr>
+    <br>
+    <script>
+        let fname = prompt("Enter your first name: ");
+        let lname = prompt("Enter your last name: ");
+        let age = Number(prompt("Enter your age: "));
+
+        let username;
+        if (age >= 18 && age <= 22){
+            username = fname + "." + lname + "2";
+        } else if (age < 18){
+            username = fname + "." + lname + "1";
+        }else {
+            username = fname + "." + lname + "3";
+        }
+
+        document.write("Username: " + username);
+    </script>
+</body>
+</html>

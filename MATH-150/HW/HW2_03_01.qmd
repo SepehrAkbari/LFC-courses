@@ -1,0 +1,50 @@
+---
+title: "Calculating with the normal distribution"
+author: "Sepehr Akbari"
+date: "01 march 2024"
+title-block-banner: true
+format: pdf
+---
+
+# Problem 1
+
+Suppose X has a normal distribution with mean 24 and standard deviation 5.
+
+(a) Sketch the distribution. Label at least 5 points on the x-axis.
+
+![](images/IMG_8070.jpg){fig-align="center" width="360"}
+
+(b) Fill in the blank: $P(24-5< X < 24+5) = 68\%$. Use the emperical rule.
+
+(c) Fill in the blank: $P(24-(5 \times 2)< X < 24+(5 \times 2)) = 95\%$. Use the emperical rule.
+
+(d) Fill in the blank: $P(24-(5 \times 3)< X < 24+(5 \times 3)) = 99.7\%$. Use the emperical rule.
+
+{{< pagebreak >}}
+
+(e) Sketch $P(X \le 28)$.
+
+![](images/IMG_8071.jpg){fig-align="center" width="360"}
+
+(f) Compute P(X ≤ 28). Include both R code and a numerical answer.
+
+```{r}
+pnorm(28,24,5)
+```
+
+
+(g) Compute P (X > 26). Include both R code and a numerical answer.
+
+```{r}
+1 - pnorm(26,24,5)
+```
+
+
+(h) Compute P (26 ≤ X ≤ 28). Include both R code and a numerical answer.
+
+```{r}
+pnorm(28,24,5) - pnorm(26,24,5)
+```
+
+
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>lab13 | Home</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            background-color: #8B008B;
+            color: pink;
+        }
+
+        h2 {
+            color: #FFBFCB;
+        }
+    </style>
+</head>
+<body>
+    <h2>Lab #13 - [appropriate] MadLib</h2>
+    <div>
+        <a href="../index.html">
+            <img src="../Images/backtohomPink.png" 
+            alt="Back to HomePage" width="100" height="55">
+        </a>
+        <a href="default.html">
+            <img src="../Images/backtoportalPink.png" 
+            alt="Back to HomePage" width="100" height="55">
+        </a>
+    </div>
+    <hr>
+    <br>
+
+    <script>
+        let name = prompt("Enter first person's name: ");
+        let name2 = prompt("Enter second person's name: ");
+        let bodyPart = prompt("Enter a body part name: ");
+        let adj = prompt("Enter an adjective: ");
+        let food = prompt("Enter a food name: ");
+
+        let out = name+" fell in love with "+name2+" because their "+bodyPart+
+                    " was "+adj+". But It did  not workout because "+name2+
+                    " kept eating all the "+food+" which "+name+" loved.";
+
+        document.write("First Person: "+name+"<br>");
+        document.write("Second Person: "+name2+"<br>");
+        document.write("Body Part: "+bodyPart+"<br>");
+        document.write("Adjective: "+adj+"<br>");
+        document.write("Food: "+food+"<br><br>");
+
+        document.write(out);
+    </script>
+</body> 
+</html>

@@ -1,0 +1,95 @@
+body {
+    background-color: lightgray;
+    border: 3px solid blue;
+    padding: 3px;
+}
+
+.center{
+    display: block;
+    text-align: center;
+}
+
+.right {
+    display: block;
+    text-align: right;
+}
+
+.left-image {
+    float: left;
+    margin-right: 20px;
+}
+
+.left-image2 {
+    float: left;
+}
+
+.cont-1, .cont-2, .cont-3, .cont-4, .cont-5, cont-6 {
+    display: inline-block;
+}
+
+.top {
+    background-color: #983430;
+    padding: 5px;
+    border: 2px dashed tan;
+}
+
+.middle {
+    background-color:tan;
+    padding: 5px;
+    border: 2px solid #983430;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.buttom {
+    background-color: brown;
+    padding: 5px;
+    border: 2px dotted cornsilk;
+}
+
+.middle h1 {
+    color:#983430;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.middle h1 span {
+    font-style: italic;
+}
+
+.middle p span {
+    font-weight: bold;
+}
+
+.cont-1 p, .cont-1 h2 {
+    color:darkcyan;
+}
+
+.cont-2 p, .cont-2 h2 {
+    color:blueviolet;
+}
+
+.cont-3 p, .cont-3 h2 {
+    color:royalblue;
+}
+
+.cont-4 p, .cont-4 h2 {
+    color:chocolate;
+}
+
+.cont-5 p, .cont-5 h2 {
+    color:darkolivegreen
+}
+
+.cont-6 p {
+    font-weight: bold;
+}
+
+.buttom h4 {
+    text-align: center;
+    color: cornsilk;
+}
+
+.buttom h4 span {
+    font-style: italic;
+}

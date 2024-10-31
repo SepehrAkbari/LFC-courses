@@ -1,0 +1,128 @@
+---
+author: "Sepehr Akbari"
+date: "03 April 2024"
+format: pdf
+---
+
+###### Sepehr Akbari
+
+###### April 3rd, 2024
+
+# Confidence intervals with the t-distribution
+
+## Problem 2
+
+Using the R data set mtcars, construct a level $90\%$ confidence interval for the mean horsepower of all cars (a) by direct computation and (b) using the t.test function. Confirm that your answers agree with one another.
+
+**Answer:**
+
+Using direct computation (a):
+
+```{r}
+data(mtcars)
+
+hp_mean <- mean(mtcars$hp)
+hp_sd <- sd(mtcars$hp)
+cl <- 0.9
+hp_count <- nrow(mtcars)
+
+t <- qt(((1 - cl) / 2),(hp_count - 1))
+mu_lower <- hp_mean - (abs(t) * ((hp_sd) / sqrt(hp_count)))
+mu_upper <- hp_mean + (abs(t) * ((hp_sd) / sqrt(hp_count)))
+
+cat("The mean horsepower of cars represented in the dataset",
+    "\n are between"
+    ,mu_lower,"and",mu_upper,"horsepowers. With 90% confidency rate.")
+```
+
+Using the t.test function (b):
+
+```{r}
+data(mtcars)
+
+hp_mean <- mean(mtcars$hp)
+hp_sd <- sd(mtcars$hp)
+cl <- 0.9
+hp_count <- nrow(mtcars)
+
+t_test <- t.test(mtcars$hp, conf.level = cl)
+t_test_ci <- t_test$conf.int
+
+cat("The mean horsepower of cars represented in the dataset",
+    "\n are between"
+    ,t_test_ci[1],"and",t_test_ci[2],"horsepowers. With 90% confidency rate.")
+```
+
+We can verify our answer so:
+
+```{r}
+if((round(mu_lower,2) == round(t_test_ci[1],2) && 
+    (round(mu_upper,2) == round(t_test_ci[2],2)))){
+  cat("True")
+}else{
+  cat("False")
+}
+```
+
+## Problem 3
+
+In a survey of $18$ adults age $45$-$54$, random individuals were asked how many minutes they spend eating breakfast each day. The results are:
+
+|     |     |     |     |     |     |     |     |     |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 24  | 17  | 26  | 33  | 21  | 38  | 24  | 13  | 41  |
+| 17  | 15  | 19  | 12  | 29  | 19  | 24  | 31  | 15  |
+
+Construct a level $99\%$ confidence interval for the population mean (a) by direct computation and (b) using the t.test function. Confirm that your answers agree with one another.
+
+**Answer:**
+
+Inputing the data in R:
+
+```{r}
+x <- sort(c(24,17,17,15,26,19,33,12,21,29,38,19,24,24,13,31,41,15))
+```
+
+Using direct computation (a):
+
+```{r}
+x_mean <- mean(x)
+x_sd <- sd(x)
+cl <- 0.99
+x_count <- 18
+
+t <- qt(((1 - cl) / 2),(x_count - 1))
+mu_lower <- x_mean - (abs(t) * ((x_sd) / sqrt(x_count)))
+mu_upper <- x_mean + (abs(t) * ((x_sd) / sqrt(x_count)))
+
+cat("The mean time people spend eating breakfast each day",
+    "\n is between"
+    ,mu_lower,"and",mu_upper,"minutes With 99% confidency rate.")
+```
+
+Using the t.test function (b):
+
+```{r}
+x_mean <- mean(x)
+x_sd <- sd(x)
+cl <- 0.99
+x_count <- 18
+
+t_test <- t.test(x, conf.level = cl)
+t_test_ci <- t_test$conf.int
+
+cat("The mean time people spend eating breakfast each day",
+    "\n are between"
+    ,t_test_ci[1],"and",t_test_ci[2],"minutes With 99% confidency rate.")
+```
+
+We can verify our answer so:
+
+```{r}
+if((round(mu_lower,2) == round(t_test_ci[1],2) && 
+    (round(mu_upper,2) == round(t_test_ci[2],2)))){
+  cat("True")
+}else{
+  cat("False")
+}
+```

@@ -1,0 +1,144 @@
+---
+author: "Sepehr Akbari"
+date: "05 April 2024"
+format: pdf
+---
+
+###### Sepehr Akbari
+
+###### April 5th, 2024
+
+# Introduction to hypothesis testing
+
+## Introduction:
+
+For each of the following problems,
+
+(a) Write null and alternative hypotheses appropriate to this study.
+
+(b) Compute the z-score of the sample mean.
+
+(c) Compute the p-value of the sample mean.
+
+(d) Are the results statistically significant at level $α = 0.05$?
+
+(e) What conclusions, if any, can be drawn from this study? Answer in ordinary human language.
+
+## Problem 1
+
+A medical school advertises that the mean starting salary of its graduates is $\$89,000$. Concerned that it may actually be less, a group of first-years surveys $38$ recent graduates, finding a sample mean of $\$85,500$. Assume $σ = \$8000$.
+
+**Answer:**
+
+```{r} 
+populationMean <- 89000
+sampleMean <- 85500
+stndDev <- 8000
+count <- 38
+
+#PART A
+cat("Null-hypotheses:"
+    ,"N =",populationMean,"\n")
+cat("Alternative-hypotheses:",
+    "N <",populationMean,"\n\n")
+
+# PART B
+z_score <- (sampleMean - populationMean) / (stndDev / sqrt(count))
+cat("z-score:",z_score,"\n\n")
+
+# PART C
+p_score <- pnorm(z_score)
+cat("p-score:",p_score,"\n\n")
+
+# PART D
+if (p_score < 0.05){
+  cat("The results are not statistically significant.")
+} else if (p_score > 0.05){
+  cat("The results are statistically significant.")
+} else {
+  cat("p-score is equal to 5%.")
+}
+```
+
+PART E:
+
+That means there is **NOT** enough evidance to support us confidently saying the mean salary of graduates is $89000$ dollars.
+
+## Problem 2
+
+A laptop manufacturer claims that the mean life of the battery for a certain model of laptop is $6$ hours. In a simple random sample of $80$ laptops, the mean battery life is $5.9$ hours. Assume $σ = 1.3$ hours. Is the company’s claim reasonable?
+
+**Answer:**
+
+```{r} 
+populationMean <- 6
+sampleMean <- 5.9
+stndDev <- 1.3
+count <- 80
+
+#PART A
+cat("Null-hypotheses:"
+    ,"N =",populationMean,"\n")
+cat("Alternative-hypotheses:",
+    "N <",populationMean,"\n\n")
+
+# PART B
+z_score <- (sampleMean - populationMean) / (stndDev / sqrt(count))
+cat("z-score:",z_score,"\n\n")
+
+# PART C
+p_score <- pnorm(z_score)
+cat("p-score:",p_score,"\n\n")
+
+# PART D
+if (p_score < 0.05){
+  cat("The results are not statistically significant.")
+} else if (p_score > 0.05){
+  cat("The results are statistically significant.")
+} else {
+  cat("p-score is equal to 5%.")
+}
+```
+PART E:
+
+That means there is enough evidance to support us confidently saying the mean battery life of a phone is $6$ hours.
+
+## Problem 3
+
+A soft drink manufacturer claims that the mean calorie content of one of its sports drinks is $150$ calories per bottle. In a simple random sample of $95$ bottles, the mean is $158$ calories. Is there sufficient evidence to conclude that the mean is actually more than $150$ calories/bottle? Assume $σ = 20$ calories.
+
+**Answer:**
+
+```{r} 
+populationMean <- 150
+sampleMean <- 158
+stndDev <- 20
+count <- 95
+
+#PART A
+cat("Null-hypotheses:"
+    ,"N =",populationMean,"\n")
+cat("Alternative-hypotheses:",
+    "N >",populationMean,"\n\n")
+
+# PART B
+z_score <- (sampleMean - populationMean) / (stndDev / sqrt(count))
+cat("z-score:",z_score,"\n\n")
+
+# PART C
+p_score <- 1 - pnorm(z_score)
+cat("p-score:",p_score,"\n\n")
+
+# PART D
+if (p_score < 0.05){
+  cat("The results are not statistically significant.")
+} else if (p_score > 0.05){
+  cat("The results are statistically significant.")
+} else {
+  cat("p-score is equal to 5%.")
+}
+```
+
+PART E:
+
+That means there is **NOT** enough evidance to support us confidently saying the mean of calories in a drink is $150$ calories.

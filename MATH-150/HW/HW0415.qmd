@@ -1,0 +1,115 @@
+---
+author: "Sepehr Akbari"
+date: "15 April 2024"
+format: pdf
+---
+
+###### Sepehr Akbari
+
+###### April 15th, 2024
+
+# Scatterplots & Correlation
+
+## Problem 1
+
+![](images/Screenshot%202024-04-15%20at%2010.08.46.png){fig-align="center"}
+
+**Answer:**
+
+(a) Positive Strong
+
+(b) Positive Weak
+
+(c) The Husband's age scatterplot as they are closer and therefore illustrate a more collerated data
+
+## Problem 2
+
+![](images/Screenshot%202024-04-15%20at%2010.11.52.png){fig-align="center"}
+
+**Answer:**
+
+(a) 4
+
+(b) 1
+
+(c) 3
+
+(d) 2
+
+## Problem 3
+
+![](images/Screenshot%202024-04-15%20at%2010.12.03.png){fig-align="center"}
+
+**Answer:**
+
+(a) 2
+
+(b) 4
+
+(c) 3
+
+(d) 1
+
+# Introducing linear regression
+
+## Problem 1
+
+![](images/Screenshot%202024-04-15%20at%2010.13.30.png){fig-align="center"}
+
+**Answer:**
+
+(a) Explanatory Variable is the Husband's Age, and the Response Variable is the Wife's Age.
+
+(b) The relationship is strong positive
+
+(c) 
+
+![](images/Screenshot%202024-04-15%20at%2019.38.13-01.png){fig-align="center" width="500"}
+
+(d) About maybe $70%$. Could have been more.
+
+(e) For this we need to calculate the points and slope:
+
+$$
+p1: (20,21)
+$$
+
+$$
+p2: (40,30)
+$$
+
+$$
+m = \frac{\Delta p1}{\Delta p2} = \frac{9}{10} = 0.9
+$$
+
+$$
+y = 0.9x+39
+$$
+
+## Problem 2
+
+![](images/Screenshot%202024-04-15%20at%2010.10.47.png){fig-align="center"}
+
+**Answer:**
+
+(a) Explanatory Variable is the Family Income, and the Response Variable is the Gift Aid from University.
+
+(b) About $-0.30$. It is weak negative, and has very little correlation.
+
+(c) For this we need to calculate the points and slope:
+
+$$
+p1: (20000,20000)
+$$
+
+$$
+p2: (98000,10000)
+$$
+
+$$
+m = \frac{\Delta p1}{\Delta p2} = -\frac{10000}{88000} = -0.11
+$$
+
+$$
+y = -0.11x + 21.1
+$$

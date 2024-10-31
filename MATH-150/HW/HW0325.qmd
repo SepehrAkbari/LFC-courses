@@ -1,0 +1,113 @@
+---
+author: "Sepehr Akbari"
+date: "25 march 2024"
+format: pdf
+---
+
+###### Sepehr Akbari
+
+###### March 25, 2024
+
+# Introduction to confidence intervals
+
+## Problem 1
+
+In a random sample of $n = 55$ repairs at a certain auto garage, the average cost was $\$374.75$. Construct a level $90\%$ confidence interval for the population mean repair cost at this garage. Assume the population standard deviation is $σ = \$72.50$.
+
+**Answer:**
+
+```{r}
+n <- 55
+x <- 374.75
+stndDev <- 72.5
+
+z <- qnorm(0.95) # 1.645
+low_bound <- x - (z * (stndDev / sqrt(n)))
+up_bound <- x + (z * (stndDev / sqrt(n)))
+
+cat("The cost will be between",round(low_bound,2),"and",
+    round(up_bound,2),"dollars.")
+```
+
+## Problem 2
+
+Repeat problem $1$ with a sample of size $n = 85$. Which confidence interval is wider? Briefly explain.
+
+**Answer:**
+
+```{r}
+n <- 55
+n2 <- 85
+x <- 374.75
+stndDev <- 72.5
+
+z <- qnorm(0.95) # 1.645
+low_bound <- x - (z * (stndDev / sqrt(n)))
+low_bound2 <- x - (z * (stndDev / sqrt(n2)))
+up_bound <- x + (z * (stndDev / sqrt(n)))
+up_bound2 <- x + (z * (stndDev / sqrt(n2)))
+
+cat("The cost will be between",round(low_bound2,2),"and",
+    round(up_bound2,2),"dollars.\n\n")
+
+if(round(up_bound2,2) - round(low_bound2,2) > 
+   round(up_bound,2) - round(low_bound,2)){
+  cat("The sample size",n,"will have a narrower confidence level")
+}else{
+  cat("The sample size",n2,"will have a narrower confidence level")
+}
+```
+
+As shown, the confidence interval for the sample size of 85 will be narrower than the one for 55. This is because the margin of error is inversely proportional to the square root of the sample size. With a larger sample size (n=85), the standard deviation of the sample mean becomes smaller, leading to a smaller margin of error and a narrower confidence interval.
+
+## Problem 3
+
+In a random sample of $n = 218$ eruptions of a geyser, the mean duration was $2.42$ minutes. Construct a level $95\%$ confidence interval for the population mean. Assume the population standard deviation is $σ = 1.04$ minutes.
+
+**Answer:**
+
+```{r}
+n <- 218
+x <- 2.42
+stndDev <- 1.04
+
+z <- qnorm(0.975) # 1.960
+low_bound <- x - (z * (stndDev / sqrt(n)))
+up_bound <- x + (z * (stndDev / sqrt(n)))
+
+cat("The eruption will be between",round(low_bound,2),"and",
+    round(up_bound,2),"minutes \n\n")
+```
+
+## Problem 4
+
+Repeat problem 3 with a standard deviation of $σ = 1.92$. Which confidence interval is wider? Briefly explain.
+
+**Answer:**
+
+```{r}
+n <- 218
+x <- 2.42
+stndDev <- 1.04
+stndDev2 <- 1.92
+
+z <- qnorm(0.975) # 1.960
+low_bound <- x - (z * (stndDev / sqrt(n)))
+low_bound2 <- x - (z * (stndDev2 / sqrt(n)))
+up_bound <- x + (z * (stndDev / sqrt(n)))
+up_bound2 <- x + (z * (stndDev2 / sqrt(n)))
+
+cat("The eruption will be between",round(low_bound2,2),"and",
+    round(up_bound2,2),"minutes \n\n")
+
+if(round(up_bound2,2) - round(low_bound2,2) > 
+   round(up_bound,2) - round(low_bound,2)){
+  cat("The sample with standard deviation",stndDev,
+      "will have a narrower confidence level")
+}else{
+  cat("The sample with standard deviation",stndDev2,
+      "will have a narrower confidence level")
+}
+```
+
+As shown, the confidence interval for the sample's standard deviation of 1.04 will be narrower than the one for 1.92 This is because the margin of error is directly proportional to the standard deviation of the sample's standard deviation. Just opposite question 2. So as the standard deviation decreases the gap between the bounds also decrease.

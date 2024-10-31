@@ -1,0 +1,243 @@
+/*
+* Accent color (red) : #BE2121
+* Background, Primary (black): #262626 | #282828
+* Text, Secondary (white): #F1F1F1 | #ECECEC
+* ^^ (reverse for light mode)
+*/
+
+/* Configs */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@font-face {
+    font-family: 'Fortuna';
+    src: url(../fonts/Fortuna\ Regular.ttf) format('truetype');
+}
+
+.clear_float  {
+    clear: both; 
+}
+
+.special_bullet {
+    list-style-image: url("../images/icons/chevron_right_FILL0_wght400_GRAD0_opsz24.svg");
+    list-style-position: outside;
+}
+
+/* Body */
+
+body {
+    font-family: "Poppins", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+#page_wrapper {
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 0 20px;
+    position: relative;
+}
+
+/* Columns */
+
+div.col25 {
+    box-sizing: border-box;
+    float: left;   
+    width: 25%;
+    margin: 0px;
+    padding: 10px;
+}
+
+div.col33 {
+    box-sizing: border-box;
+    float: left;   
+    width: 33%;
+    margin: 0px;
+    padding: 10px;
+}
+
+div.col50r {
+    box-sizing: border-box;
+    float: left;   
+    width: 50%;
+    margin: 0px;
+    padding: 10px;
+    padding-left: 12px;
+}
+
+div.col50l {
+    box-sizing: border-box;
+    float: left;   
+    width: 50%;
+    margin: 0px;
+    padding: 10px;
+    padding-right: 12px;
+}
+
+div.col75 {
+    box-sizing: border-box;
+    float: left;   
+    width: 75%;
+    margin: 0px;
+    padding: 10px;
+}
+
+div.col100 {
+    box-sizing: border-box;
+    float: left;   
+    width: 100%;
+    margin: 0px;
+    padding: 10px;
+}
+
+/* Element Styles */
+
+h1, h3, h2{
+    font-family: "Fortuna";
+    color: #333333;
+}
+
+h1 {
+    margin-top: 10px;
+    font-weight: 400;
+}
+
+h3 {
+    font-weight: 450;
+    margin-bottom: 5px;
+}
+
+ul, ol {
+    padding-left: 40px;
+}
+
+p, li, a{
+    color: #666666;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* Link Styles */
+
+a.drctLnk, a.navLnk{
+    color: #158cba;
+    text-decoration: none;
+}
+
+a.drctLnk:hover, li a.navLnk:hover {
+    text-decoration: underline;
+}
+
+a.drctLnk:active, li a.navLnk:active {
+    color: #075e81;
+}
+
+a.drctLnk:visited, li a.navLnk:visited {
+    font-style: italic;
+    color: #075e81;
+}
+
+.special_a {
+    color: #666666;
+}
+
+.special_a:hover {
+    color: #158cba;
+    text-decoration: underline;
+}
+
+.special_a:active {
+    color: #075e81;
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+a.btn {
+    background-color: #158cba;
+    color: white;
+    padding: 12px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+a.btn:hover, a.btn:active {
+    background-color: #075e81;
+}
+
+#main {
+    min-height: 500px;
+}
+
+/* Hero Section */
+
+.logo {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+.hero-bg {
+    background-image: url("../images/pics/blue-sky.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+}
+
+/* Footer Section */
+
+#footer {
+    display: flex;
+    justify-content: space-between;
+    min-height: 150px;
+}
+
+.footer_hr {
+    border: 0px;
+    border-top: 1px solid #666666;    
+    border-bottom: 1px solid #434343;
+    height: 0.5px;
+}
+
+.cc-r {
+    text-align: right;
+}
+
+.cc-c {
+    text-align: center;
+}
+
+.cc-l {
+    text-align: left;
+}
+
+/* Navigation */
+
+#nav {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+#nav .active_nav a{
+    color: #158cba;
+}
+
+#nav li {
+    display: inline-block;
+}
+
+#nav li a {
+    color: #333333;
+    display: block;
+    margin: 0 42px;
+    text-decoration: none;
+}
+
+#nav li a:hover, #nav li a:active {
+    color: #158cba;
+}

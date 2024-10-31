@@ -1,0 +1,55 @@
+---
+author: "Sepehr Akbari"
+date: "08 April 2024"
+format: pdf
+---
+
+###### Sepehr Akbari
+
+###### April 8th, 2024
+
+# Hypothesis testing: errors
+
+## Instructions
+
+For each of the following problems,
+
+(a) State null and alternative hypotheses appropriate to the situation
+
+(b) Describe what a type I and type II error would look like.
+
+## Problem 1
+
+A smart phone manufacturer claims that their devices have a mean charge time of $35$ minutes. A consumer group suspects it’s longer. They collect a sample of size $89$ to test the claim.
+
+**Answer:**
+
+***(a) Null & Alternative Hypotheses***
+
+**Null Hypotheses** $(H_0)$**:** The average charging time for the manufacturer's smartphones is $35$ minutes. (This is the manufacturer's claim)
+
+**Alternative Hypotheses** $(H_1)$**:** The average charging time for the manufacturer's smartphones is different from $35$ minutes. (This is what the consumer group suspects)
+
+***(b) Type I & Type II Errors***
+
+**Type I Error:** We reject the null hypothesis $(H_0)$ when it's actually true. In this case, we would conclude that the average charging time is different from 35 minutes, when in reality it actually is $35$ minutes on average.
+
+**Type II Error:** We accept the null hypothesis $(H_0)$ when it's actually false. Here, we would conclude that the average charging time is $35$ minutes, when it's actually longer or shorter than that.
+
+## Problem 2
+
+The NBA advertises that the average length of their games is $131$ minutes. A fan times $25$ games to see if this claim is reasonable.
+
+**Answer:**
+
+***(a) Null & Alternative Hypotheses***
+
+**Null Hypotheses** $(H_0)$**:** The average length of NBA games is $131$ minutes. (This is the NBA's advertised claim)
+
+**Alternative Hypotheses** $(H_1)$**:** The average length of NBA games is different from $131$ minutes. (The fan suspects games are either longer or shorter)
+
+***(b) Type I & Type II Errors***
+
+**Type I Error:** We reject the null hypothesis $(H_0)$ when it's actually true. In this case, we would conclude that the average game length is different from $131$ minutes, when all games are actually $131$ minutes long on average.
+
+**Type II Error:** We fail to reject the null hypothesis $(H_0)$ when it's actually false. Here, we would conclude that the average game length is $131$ minutes, when games are actually longer or shorter than that on average.

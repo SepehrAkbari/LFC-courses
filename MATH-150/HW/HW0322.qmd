@@ -1,0 +1,177 @@
+---
+author: "Sepehr Akbari"
+date: "20 march 2024"
+format: pdf
+---
+
+###### Sepehr Akbari
+
+###### March 22, 2024
+
+# The central limit theorem
+
+## Problem 1
+
+A certain population has mean $\mu = 27.3$ and standard deviation $\sigma = 4.2$. For a sample of size $n = 36$,
+
+(a) Determine the mean, variance, and standard deviation of the sample mean $x$.
+
+**Answer:**
+
+```{r}
+mu <- 27.3
+sigma <- 4.2
+n <- 36
+
+cat("mean of x:",mu,"\n")
+cat("variance of x:",(sigma ^ 2 / n),"\n")
+cat("standard deviation of x:",sqrt((sigma ^ 2 / n)),"\n")
+```
+
+(b) Determine the probability that $x ≤ 26.0$.
+
+**Answer:**
+
+```{r}
+mu <- 27.3
+sigma <- 4.2
+n <- 36
+stndDev <- (sigma / sqrt(n))
+
+z <- (26.0 - mu) / stndDev
+
+pnorm(z)
+```
+
+(c) Determine the probability that $x ≥ 25.9$.
+
+**Answer:**
+
+```{r}
+mu <- 27.3
+sigma <- 4.2
+n <- 36
+stndDev <- (sigma / sqrt(n))
+
+z <- (25.9 - mu) / stndDev
+
+1 - pnorm(z)
+```
+
+## Problem 2
+
+At a local grocery, apples have mean weight $0.620$ pounds with standard deviation $0.165$ pounds. The distribution is approximately normal.
+
+(a) What is the probability that a randomly-selected apple weighs more than $0.650$ pounds?
+
+**Answer:**
+
+```{r}
+mu <- 0.62
+sigma <- 0.165
+
+cat("The probablity is:",1 - pnorm(0.65,mu,sigma))
+```
+
+(b) What is the probability that $10$ randomly-selected apples weigh more than $0.650$ pounds, on average?
+
+**Answer:**
+
+```{r}
+mu <- 0.62
+sigma <- 0.165
+n = 10
+stndDev <- (sigma / sqrt(n))
+
+z <- (0.65 - mu) / stndDev
+
+cat("The probablity is:",1 - pnorm(z))
+```
+
+(c) What is the probability that $50$ randomly-selected apples weigh more than $0.650$ pounds, on average?
+
+**Answer:**
+
+```{r}
+mu <- 0.62
+sigma <- 0.165
+n = 50
+stndDev <- (sigma / sqrt(n))
+
+z <- (0.65 - mu) / stndDev
+
+cat("The probablity is:",1 - pnorm(z))
+```
+
+(d) What is the probability that $500$ randomly-selected apples weigh more than $0.650$ pounds, on average?
+
+**Answer:**
+
+```{r}
+mu <- 0.62
+sigma <- 0.165
+n = 500
+stndDev <- (sigma / sqrt(n))
+
+z <- (0.65 - mu) / stndDev
+
+pnorm(z)
+
+cat("The probablity is about:",1 - 0.999)
+```
+
+## Problem 3
+
+Lengths of eruptions of the Old Faithful geyser are approximately normally distributed with mean $3.49$ minutes and standard deviation $1.14$ minutes.
+
+(a) Which is more likely, a single eruption longer than $3.20$ minutes or $20$ eruptions with mean greater than $3.20$ minutes? Compute both probabilities.
+
+**Answer:**
+
+```{r}
+mu <- 3.49
+sigma <- 1.14
+n = 20
+x = 3.20
+stndDev <- (sigma / sqrt(n))
+
+single_eruption <- 1 - pnorm(x,mu,sigma)
+multi_eruption <- 1 - pnorm((x - mu) / stndDev)
+
+print(single_eruption)
+print(multi_eruption)
+
+if(single_eruption > multi_eruption){
+  cat("The probability of a single eruption of 3.2 minutes or greater is higher, as:",single_eruption,">",multi_eruption,".")
+}else if (multi_eruption > single_eruption){
+  cat("The probability of the mean of 20 eruptions being greater than 3.2 minutes is higher, as:",multi_eruption,">",single_eruption,".")
+}else{
+  cat("They are equally probable.")
+}
+```
+
+(b) Which is more likely, a single eruption longer than $3.60$ minutes or $20$ eruptions with mean greater than $3.60$ minutes? Justify your answer without computing probabilities.
+
+**Answer:**
+
+```{r}
+mu <- 3.49
+sigma <- 1.14
+n = 20
+x = 3.60
+stndDev <- (sigma / sqrt(n))
+
+single_eruption <- 1 - pnorm(x,mu,sigma)
+multi_eruption <- 1 - pnorm((x - mu) / stndDev)
+
+print(single_eruption)
+print(multi_eruption)
+
+if(single_eruption > multi_eruption){
+  cat("The probability of a single eruption of 3.6 minutes or greater is higher, as:",single_eruption,">",multi_eruption,".")
+}else if (multi_eruption > single_eruption){
+  cat("The probability of the mean of 20 eruptions being greater than 3.6 minutes is higher, as:",multi_eruption,">",single_eruption,".")
+}else{
+  cat("They are equally probable.")
+}
+```

@@ -1,0 +1,120 @@
+---
+author: "Sepehr Akbari"
+date: "01 April 2024"
+format: pdf
+---
+
+###### Sepehr Akbari
+
+###### April 1st, 2024
+
+# Calculating in the t-distribution
+
+## Problem 1
+
+Compute $P(T < −1.1)$ in $t(22)$.
+
+**Answer:**
+
+```{r}
+n <- 22
+t <- -1.1
+
+pt(t,n)
+```
+
+## Problem 2
+
+Compute $P(−1.5 < T < 0.4)$ in $t(5)$.
+
+**Answer:**
+
+```{r}
+n <- 5
+t_lower <- -1.5
+t_upper <- 0.4
+
+pt(t_upper,n) - pt(t_lower,n)
+```
+
+## Problem 3
+
+Find the number $\tau$ such that $P(T > \tau) = 0.05$ in $t(80)$. Note that this a right-tailed probability, not a left-tailed one.
+
+**Answer:**
+
+```{r}
+n <- 80
+x <- 1 - 0.05
+
+cat("tau =", qt(x,n))
+```
+
+## Problem 4
+
+Find the number $\tau$ such that $95\%$ of the area under $t(6)$ lies between $-\tau$ and $\tau$.
+
+**Answer:**
+
+Mathematically: 
+$$
+P(-\tau<T<\tau)=0.95 \leftarrow t(n=6)
+$$
+$$
+= P(T<\tau)-P(-\tau<T)=0.95
+$$
+
+```{r}
+n <- 6
+x <- 0.975 # To calculate 0.95 percentile
+
+t_lower <- qt((1 - x),n)
+t_upper <- qt(x,n)
+
+cat("lower bound:",round(t_lower,3),"\n")
+cat("upper bound:",round(t_upper,3))
+```
+
+We can test our result as well:
+
+```{r}
+cat("95% of t(6) is between the bounds:",
+    pt(t_upper,n) - pt(t_lower,n) == 0.95,"\n")
+cat("-tau = +tau:",
+    abs(t_lower) == abs(t_upper))
+```
+
+## Problem 5
+
+In a simple random sample of $10$ sales clerks at convenience stores in $1989$, the mean salary was $\$25,352.87$ and the standard deviation was $\$3,202.09$. Compute a level $95\%$ confidence interval for the population mean. Carefully justify your answer.
+
+**Answer:**
+
+We can calculate this confidence interval, using the critical t-value, instead of z-value:
+
+$$
+\mu = \overline x ± t \times \frac{\sigma}{\sqrt{n}}
+$$
+To calculate t, we use the R, qt( ) function, to get $\tau$ based on:
+
+$$
+P(T<\tau)= \frac{1-0.95}{n-1} \leftarrow t(n=23-1)
+$$
+
+```{r}
+n <- 10 # sample size
+m <- 25352.87 # mean
+s <- 3202.09 # standard deviation
+cl <- 0.95 # confidence level
+
+t <- qt(((1 - cl) / 2),(n - 1))
+mu_lower <- m - (abs(t) * ((s) / sqrt(n)))
+mu_upper <- m + (abs(t) * ((s) / sqrt(n)))
+
+cat("The mean salary of a convinient store worker in 1989",
+    "\n is between"
+    ,mu_lower,"and",mu_upper,"dollars. With 95% confidency rate.")
+ 
+```
+
+This is the same approach as we had before for calculating confidence intervals. However this time, we are only interested in the sample, rather than the population. So we have to use the t_score instead of z_score. At the end, we'll get the confidence interval based on that specific sample.

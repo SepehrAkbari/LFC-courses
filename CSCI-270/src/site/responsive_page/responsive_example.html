@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>W3schools Responsive Columns</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="responsive_columns.css" rel="stylesheet" type="text/css">
+    <!--
+      See Comments inside the above stylesheet, which simulates a very minimal responsive CSS framework.
+
+      You could actually edit the above stylesheet to provide your own custom responsive behaviors.
+      But when frameworks get more complicated, it's best to provide your own styles such as below
+      to supplement the framework.  The media queries below use the same breakpoints as the above stylesheet.
+    -->
+
+    <style>
+
+      .my_row_styles {  /*  Will apply across all breakpoints */
+        color: red;
+      }
+
+      .header_styles {
+        color: black;
+        text-align: center;
+      }
+
+      .col-12.col-m-12{
+        width: 100%;
+      }
+
+      .vw_1 { font-size: 1vw; }
+      .vw_2 { font-size: 2vw; }
+      .vw_3 { font-size: 3vw; }
+
+      .col-3.col-m-5.image{
+        background-image: url(../../images/pics/blue-sky.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        height: 300px; 
+      }
+
+      .col-3.col-m-5{
+        display: flex;
+        justify-content: center;
+      }
+
+      @media only screen and (max-width: 599px) { /* Phones */
+
+        /*
+        .my_column_styes1 {
+          color: #EEE;
+          border: 1px solid #000;
+        }
+
+        .my_column_styes2 {
+          color: #666;
+        }
+        */
+
+        .col-12 {
+          background-color: rgb(255, 163, 163);
+        }
+      }
+
+      @media only screen and (min-width: 600px) {  /* Tablets */
+
+        /*
+        .my_column_styes1 {
+          color: green;
+        }
+
+        .my_column_styes2 {
+          color: blue;
+        }
+        */
+
+        .col-12 {
+          background-color: rgb(163, 255, 203);
+        }
+      }
+
+      @media only screen and (min-width: 768px) { /* Desktop */
+        .col-12 {
+          background-color: rgb(163, 204, 255);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .col-3.col-m-5 {
+          width: 100%; 
+          display: block; 
+        }
+      }
+
+    </style>
+
+
+  </head>
+  <body>
+
+    <!--
+      IMPORTANT: To visualize what I mean by "grid lines" follow the "960 Grid System" link provided in the resources section of this lesson.
+      We are not going to use the 960.gs framework (it's not responsive) but their page will help you visualize the concept of column grids.
+      Virtually all modern responsive CSS frameworks implement columns using a 12 column grid.
+
+      All the style classes below come from the simple framework I provided for this lesson.
+      The row just below is two 50/50 columns on big screens (6 out of 12 grid lines).
+      But full-width stripes on medium screens (12 out of 12 grid lines).
+
+      The row wrapper automatically clears the float after the floated columns.
+    -->
+
+    <div class="row header_styles">
+      <div class="col-12  col-m-12">
+        Responsive Columns Example Page
+      </div>
+      
+    </div>
+
+    <br><br>
+
+    <!--
+      Same column structure as above row.
+
+      But my_row_styles class is added to supplement the framework row class.
+      my_row_styles apply across all breakpoints (see internal stylesheet above)
+    -->
+
+    <div class="row  my_row_styles">
+      <div class="col-3  col-m-6 vw_1">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
+      <div class="col-3  col-m-6 vw_2">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
+      <div class="col-3  col-m-6 vw_3">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
+      <div class="col-3  col-m-6 vw_1">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
+    </div>
+
+    <br><br>
+
+    <!--
+      Similar column structure as above rows, but stays two columns (col-m-6) on medium devices.
+
+      my_column_styes1 and my_column_styes2 classes supplement the framework col classes.
+      But my column classes behave differently across breakpoints (see internal stylesheet above).
+
+      My custom classes start with my_ so that it's easy to see that they are mine, as opposed to pre-built ones
+      that come with the framework.  CSS frameworks come with lots of pre-built "framework classes"
+      so consistent naming conventions for your classes can be helpful in keeping track of things.
+    -->
+
+    <div class="row">
+      <div class="col-3  col-m-5">
+        <img src="../../images/pics/blue-sky2.jpg" height="200" width="280">    
+      </div>
+      <div class="col-3  col-m-5 image"><!-- The pic is in the CSS --></div>
+      <div class="col-3  col-m-5">
+        <picture>
+          <source media="(max-width: 600px)" srcset="../../images/pics/blue-sky3.jpg">
+          <img src="../../images/pics/blue-sky3.jpg" height="300" width="300" alt="Another Picture">
+        </picture>
+      </div>
+      <div class="col-3  col-m-5">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
+    </div>
+  </body>
+</html>

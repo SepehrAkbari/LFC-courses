@@ -1,0 +1,136 @@
+---
+author: "Sepehr Akbari"
+date: "20 march 2024"
+format: pdf
+---
+
+###### Sepehr Akbari
+
+###### March 20, 2024
+
+# Sampling distributions
+
+## Problem 1
+
+The heights of four friends, in centimeters, are $160$, $165$, $170$, and $185$.
+
+(a) Compute the mean $\mu$ and standard deviation $\sigma$ of their heights.
+
+**Answer:**
+
+```{r}
+heights <- c(160,165,170,185)
+
+mean(heights)
+```
+
+```{r}
+heights <- c(160,165,170,185)
+
+sd(heights)
+```
+
+(b) List all possible random samples of size $2$ (with replacement). Compute the sample mean $\overline{x}$ of each. Hint: order doesn’t matter, so there are $10$ possibilities.
+
+**Answer:**
+
+```{r}
+heights <- c(160,165,170,185)
+num = 1
+
+for (i in 1:length(heights)) {
+ for (j in i:length(heights)) {
+   samples <- paste0("(", heights[i], ", ", heights[j], ")")
+   means <- mean(c(heights[i], heights[j]))
+   
+   cat("Sample",num,":", samples, ", Mean =",means, "cm\n")
+   num = num + 1
+ }
+}
+```
+
+(c) Compute the mean $\mu_{\overline{x}}$ and standard deviation $\sigma_{\overline{x}}$ of these $10$ values of $\overline{x}$. This is the mean and standard deviation of the sampling distribution of the sample mean.
+
+**Answer:**
+
+```{r}
+heights <- c(160,165,170,185)
+xall <- c()
+
+for (i in 1:length(heights)) {
+ for (j in i:length(heights)) {
+   samples <- paste0("(", heights[i], ", ", heights[j], ")")
+   means <- mean(c(heights[i], heights[j]))
+   
+   xall <- c(xall,means)
+ }
+}
+
+mean(xall)
+```
+
+```{r}
+heights <- c(160,165,170,185)
+xall <- c()
+
+for (i in 1:length(heights)) {
+ for (j in i:length(heights)) {
+   samples <- paste0("(", heights[i], ", ", heights[j], ")")
+   means <- mean(c(heights[i], heights[j]))
+   
+   xall <- c(xall,means)
+ }
+}
+
+sd(xall)
+```
+
+(d) Verify that $\mu_{\overline{x}} =\mu$ and $\sigma_{\overline{x}} = \frac{\sigma}{\sqrt{n}}$ in is case.
+
+**Answer:**
+
+```{r}
+heights <- c(160,165,170,185)
+xall <- c()
+
+for (i in 1:length(heights)) {
+ for (j in i:length(heights)) {
+   samples <- paste0("(", heights[i], ", ", heights[j], ")")
+   means <- mean(c(heights[i], heights[j]))
+   
+   xall <- c(xall,means)
+ }
+}
+
+if(mean(heights) == mean(xall)){
+  cat("They are equal")
+}else{
+  cat("They are NOT equal")
+}
+```
+
+```{r}
+heights <- c(160,165,170,185)
+xall <- c()
+
+for (i in 1:length(heights)) {
+ for (j in i:length(heights)) {
+   samples <- paste0("(", heights[i], ", ", heights[j], ")")
+   means <- mean(c(heights[i], heights[j]))
+   
+   xall <- c(xall,means)
+ }
+}
+
+size = 2
+stndDev = sd(heights)
+
+approximity <- 0.0000000001
+
+if (abs((stndDev / (sqrt(size))) - sd(xall)) < approximity) {
+  cat("They are equal")
+} else {
+  cat("They are NOT equal")
+}
+```
+

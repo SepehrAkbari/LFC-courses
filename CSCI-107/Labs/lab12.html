@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab12 | Home</title>
+    <style>
+        body {
+            background-color: #8B008B;
+            color: pink;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #FFBFCB;
+        }
+    </style>
+</head>
+<body>
+    <h2>Lab #12 - Extremely Simple Calculator</h2>
+    <div>
+        <a href="../index.html">
+            <img src="../Images/backtohomPink.png" 
+            alt="Back to HomePage" width="100" height="55">
+        </a>
+        <a href="default.html">
+            <img src="../Images/backtoportalPink.png" 
+            alt="Back to HomePage" width="100" height="55">
+        </a>
+    </div>
+    <hr>
+    <br>
+
+    <script>
+        let num1 = Number(prompt("Enter 1st Number: "));
+        let num2 = Number(prompt("Enter 2nd Number: "));
+        let num3 = Number(prompt("Enter 3rd Number: "));
+        let num4 = Number(prompt("Enter 4th Number: "));
+
+        let sum = num1 + num2;
+        let multiplication = num3 * num4;
+        let power = num3 ** 3;
+        let division = num4 / num1;
+        let mod = num2 % num1;
+
+        document.write("Your input: "+num1+", "+num2+", "+num3+", "+num4+"<br><br>");
+
+        document.write("The sum of "+num1+" & "+num2+" is: "+sum+"<br>");
+        document.write(num3+" multiplied with "+num4+" is: "+multiplication+"<br>");
+        document.write(num3+" to the power 3 is: "+power+"<br>");
+        document.write(num4+" divided by "+num1+" is: "+division+"<br>");
+        document.write(num2+" divided by "+num1+" has a remainder of: "+mod+"<br><br>");
+        document.write("Now... You know...!");
+    </script>
+</body>
+</html>
