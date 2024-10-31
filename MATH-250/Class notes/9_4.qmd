@@ -1,0 +1,92 @@
+---
+title: "9/4 Notes"
+author: "Sepehr Akbari"
+date: "9/4/2024"
+format: html
+embed-resources: true
+---
+
+## Intro
+
+Here is some text. Here is *italic* and **bold**, and a footnote ^[like this]. If you want something to typset looking like code, use ticks. `library(tidyverse)`.
+
+```{r}
+library(tidyverse) 
+```
+
+How can we set output options to supress the message or change how plot looks?
+
+By the way, Quarto is language neutral:
+
+```{python}
+3 + 7
+```
+
+## Bar Charts
+
+We'll be using the `Carsets` from the `ISLR` package. We haven't installed this yet.
+
+```{r}
+library(ISLR2)
+glimpse(Carseats)
+```
+
+You can learn more about the set with `?Carseats`, but don't do that in Quarto (do it in console).
+
+**Question**: How are `ShelveLoc` and `US` relates, if at all?
+
+```{r}
+ggplot(
+  Carseats,
+  aes(
+    x = ShelveLoc,
+    fill = US
+  )
+) +
+  geom_bar() +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+A stacked bar chart emphasizes the variable on the x-axis. Let's compare with this:
+
+```{r}
+ggplot(
+  Carseats,
+  aes(
+    fill = ShelveLoc,
+    x = US
+  )
+) +
+  geom_bar() +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+Sometimes we are more interested in the relative perportions of the secondary (fill) variable. So let's do this:
+
+```{r}
+ggplot(
+  Carseats,
+  aes(
+    fill = ShelveLoc,
+    x = US
+  )
+) +
+  geom_bar(position = "fill") +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+But now we can't see the amount... So let's try this maybe:
+
+```{r}
+ggplot(
+  Carseats,
+  aes(
+    fill = ShelveLoc,
+    x = US
+  )
+) +
+  geom_bar(position = "dodge") +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+This is a good chart, but its actually the least useful.

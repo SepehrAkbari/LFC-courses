@@ -1,0 +1,171 @@
+---
+title: "Math 250 Midterm 1"
+author: "Sepehr Akbari"
+date: "9/27/2024"
+format: html
+embed-resources: true
+---
+
+## Setup
+
+To set up, I'll load the `fivethirtyeight` package to access the `bechdel` data set and `tidyverse` to use functionality such as `ggplot2`, etc.
+
+```{r}
+#| label: setup
+#| message: False
+#| warning: False
+
+library(fivethirtyeight) # loading the data
+library(tidyverse) # loading tools for plotting and data manipulation
+```
+
+## Problem 1
+
+"The Rule," better known as the Bechdel Test, is a deceptively simple yet powerful tool for measuring gender representation in films. Originating from a 1985 comic strip by Alison Bechdel [^1], this test asks whether a film features two named women who talk to each other about something other than a man. What began as a humorous critique of Hollywood's skewed gender dynamics has since evolved into a global cultural benchmark, challenging filmmakers and audiences alike. Today, the Bechdel Test not only sparks conversation but also powers the Bechdel dataset, a vast, crowd-sourced collection tracking thousands of films [^2]. This data serves as a compelling mirror of the media industry, revealing persistent gender disparities and inspiring conversations about the roles women are allowed to play in stories. With its stark simplicity, "The Rule" exposes just how rarely female characters are given the depth and complexity they deserve.[^3]
+
+[^1]: ["The Rule" comic strip](https://dykestowatchoutfor.com/wp-content/uploads/2014/05/The-Rule-cleaned-up.jpg)
+
+[^2]: [Bechdel dataset](https://bechdeltest.com/)
+
+[^3]: [A few examples of such exposures](https://nofilmschool.com/bechdel-test)
+
+## Problem 2
+
+To access the formatted data, the `bechdel` data set's changes has to be stored in a new variable called `bechdel_sm`. I'll then filter out movies released before 2000 and select only the columns we need for analysis.
+
+```{r}
+#| lablel: Problem 2
+#| message: False
+#| warning: False
+
+bechdel_sm <- bechdel %>% # storing changes in a new variable
+  filter(year >= 2000) %>% # removing the movies released before 2000
+  select( # selecting the columns we need
+    title, 
+    year, 
+    clean_test, 
+    binary, 
+    budget_2013, 
+    domgross_2013, 
+    intgross_2013
+  )
+```
+
+Glimpsing the new data set:
+
+```{r}
+glimpse(bechdel_sm) # glimpsing the new data frame
+```
+
+## Problem 3
+
+First I'll add a new column called `totalProfit_2013` with the `mutate` function, that calculates the total profit of each movie in 2013 dollars, by adding the domestic and international gross and subtracting the budget. To remove the missing values I'll use the `filter` function, and to shift the movies that failed the test to the bottom of the data frame, I'll use the `arrange` function with the `desc` argument.
+
+```{r}
+#| lablel: Problem 3
+#| message: False
+#| warning: False
+
+bechdel_sm <- bechdel_sm %>% # overriding changes
+  mutate( # adding a new column
+    totalProfit_2013 = intgross_2013 + domgross_2013 - budget_2013
+  ) %>%
+  filter(!is.na(totalProfit_2013)) %>% # removing rows with missing values (NAs)
+  arrange(desc(binary)) # shifting the movies that failed the test to the bottom
+```
+
+Glimpsing the updated data set:
+
+```{r}
+glimpse(bechdel_sm) # glimpsing the updated data frame
+```
+
+## Problem 4
+
+*Of all the movies made between 2000 and 2013 (inclusive),* **47%** *pass the Bechdel test. Moreover, only* **19%** *of those passing movies have a budget higher than the median.*
+
+To get this data, I'll use the `summarize` function to calculate the fraction of movies that pass the test and the fraction of high-budget movies that pass the test. I will use the `mean` function to calculate these fractions, as the `binary` column is either PASS or FAIL. I will also use the `na.rm` argument to ignore rows with missing values. Lastly, of course the median budget is calculated using the `median` function.
+
+```{r}
+#| lablel: Problem 4
+#| message: False
+#| warning: False
+
+bechdel_sm %>% 
+  summarize( 
+    passed = mean( # fraction of movies passing the test
+      binary == "PASS",
+      na.rm = TRUE # ignoring rows with missing values
+    ), 
+    highBudgetPassed = mean( # fraction of high budget movies passing the test
+      binary == "PASS" & budget_2013 > median(budget_2013, na.rm = TRUE),
+      na.rm = TRUE # ignoring rows with missing values
+    )
+  )
+```
+
+This shows, as mentioned earlier, that about **47%** of the movies in `bachdel_sm`, which are movies produced from the year 2000 to 2013, pass the Bechdel test, and **19%** of those that pass have a budget higher than the median budget in 2013 dollars.
+
+## Problem 5
+
+First, I observe that the plot is a histogram, hence using the `geom_histogram` function. I then started by assigning the axis, I noticed that the label of the axes don't match the data they represent, however, as I am simply recreating the graph, I decided to go with it. So I assigned the `budget_2013` column to the y-axis and left the x-axis empty to show the count of movies. I added the `filled = binary` argument to differentiate between movies that pass and fail the Bechdel test by color. 
+
+In the histogram function, I first set `color` to white to match the border colors of the original plot, and `show.legend = FALSE` to hide the legend. 
+
+To match the original plot’s bar structure, I set the `binwidth` to 24,300,000. I arrived at this value by observing that the original plot had four bars between each y-axis increment of 100 million. My initial estimate was 25 million, but after some trial and error, I found that 24,300,000 produced a near-perfect match. 
+
+I then used the `facet_wrap` function to separate the plot into facets based on the `binary` column. 
+
+I also used the `labs` function to add title, labels for the x and y axes, and a caption, matching the original plot. Finally, I applied a minimalistic theme with `theme_minimal` and used `scale_fill_brewer` to select a color palette that ensures accessibility.
+
+```{r}
+ggplot(
+  bechdel_sm,
+  aes(
+    y = budget_2013,
+    fill = binary
+  )
+) +
+  geom_histogram(
+    show.legend = FALSE, 
+    color = "white", 
+    binwidth = 24300000
+  ) +
+  facet_wrap(~ binary) +
+  labs(
+    title = "Bechdel and budget",
+    x = "Budget (2013 dollars)",
+    y = "Number of movies",
+    caption = "source: fivethirtyeight.com"
+  ) +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+## Problem 6
+
+First, I noticed that I will be creating a stacked bar chart, so I used the `geom_bar` function. I mapped the `year` variable to the x-axis and the `binary` variable to the `fill` aesthetic to color the bars based on whether the movie passed or failed the test. 
+
+To show the proportions of passing and failing movies within each year, I used `position = "fill"`. This ensures that each bar is scaled to 100% (shown as 1.00), making it easy for humans to compare the percentages of passing and failing movies across years.
+
+I then used the `labs` function to add a title, labels for the x-axis and y-axis, a caption, and the legend's title, to match the original plot. Finally, I applied a minimal theme using `theme_minimal`, and used the `scale_fill_brewer` function to ensure the plot is accessible.
+
+```{r}
+ggplot(
+  bechdel_sm,
+  aes(
+    x = year, 
+    fill = binary
+  )
+) +
+geom_bar(position = "fill") +
+labs(
+  title = "Movies passing the Bechdel test since 2000",
+  x = "Year of release",
+  y = "Percent passing",
+  caption = "source: fivethirtyeight.com",
+  fill = "Pass?"
+) +
+theme_minimal() +
+scale_fill_brewer(palette = "Dark2")
+```

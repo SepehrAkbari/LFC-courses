@@ -1,0 +1,174 @@
+---
+title: "9/23 Notes"
+author: "Sepehr Akbari"
+date: "9/23/2024"
+format: html
+embed-resources: true
+---
+
+Today we'll be getting grouped information about the penguins set.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(modeldata)
+```
+
+## The `table` command
+
+```{r}
+table(penguins$species) # simple table
+table(penguins$species,
+      penguins$island) # a cross table
+```
+
+The output is a cross-table where the structure isn't our usual (rows are observations and columns are variables).
+
+## Simple numerical summaries
+
+We already know a little of this.
+
+```{r}
+mean(penguins$bill_length_mm, na.rm = TRUE)
+sd(penguins$bill_length_mm, na.rm = TRUE)
+```
+
+Here's a more high-powered way.
+
+```{r}
+penguins %>% 
+  summarize(mean(bill_length_mm, na.rm = TRUE))
+```
+
+We can name the column in the data frame we made:
+
+```{r}
+penguins %>% 
+  summarize(avg_bill = mean(bill_length_mm, na.rm = TRUE))
+```
+
+We can also create multiple columns at once.
+
+```{r}
+penguins %>% 
+  summarize(avg_bill = mean(bill_length_mm, na.rm = TRUE),
+            sd_bill = sd(bill_length_mm, na.rm = TRUE))
+```
+
+Notice that the columns are variables. Here we only have one observation: the penguins set.
+
+## Grouping
+
+`summarize` is powerful mostly because it respects grouping, which we can do with `group_by`. 
+
+```{r}
+penguins %>% 
+  group_by(species)
+```
+
+Imagine this as an excel sheet which has been highlighted with different colors for each species of penguin.
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarize(avg_bill = mean(bill_length_mm, na.rm = TRUE),
+            sd_bill = sd(bill_length_mm, na.rm = TRUE))
+```
+
+Here columns are variables and rows are observations (species of penguins). Nice!
+
+**These commands are so important! A scary amount of data science is essentially just `group_by` and `summarize`.**
+
+We can group by multiple variables at once.
+
+```{r}
+penguins %>% 
+  group_by(species,
+           sex) %>% 
+  summarize(avg_bill = mean(bill_length_mm, na.rm = TRUE),
+            sd_bill = sd(bill_length_mm, na.rm = TRUE))
+```
+
+Here we get every combination of the variables `species` and `sex`.
+
+Notice that the output is still grouped by `species`. This can cause unexpected behaviors if you forget there's still grouping. For instance:
+
+```{r}
+pen_sum <- penguins %>% 
+  group_by(species,
+           sex) %>% 
+  summarize(avg_bill = mean(bill_length_mm, na.rm = TRUE),
+            sd_bill = sd(bill_length_mm, na.rm = TRUE))
+
+pen_sum %>% 
+  summarize(max(avg_bill)) # still grouped.
+```
+
+To avoid this behavior, use `ungroup`.
+
+```{r}
+pen_sum %>% 
+  ungroup() %>% 
+  summarize(max(avg_bill)) # no longer grouped.
+```
+
+If you're going to keep working with the output of a grouped summary later on, it's good to `ungroup`.
+
+## Counts
+
+The `summarize` command suppresses counts, which can be very important. It's good practice to include these. 
+
+```{r}
+penguins %>% 
+  group_by(species,
+           sex) %>% 
+  summarize(avg_bill = mean(bill_length_mm, na.rm = TRUE),
+            sd_bill = sd(bill_length_mm, na.rm = TRUE),
+            count = n()) # this adds a column of counts
+```
+
+If all you want is counts, there's a special function just for that. 
+
+```{r}
+penguins %>% 
+  count(species)
+
+penguins %>% 
+  count(species,
+        sex)
+```
+
+Note that this is still a data frame in standard format. Compare with `table`.
+
+```{r}
+table(penguins$species,
+      penguins$sex)
+```
+
+
+## A bit on the homework
+
+```{r}
+library(nycflights13)
+
+flights_sm <- flights %>% 
+  select(dest, 
+         contains("arr_"),
+         contains("dep_"))
+glimpse(flights_sm)
+```
+
+Let's arrange so that missing values of `dep_time` are at the top. Note that `arrange` puts missing values at the end by default.
+
+```{r}
+flights_sm %>% 
+  arrange(!is.na(dep_time)) %>% 
+  glimpse()
+```
+
+The missing values have `!is.na(dep_time)` is `FALSE`, which is coded as a zero. These will come before the `TRUE` values, which are coded as ones.
+
+
+

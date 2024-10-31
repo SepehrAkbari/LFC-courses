@@ -1,0 +1,118 @@
+---
+title: "9/16 Notes"
+author: "Sepehr Akbari"
+date: "9/16/2024"
+format: html
+embed-resources: true
+---
+
+## Considering the `scat` homework
+
+Some things I'll be looking for:
+
+- Is the code valid and appropriate to this class and to 2024?
+
+- Are the variables used explained and/or contextualized?
+
+- Is there writing that supports the code ad which is helpful to the reader?
+
+- Does each plot communicate a specific data idea or answer?
+
+- Does the quarto document look good?
+
+## Using `filter` and `select`.
+
+Let's work with `scat` a bit more.
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(modeldata)
+```
+
+Suppose we want a subset with bobcats or coyotes.
+
+```{r}
+scat_bc <- filter(
+  scat,
+  Species == "bobcat" | Species == "coyote"
+)
+
+glimpse(scat_bc)
+```
+
+For more, check out the `filter` video.
+
+Let's look at subsetting columns. This means selecting variables of interest and omitting the others.
+
+```{r}
+scat_sm <- select(
+  scat,
+  Species,
+  Number,
+  Age,
+  Length
+)
+
+glimpse(scat_sm)
+```
+
+Two other ways to the same thing:
+
+```{r}
+scat_sm <- select(
+  scat,
+  1, 6, 7, 8 
+) # Not Recommended
+
+scat_sm <- select(
+  scat,
+  Species,
+  Age:Length
+)
+```
+
+You might want to keep columns that start with letter "S".
+
+```{r}
+scat_sm <- select(
+  scat,
+  starts_with("S")
+)
+
+glimpse(scat_sm)
+```
+
+We can remove a column:
+
+```{r}
+scat_sm <- select(
+  scat,
+  -(ropey:scrape)
+)
+
+glimpse(scat_sm)
+```
+
+Other times, you might just want to move columns around.
+
+```{r}
+scat_new <- select(
+  scat,
+  Location,
+  Species,
+  everything()
+)
+
+glimpse(scat_new)
+```
+
+The `everything` helper says to include all the remaining columns after the specified ones.
+
+## Next time: re-arranging rows
+
+We'll use the `arrange` command.
+

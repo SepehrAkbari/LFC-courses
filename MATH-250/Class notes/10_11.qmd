@@ -1,0 +1,109 @@
+---
+title: "10/11 Notes"
+author: "Sepehr Akbari"
+date: "10/11/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## HW 10/11
+
+```{r}
+#| label: hidden
+#| message: FALSE
+#| warning: FALSE
+#| error: FALSE
+#| echo: FALSE
+base_dir <- "/Users/sepehrakbari/Documents/LFC/Semester 3/MATH 250/MATH_250"
+```
+
+```{r}
+#| label: setup
+#| message: FALSE
+#| warning: FALSE
+#| error: FALSE
+
+library(tidyverse)
+library(readxl)
+library(gt)
+
+airport_data_speeds <- read_excel(file.path(base_dir, "Data/airport_data_speeds.xlsx"))
+```
+
+#### Problem 2
+
+```{r}
+speeds_long <- airport_data_speeds %>%
+  pivot_longer(
+    cols = VERIZON:`T-MOBILE`,
+    names_to = "carrier",
+    values_to = "speed"
+  )
+speeds_long %>% 
+  slice_head(n = 5) %>% 
+  gt::gt()
+```
+
+#### Problem 3
+
+We want a table showing how many airports have each carrier as the fastest.
+
+```{r}
+speeds_long %>% 
+  group_by(`AIRPORT CODE`) %>% 
+  filter(speed == max(speed)) %>% 
+  ungroup() %>%
+  count(carrier) %>% 
+  arrange(desc(n)) %>% 
+  gt::gt()
+```
+
+## Pivot Wider
+
+1.  Variables are spread across multiple columns.
+
+```{r}
+glimpse(table2)
+```
+
+Here each observation has multiple rows. We fix this with `pivot_wider`, which is basically the reverse of `pivot_longer`.
+
+```{r}
+table2_wide <- table2 %>% 
+  pivot_wider(
+    id_cols = c(country, year),
+    names_from = type,
+    values_from = count
+  )
+
+gt::gt(table2_wide)
+```
+
+2.  Variables are combined in one column.
+
+```{r}
+glimpse(table5) # rate
+```
+
+Use the separate command (or one of its friends) to split the `rate` column into population and cases.
+
+```{r}
+table5 %>% 
+  separate(
+    col = rate,
+    into = c("cases", "population")
+  ) %>% 
+  gt::gt()
+```
+
+Use `sep = "/"` to specify the separator. Otherwise R will guess.
+
+3.  A single variable is split between multiple columns
+
+```{r}
+glimpse(table5) # century and year
+```
+
+Use `unite` to handle this.

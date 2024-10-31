@@ -1,0 +1,74 @@
+---
+title: "10/21 Notes"
+author: "Sepehr Akbari"
+date: "10/21/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+Let's do some stats!
+
+```{r}
+library(tidyverse)
+library(readxl)
+optical_full <- read_excel(file.path(base_dir, "Data/optical_full.xlsx"))
+```
+
+We view this set as **population** data (it includes all the data of interest). More typically, we only have **sample** data, that is, a subset of the population, typically a random one.
+
+Let's get a random sample of size n = 10 and compare it to the population.
+
+```{r}
+set.seed(0) # to reset the RNG using seed 0
+optical_sample <- optical_full %>% 
+  slice_sample(n = 10)
+```
+
+Let's compute means and sds of `Age`.
+
+```{r}
+mean(optical_full$Age)
+mean(optical_sample$Age)
+
+sd(optical_full$Age)
+sd(optical_sample$Age)
+```
+
+
+A number describing a sample is called a **statistic** and a number describing a population is called a **parameter**.
+
+**Statistical inference** is the process of drawing conclusions about parameters from statistics.
+
+We need to take variability into account because if we re-run the sample, we'll almost certainly get different statistics.
+
+```{r}
+set.seed(1)
+
+optical_sample2 <- optical_full %>% 
+  slice_sample(n = 10)
+
+mean(optical_sample2$Age)
+```
+
+A **level C confidence interval** is an interval created  using sample data that using a process that is known to capture the true value of the paramter C percent of the time.
+
+In an introductory stats class, we learn to do this with a t-distribution. Here is the formula:
+
+$$
+\mu = \overline{x} \pm t_* \frac{s}{\sqrt{n}}
+$$
+
+Where s is the sample standard deviation, n is the sample size, and $t_*$ is computed from the confidence level C. Bigger values for higher levels of confidence. 
+
+In R we do this using the `t.test()` function.
+
+```{r}
+t.test(optical_sample$Age, 
+       conf.level = 0.95)
+```
+
+We can change the confidence level but in general you don't need to.
+
+

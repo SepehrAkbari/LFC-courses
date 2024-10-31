@@ -1,0 +1,144 @@
+---
+title: "9/13 Notes"
+author: "Sepehr Akbari"
+date: "9/13/2024"
+format: html
+embed-resources: true
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(readxl)
+
+scooby <- read_excel(file.path(base_dir, "Data/scooby.xlsx"))
+```
+
+Let's start subsetting our data.
+
+## Choosing Rows
+
+We subset rows using criteria that we specify using the `filter` command from the `dplyer` package, which loads with `tidyverse`. 
+
+For instance, let's say we just want episodes on CBS.
+
+```{r}
+#| label: filtering CBS network
+
+scooby_cbs <- filter(
+  scooby,
+  network == "CBS"
+)
+```
+
+The double equal sign means 'logical equality'. Compare with "=" which specifies the name of an argument.
+
+R does NOT automatically save this, or any other result.
+
+Notice that there are fewer rows in `scooby_cbs` than in `scooby`. But the same number of columns.
+
+```{r}
+nrow(scooby_cbs)
+ncol(scooby_cbs)
+```
+
+We can filter numarically.
+
+```{r}
+#| label: filtering by imdb rating
+
+scooby_good <- filter(
+  scooby,
+  imdb >= 7.0
+)
+
+scooby_better <- filter(
+  scooby,
+  imdb >= mean(imdb,
+               na.rm = TRUE)
+)
+```
+
+We can filter for multiple conditions at once.
+
+```{r}
+#| label: filtering by network & season
+
+scooby_cbs_s1 <- filter(
+  scooby,
+  network == "CBS",
+  season == 1
+)
+```
+
+If we want everything but CBS:
+
+```{r}
+#| label: filtering out CBS
+
+scooby_not_cbs <- filter(
+  scooby,
+  network != "CBS"
+)
+```
+
+What about missing values? Most machine learning models treat missing data as random, which is normally not.
+
+```{r}
+#| label: filtering by missing values (incorrect)
+
+scooby_NA <- filter(
+  scooby,
+  imdb == "NA"
+)
+```
+
+Here, R thinks I'm looking for `imdb` values that are equal to the string "NA". Instead, I want to look for missing values. To detect missing values, we use the `is.na` function.
+
+```{r}
+#| label: filtering by missing values
+
+scooby_NA <- filter(
+  scooby,
+  is.na(imdb)
+)
+```
+
+## Old-fashioned Subsetting
+
+We can subset vectors using brackets.
+
+```{r}
+#| label: subsetting vectors
+
+my_vec <- c(1, 7, -3, 4, 10, 15)
+
+# ex, for third element 
+my_vec[3]
+
+# ex, for third to fifth elements
+my_vec[3:5]
+
+# ex, removing the third element
+my_vec[-3]
+
+# ex, removing the third to fifth elements
+my_vec[-(3:5)]
+```
+
+For a data frame, we have to specify row and column.
+
+```{r}
+scooby[1, 2:4] # row1, columns 2-4
+```
+
+We almost never need to use this in data anlysis. `filter` and  `select` are much more useful.
+
+
+
+
+
+
+

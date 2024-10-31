@@ -1,0 +1,72 @@
+---
+title: "10/01 Notes"
+author: "Sepehr Akbari"
+date: "10/01/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+
+library(tidyverse)
+library(modeldata)
+```
+
+# A few things with `penguins`
+
+First, let's do grouped regression lines.
+
+```{r}
+#| warning: FALSE
+#| fig-alt: "(description here)" # alt text
+
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    color = species
+  )
+) +
+  geom_point() +
+  geom_smooth( # regression line(s)
+    se = FALSE, # hiding the error ribbon
+    method = "lm") + # making the lines linear
+  scale_color_brewer(palette = "Dark2") +
+  theme_minimal()
+```
+
+Next let's get the 3 penguins of each specie with the shortest bills:
+
+```{r}
+penguins %>%
+  group_by(species) %>%
+  slice_min(order_by = bill_length_mm, n = 3)
+```
+
+Notice that `slice_min` respected grouping. The same is true of `filter` and `mutate`. For instance:
+
+```{r}
+peguins_new <- penguins %>%
+  group_by(species) %>%
+  mutate(avg_bills = mean(bill_length_mm, na.rm = TRUE)) %>% 
+  select(species, bill_length_mm, bill_depth_mm, avg_bills)
+```
+
+Let's look at this in the viewer. We only have 3 unique values in the `avg_bill` column.
+
+## Inline code
+
+The average bill length in this set is `{r} mean(penguins$bill_length_mm, na.rm = TRUE)`.
+
+
+
+
+
+
+
+

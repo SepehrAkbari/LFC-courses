@@ -1,0 +1,121 @@
+---
+title: "9/30 Notes"
+author: "Sepehr Akbari"
+date: "9/30/2024"
+format: html
+embed-resources: true
+---
+
+```{r}
+#| label: setup
+#| message: FALSE
+
+library(tidyverse)
+library(readxl)
+
+scooby <- read_excel(file.path(base_dir, "Data/scooby.xlsx"))
+```
+
+
+Let's try to get a better plot for Scooby's Roobies over time. Let's try to get the average number of roobies per year in each year.
+
+```{r}
+rooby_by_year <- scooby %>% 
+  group_by(year) %>% 
+  summarize(avg_roobies = mean(rooby_rooby_roo, na.rm = TRUE),
+            num_episodes = n())
+```
+
+Let's just print a decent looking table of this, using the `gt()` function from the `gt` package.
+
+```{r}
+gt::gt(rooby_by_year) # package::function without using library(package)
+```
+
+
+How can we make this shorter, either just taking the first few rows or maybe just taking the years with the most roobies?
+
+```{r}
+ggplot(
+  rooby_by_year,
+  aes(
+    x = year,
+    y = avg_roobies,
+    size = num_episodes
+  )) +
+  geom_point() +
+  geom_smooth()
+```
+
+Let's fix the warning, remove the error ribbon, and add a minimal theme.
+
+```{r}
+ggplot(
+  rooby_by_year,
+  aes(
+    x = year,
+    y = avg_roobies
+  )) +
+  geom_point(aes(size = num_episodes)) +
+  geom_smooth(se = FALSE) +
+  theme_minimal()
+```
+
+## Alt text
+
+We add descriptive text to plots by using the `fig-alt` option. Please get in this habit. It is graded!
+
+```{r}
+#| fig-alt: A scatterplot showing roobies per year with size representing number of episodes. The trend is an upside down U.
+
+ggplot(
+  rooby_by_year,
+  aes(
+    x = year,
+    y = avg_roobies
+  )) +
+  geom_point(aes(size = num_episodes)) +
+  geom_smooth(se = FALSE) +
+  theme_minimal()
+```
+
+## Slicing a data set
+
+A few smaller useful `tidyverse` commands.
+
+```{r}
+slice_head(rooby_by_year, n = 5)
+```
+
+Let's get the 5 year with the most avg roobies.
+
+```{r}
+rooby_by_year %>% 
+  slice_max(order_by = avg_roobies, n = 5)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

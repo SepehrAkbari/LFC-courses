@@ -1,0 +1,108 @@
+---
+title: "9/18 Notes"
+author: "Sepehr Akbari"
+date: "9/18/2024"
+format: html
+embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(modeldata)
+```
+
+The most basic `dplyr` functions:
+
+- `filter` to subset rows but given column conditions.
+
+- `select` to choose or rearrange columns.
+
+- `arrange` to reorder columns by column conditions.
+
+- `mutate` to add or modify columns.
+
+These are all covered in the new homewrok and will be in the test. The following basic verbs won't be on either of them:
+
+- `group_by` and `summarize` for grouped summaries.
+
+## Arranging rows
+
+```{r}
+glimpse(scat)
+```
+
+First let's arrange by `Species`.
+
+```{r}
+scat_sorted <- arrange(
+  scat,
+  Species
+)
+glimpse(scat_sorted)
+```
+
+Reverse the order with desc wrapper
+
+```{r}
+scat_sorted <- arrange(
+  scat,
+  desc(Species)
+)
+glimpse(scat_sorted)
+```
+
+You can also add a secondary condition.
+
+```{r}
+scat_sorted <- arrange(
+  scat,
+  desc(Species),
+  Age #first sort by species then age
+)
+glimpse(scat_sorted)
+```
+
+## The pipe!!
+
+R makes it easy and natural to combine operations on datasets including using the functions above. For instance, say we want to select the first 6 columns of `scat`, remove the coyotes, and then arrange the set by age. Here are two, not-so-great solutions:
+
+```{r}
+scat_result <- arrange((filter(select(scat,1:6), Species != "coyote")), Age) # Function sandwich... Not great
+
+scat1 <- select(scat, 1:6)
+scat2 <- filter(scat1, Species != "coyote")
+scat_result <- arrange(scat2, Age) # Not great either
+```
+
+R provides a much more elegant alternative: The **pipe** passes the thing on its left into the function on its right as the first argument.
+
+```{r}
+scat_result <- scat %>%
+  select(1:6) %>%
+  filter(Species != "coyote") %>%
+  arrange(Age)
+
+glimpse(scat_result)
+```
+
+The shortcut for pipe operator is `cmd + shift + m`.
+
+## Creating and modifying columns
+
+Let's make a column with `Age` in months.
+
+```{r}
+scat_months <- scat_result %>% 
+  mutate(Age_months = Age * 12)
+
+glimpse(scat_months)
+```
+
+
+
+
+
+
+

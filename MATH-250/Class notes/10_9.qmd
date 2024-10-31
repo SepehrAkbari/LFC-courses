@@ -1,0 +1,190 @@
+---
+title: "10/9 Notes"
+author: "Sepehr Akbari"
+date: "10/09/2024"
+format: html
+embed-resources: true
+---
+
+# 10/7 notes
+
+```{r}
+library(tidyverse)
+library(gt)
+library(readxl)
+```
+
+```{r}
+glimpse(table4a)
+```
+
+
+In a tidy data set:
+
+- every column is one variable
+
+- every row is one observation
+
+- there is only one kind of observational
+
+The `table4a` dataset does not obey the first two principles. Here, the year variable appears as column names and the cases variable appears as cell values in multiple columns. This is a common untidy structure **wide data**. We tidy such set with `pivot_longer`, which requires 3 pieces of information.
+
+1) the problem columns
+
+2) the name(s) of the new column(s) where the problem column names will be housed. In this case, "year."
+
+3) the names of the new column(s) where the corresponding values will go. In this case, "cases."
+```{r}
+table_long <- table4a %>% 
+  pivot_longer(
+    cols = `1999`:`2000`,
+    names_to = "year",
+    values_to = "cases"
+  )
+
+glimpse(table_long)
+```
+
+*Let's do a fuller example:*
+
+## The billboard hot 100
+
+This data does not print nicely, but let's see it anyway.
+
+```{r}
+glimpse(billboard)
+```
+
+We'd like a variable called "week" and another called "rank." This is a pivoting problem. Since the names of columns are actually values of the week variable, this is a `pivot_longer` situation.
+
+```{r}
+billboard_long <- billboard %>% 
+  pivot_longer(
+    cols = contains("wk"),
+    names_to = "week",
+    values_to = "rank"
+  )
+
+glimpse(billboard_long)
+```
+
+The help file is, well, helpful. So check it out with `?pivot_longer`.
+
+```{r}
+billboard_long <- billboard %>% 
+  pivot_longer(
+    cols = contains("wk"),
+    names_to = "week",
+    values_to = "rank",
+    names_prefix = "wk",
+    values_drop_na = TRUE
+  )
+
+glimpse(billboard_long)
+```
+
+Now we need to make `week` numerical.
+
+```{r}
+billboard_long <- billboard_long %>% 
+  mutate(
+    week = as.numeric(week)
+  )
+
+glimpse(billboard_long)
+```
+
+Also check out `as.charachter`, and others.
+
+Next time: 
+
+- What are the top 3 songs?
+
+- How can we go from "week" to "date"?
+
+- Make a great plot!
+
+# 10/9 notes
+
+Question we won't investigate here: why are there 76 weeks in this set when there are only 52 weeks in a year.
+
+Question we will answer: How should we judge what the most popular tracks were? We'll look at how many weeks each song was on the charts.
+
+Let's add a new column saying how long this song was on the charts.
+
+```{r}
+billboard_pop <- billboard_long %>% 
+  group_by(artist, track) %>% 
+  mutate(longevity = n()) %>% 
+  ungroup() %>% 
+  filter(longevity >= 50) 
+
+glimpse(billboard_long)
+```
+
+We'll keep all four of these. In general try to restrict yourself to at most 5 lines in a line chart, or else it will look like spaghetti. Similarly, generaly restrict yourself to at most 5 colors in a plot, or else they'll be hard to distinguish.
+
+We are not quite ready yet.
+
+```{r}
+ggplot(
+  billboard_pop,
+  aes(
+    x = date.entered,
+    y = rank,
+    color = track
+  )
+) +
+  geom_line()
+```
+
+This is not what we want obviously. We need a different data for each week a song was on the chart. This will involve `date.entered` and also `week`.
+
+A hint: `{r} as.numeric(billboard_pop$date.entered)[1]`. In R, as in other languages, dates are really just integers, the number of days since (I think) Jan 1, 1970. In fact, we can do arithmetic with dates as if they were integers already.
+
+```{r}
+billboard_pop <- billboard_pop %>% 
+  mutate(
+    date = date.entered + 7 * (week - 7)
+  ) %>% 
+  select(-data)
+
+glimpse(billboard_pop)
+```
+
+Now let's plot
+
+```{r}
+#| fig-alt: A line chart showing the top 4 tracks in 2000 over time. All 4 are comparable here.
+ggplot(
+  billboard_pop,
+  aes(
+    x = date,
+    y = rank,
+    color = track
+  )
+) +
+  geom_line() +
+  scale_color_brewer(palette = "Dark2")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

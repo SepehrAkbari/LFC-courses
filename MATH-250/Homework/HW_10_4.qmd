@@ -1,0 +1,202 @@
+---
+title: "Wrangling practice"
+author: "Sepehr Akbari"
+date: "10/4/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Setup
+
+Loading required libraries and the `astronauts` and `trash_wheel` dataset.
+
+```{r}
+#| label: hidden
+#| message: FALSE
+#| warning: FALSE
+#| error: FALSE
+#| echo: FALSE
+base_dir <- "/Users/sepehrakbari/Documents/LFC/Semester 3/MATH 250/MATH_250"
+```
+
+
+```{r}
+#| label: setup
+#| message: FALSE
+#| warning: FALSE
+
+library(tidyverse)
+library(readxl)
+library(gt)
+
+astronauts <- read_excel(file.path(base_dir, "Data/astronauts.xlsx"))
+trashwheel <- read_csv(file.path(base_dir, "Data/trash_wheel.csv"))
+```
+
+
+## Problem 1
+
+```{r}
+#| label: problem1
+#| message: FALSE
+#| warning: FALSE
+
+topEVA <- astronauts %>%
+  slice_max(order_by = eva_hrs_mission, n = 5)
+
+topEVA %>% 
+  select(name, eva_hrs_mission) %>%
+  gt::gt()
+```
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+#| fig-alt: "Plot showing the top 5 astronauts with the most EVA hours. The top 5 EVA hours are in the range of about 35-90 hours."
+
+topEVA %>%
+  ggplot(
+    aes(
+      x = eva_hrs_mission, 
+      y = reorder(name, eva_hrs_mission) 
+      # I'm using reorder() to arrange names based on the EVA hours
+    )
+  ) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Top 5 Astronauts with Most EVA Hours",
+    x = "Total EVA Hours",
+    y = "Astronaut Name"
+  ) +
+  theme_minimal()
+```
+
+
+## Problem 2
+
+```{r}
+#| label: problem2
+#| message: FALSE
+#| warning: FALSE
+
+current_year <- 2024
+my_astronauts <- astronauts %>%
+  mutate(age = current_year - year_of_birth)
+
+top_occupations <- my_astronauts %>%
+  mutate(occupation = tolower(occupation)) %>% 
+  group_by(occupation) %>%
+  summarise(
+    total_count = n(),              
+    min_age = min(age, na.rm = TRUE), 
+    median_age = median(age, na.rm = TRUE), 
+    max_age = max(age, na.rm = TRUE)
+  ) %>%
+  slice_max(order_by = total_count, n = 5)
+
+gt::gt(top_occupations)
+```
+
+## Problem 3
+
+```{r}
+#| label: problem3
+#| message: FALSE
+#| warning: FALSE
+
+EVA_status <- my_astronauts %>%
+  group_by(year_of_mission, military_civilian) %>%
+  summarise(total_eva = sum(eva_hrs_mission)) %>%
+  ungroup()
+
+EVA_status %>%
+  slice_head(n = 10) %>%
+  gt::gt()
+```
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+#| fig-alt: "Plot showing the total EVA hours by military/civilian status over time. Military astronauts generally logged more EVA hours in the early years, but the gap narrowed over time."
+
+ggplot(
+  EVA_status,
+  aes(
+    x = year_of_mission,
+    y = total_eva,
+    color = military_civilian
+  )
+) +
+  geom_line() +
+  labs(
+    title = "EVA Hours by Military/Civilian Status Over Time",
+    x = "Mission's Year",
+    y = "Total EVA Hours",
+    color = "Military/Civilian"
+  ) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Dark2")
+```
+
+Looking at the plot, we can see that in the early years of space exploration, military astronauts generally logged more EVA hours than their civilian counterparts. This trend continued through the 1960s and into the early 1980s, with military astronauts clearly contributing the majority of EVA hours. However, starting in the mid-1980s, the gap between military and civilian EVA hours began to close. By the 2000s, civilian astronauts were performing EVA activities at a rate nearly equal to or sometimes exceeding that of military astronauts. In the past decade however, this trend has shifted again, with military astronauts once again logging significantly more EVA hours than civilians.
+
+
+## Problem 4
+
+I am not exactly sure of my topic for mister trash wheel yet, but I found the idea to assess anti-smoking campaigns, and their affect specificaly in Baltimore, to be interesting. Of course the data shown here, is not creating any conclusions, however it is one of the aspects of my research.
+
+```{r}
+#| label: problem4
+#| message: FALSE
+#| warning: FALSE
+
+cigaretteButtsCollected <- trashwheel %>%
+  group_by(Year) %>%
+  summarise(total_cigarette_butts = sum(CigaretteButts, na.rm = TRUE))
+
+cigaretteButtsCollected %>% 
+  gt::gt()
+```
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+#| fig-alt: "Plot showing the total cigarette butts collected by Mister Trash Wheels in Baltimore over time. The number of cigarette butts collected has significantly decreased from 2014 to 2023."
+
+ggplot(
+  cigaretteButtsCollected,
+  aes(
+    x = Year,
+    y = total_cigarette_butts
+  )
+) +
+  geom_line(color = "steelblue") +
+  labs(
+    title = "Total Cigarette Butts Collected by Mister Trash Wheels in Baltimore",
+    x = "Year",
+    y = "Total Cigarette Butts Collected"
+  ) +
+  theme_minimal()
+```
+
+This simple plot shows the number of cigarette butts collected by Mister Trash Wheel in Baltimore over time. From the chart, there is a clear and significant decline in the number of cigarette butts collected from 2014 to 2023. In 2014, more than 4 million cigarette butts were collected, but by 2019, the number had dropped to about half a million, and it remained very low through 2023 as well. This suggests a notable reduction in smoking-related litter in Baltimore, which could be due to various factors such as anti-smoking campaigns, smoking bans in public places, smokers switching to vapes, or improved waste disposal practices. The consistent decrease implies that fewer people are discarding cigarette butts improperly, reflecting a possible decline in smoking rates or better community habits.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

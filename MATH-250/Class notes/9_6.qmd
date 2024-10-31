@@ -1,0 +1,53 @@
+---
+title: "9/6 Notes"
+author: "Sepehr Akbari"
+date: "9/6/2024"
+format: html
+embed-resources: true
+---
+ 
+### Loading Data
+```{r, message=FALSE}
+library(tidyverse)
+library(modeldata)
+```
+
+## Problem
+Generate an accessible bar chart stressing the different levels of job satisfaction but also showing the relative attrition rates within each group.
+
+```{r}
+ggplot(
+  attrition,
+  aes(
+    x = JobSatisfaction,
+    fill = Attrition
+  )
+) + 
+  geom_bar(position = "dodge") +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+## Penguins
+
+Lets create a faceted scatterplot for penguins
+```{r}
+glimpse(penguins)
+```
+
+```{r}
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = body_mass_g,
+    color = species
+  )
+) + 
+  geom_point(show.legend = FALSE) +
+  facet_wrap(~species,
+             ncol = 1) +
+  scale_color_brewer(palette = "Dark2")
+```
+
+
+

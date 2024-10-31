@@ -1,0 +1,73 @@
+---
+title: "10/25 Notes"
+author: "Sepehr Akbari"
+date: "10/25/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(ISLR2)
+library(readxl)
+
+fresh15 <- read_excel(file.path(base_dir, "Data/freshman _15.xlsx"))
+```
+
+Let's just glimpse this
+
+```{r}
+glimpse(fresh15)
+```
+
+We'll start by getting a new column for change in BMI.
+
+```{r}
+fresh15 <- fresh15 %>%
+  mutate(BMI_CHANGE = BMI_APRIL - BMI_SEPT)
+mean(fresh15$BMI_CHANGE)
+```
+
+On average, students in this sample gained about 0.45 BMI Points over the academic year. Could this just be due to sampling variability?
+
+Null: CHANGE_BMI = 0 in the population
+
+Alternative: CHANGE_BMI is not 0 in the population
+
+Our perspective on 1-sided tests: Always run a 2-sided test. Then, if the sample mean is the direction you're interested in, you can also make the 1-sided conclusion.
+
+```{r}
+t.test(fresh15$BMI_CHANGE,
+       mu = 0)
+```
+
+The p-value is very low (0.004) indicating that the null isn't plausible. We conclude that freshman in this population do gain BMI on average.
+
+## Two-sample t-tests
+
+In the last example, we used two columns, noting that these were  different samples for the same variable. In that case the data was paired. So we subtracted and basically just had a single variable. Samples often aren't paired.
+
+Let's look at price for US and non-US stores.
+
+```{r}
+glimpse(Carseats)
+```
+
+We have a sample of 400 stores. Are the prices different in the population?
+
+Null: mean price is the same for US and non-US
+
+Alternative: mean price is different
+
+This is a two-sample test which is **not** paired. The math is hard for this, but we can ignore it, as long as we understand the basics of sig-tests.
+
+```{r}
+t.test(Carseats$Price - Carseats$US) # mu = 0 is default
+```
+
+Here p = 0.27. If the mans in the two groups in the population are really the same, we'd still get data like ours about 72% of the time. This data is consistent with the null. We can't conclude the means are different in the US and non-US stores. 
+
+We can NOT conclude the means are the same.
+

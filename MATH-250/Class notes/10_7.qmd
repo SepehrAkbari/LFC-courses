@@ -1,0 +1,110 @@
+---
+title: "10/7 Notes"
+author: "Sepehr Akbari"
+date: "10/04/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(gt)
+```
+
+```{r}
+gt(table4a)
+```
+
+
+In a tidy data set:
+
+- every column is one variable
+
+- every row is one observation
+
+- there is only one kind of observational
+
+The `table4a` dataset does not obey the first two principles. Here, the year variable appears as column names and the cases variable appears as cell values in multiple columns. This is a common untidy structure **wide data**. We tidy such set with `pivot_longer`, which requires 3 pieces of information.
+
+1) the problem columns
+
+2) the name(s) of the new column(s) where the problem column names will be housed. In this case, "year."
+
+3) the names of the new column(s) where the corresponding values will go. In this case, "cases."
+```{r}
+table_long <- table4a %>% 
+  pivot_longer(
+    cols = `1999`:`2000`,
+    names_to = "year",
+    values_to = "cases"
+  )
+
+gt(table_long)
+```
+
+*Let's do a fuller example:*
+
+## The billboard hot 100
+
+This data does not print nicely, but let's see it anyway.
+
+```{r}
+gt(billboard)
+```
+
+We'd like a variable called "week" and another called "rank." This is a pivoting problem. Since the names of columns are actually values of the week variable, this is a `pivot_longer` situation.
+
+```{r}
+billboard_long <- billboard %>% 
+  pivot_longer(
+    cols = contains("wk"),
+    names_to = "week",
+    values_to = "rank"
+  )
+
+gt(billboard_long)
+```
+
+The help file is, well, helpful. So check it out with `?pivot_longer`.
+
+```{r}
+billboard_long <- billboard %>% 
+  pivot_longer(
+    cols = contains("wk"),
+    names_to = "week",
+    values_to = "rank",
+    names_prefix = "wk",
+    values_drop_na = TRUE
+  )
+
+gt(billboard_long)
+```
+
+Now we need to make `week` numerical.
+
+```{r}
+billboard_long <- billboard_long %>% 
+  mutate(
+    week = as.numeric(week)
+  )
+
+gt(billboard_long)
+```
+
+Also check out `as.charachter`, and others.
+
+Next time: 
+
+- What are the top 3 songs?
+
+- How can we go from "week" to "date"?
+
+- Make a great plot!
+
+
+
+
+
+

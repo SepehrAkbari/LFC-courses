@@ -1,0 +1,214 @@
+---
+title: "Statistical Inference"
+author: "Sepehr Akbari"
+date: "11/1/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+::: {.callout-note appearance="minimal" icon="false"}
+These problems refer to the `ISLR2::Carseats` set, which includes simulated sample data for
+400 stores selling a particular brand of child carsesat.
+:::
+
+## Setup
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+library(tidyverse)
+library(ISLR2) # to use the carseats dataset
+```
+
+## Problem 1
+
+::: {.callout-note appearance="minimal" icon="false"}
+Compute a level 90% confidence interval for the mean competitor price in the population from
+which this sample is drawn. What is the sample mean? What is the margin of error?
+:::
+
+Let's run a t-test to estimate the average price of car seats in the dataset, with a 90% confidence level.
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+results <- t.test(Carseats$Price, 
+       conf.level = 0.9)
+
+sampleMean <- round(results$estimate, 1)
+marginOfError <- round((results$conf.int[2] - results$conf.int[1]) / 2, 2)
+
+print(results)
+print(sampleMean)
+print(marginOfError)
+```
+
+So the sample mean is 115.795 or approximately about **115.8**.
+
+This means, with 90% confidence, the population mean lies between 113.8 and 117.7 dollars.
+
+The margin of error is **1.95 dollars**.
+
+## Problem 2
+
+::: {.callout-note appearance="minimal" icon="false"}
+Does this data provide evidence against the company’s claim that the average price of their
+own seats is $110? Follow all best practices from class, including a relevant visualization.
+:::
+
+First, let's set up the null and alternative hypotheses:
+
+Null Hypotheses: The average price of the company's seats is \$110.
+
+$H_0: \mu = 110$
+
+Alternative Hypotheses: The average price of the company's seats is not \$110.
+
+$H_1: \mu \ne 110$
+
+Now, let's get a visual representation of the data, and explore it:
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+ggplot(
+  Carseats,
+  aes(x = Price)
+) +
+  geom_histogram(
+    bins = 20,
+    fill = "gray",
+    color = "white"
+  ) +
+  geom_vline(
+    xintercept = 110,
+    color = "black",
+    linetype = "dotted",
+    size = 1
+  ) +
+  labs(
+    title = "Distribution of Prices",
+    x = "Price",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
+
+From the histogram, it seems like the average price of seats is not \$110, although could be close to it, and sampling variability might be the reason for the difference. Let's run a t-test to see if we have enough evidence to reject the null hypothesis or not:
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+t.test(Carseats$Price, 
+       mu = 110)
+```
+
+Since the p-value is very small (less than 0.05), we have strong evidence to reject the null hypothesis. So at the 5% significance level (0.05 cutoff), we **reject the null hypothesis**. The sample data provides sufficient evidence to conclude that the average price of the seats is not \$110.
+
+## Problem 3
+
+::: {.callout-note appearance="minimal" icon="false"}
+The company also claims that 25% of stores feature their seats in good locations, 50% in
+medium ones, and 25% in bad ones. Does this data provide evidence against this claim?
+Follow all best practices from class, including a relevant visualization.
+:::
+
+Let's start with setting up the null and alternative hypotheses:
+
+Null Hypotheses: The proportions claimed by the company are correct.
+
+$H_0: p_{good} = 0.25 \text{ and } p_{medium} = 0.50 \text{ and } p_{bad} = 0.25$
+
+Alternative Hypotheses: The proportions claimed by the company are not correct.
+
+$H_1: p_{good} \ne 0.25 \text{ or } p_{medium} \ne 0.50 \text{ or } p_{bad} \ne 0.25$
+
+Next, let's get a numeric representation of the data:
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+table(Carseats$ShelveLoc)
+```
+
+To get closer to the company's claim, we can visualize the data by precentage instead of count:
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+table(Carseats$ShelveLoc) / nrow(Carseats)
+```
+
+To get a more clear understanding we can also visualize the data:
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+ggplot(
+  Carseats,
+  aes(x = ShelveLoc)
+) +
+  geom_bar() +
+  labs(
+    title = "Distribution of Shelve Locations",
+    x = "Shelve Location",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
+
+From this, the null hypotheses seems pretty plausible Although the proportions aren't exactly 25%, 50%, and 25%, they are close enough to not reject the null hypothesis at first glance. Let's run a chi-squared test to see if we have enough evidence to reject the null hypothesis or not:
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+chisq.test(table(Carseats$ShelveLoc),
+           p = c(0.25, 0.25, 0.50))
+```
+
+With a p-value of 0.1215, which is greater than the 0.05 significance level, we **fail to reject the null hypothesis**. This means that the data does not provide sufficient evidence to conclude that the company’s claimed proportions are incorrect.
+
+## Problem 4
+
+::: {.callout-note appearance="minimal" icon="false"}
+Does this data provide evidence that sales are related to whether or not the store is in an
+urban location? Follow all best practices from class, including a relevant visualization.
+:::
+
+Let's start with setting up the null and alternative hypotheses:
+
+Null Hypotheses: There is no relationship between sales and urban location (i.e., the mean sales are the same for urban and non-urban stores).
+
+$H_0: \mu_{urban} = \mu_{non-urban}$
+
+Alternative Hypotheses: There is a relationship between sales and urban location (i.e., the mean sales differ between urban and non-urban stores).
+
+$H_1: \mu_{urban} \ne \mu_{non-urban}$
+
+Next, let's get a visual representation of the data, and explore it:
+
+```{r}
+ggplot(
+  Carseats, 
+  aes(
+    x = Urban, 
+    y = Sales)
+) +
+  geom_boxplot() +
+  labs(
+    title = "Sales by Urban vs Non-Urban Locations",
+    x = "Urban Location?",
+    y = "Sales"
+  ) +
+  theme_minimal()
+```
+
+From the box plot, we see that the distribution of sales for urban and non-urban stores appears quite similar, with no notable difference in median sales or spread between the two groups. This suggests that any difference in sales may not be significant. Let's run a t-test to see if we have enough evidence to reject the null hypothesis or not:
+
+```{r}
+t.test(Carseats$Sales ~ Carseats$Urban)
+```
+
+Since the p-value, 0.7576, is much greater than the 0.05 significance level, we **fail to reject the null hypothesis**. The results indicate that there is insufficient evidence to conclude that sales are related to whether or not the store is in an urban location. Based on the sample data, the mean sales between urban and non-urban stores do not differ significantly.

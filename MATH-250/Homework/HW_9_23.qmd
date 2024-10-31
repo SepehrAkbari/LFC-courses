@@ -1,0 +1,171 @@
+---
+title: "`dplyr` basics"
+author: "Sepehr Akbari"
+date: "9/23/2024"
+format: html
+embed-resources: true
+---
+
+# Question
+
+Submit a single neat .html document via Moodle. In general, you should include both code and output in your solutions, but please be judicious in how much of any data frame you display. Use `gt` when possible and `glimpse` otherwise.
+
+These problems refer to the `flights` data set, included in the `nycflights13` package, which you will need to install. Before attempting these problems, you should take a few minutes to look at the data set and its help file to understand what the different variables represent and how they’re encoded.
+
+# Answer
+
+### Loading Packages
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(modeldata)
+library(nycflights13)
+library(dbplyr)
+library(gt)
+```
+
+```{r}
+glimpse(flights)
+```
+
+### Problem 1
+
+Obtain a smaller set `flights_sm` consisting only of destinations and the variables involving arrival/departure times and delays. The destinations should be the first column of this data frame, followed by the departure variables, and finally the arrival variables. Glimpse your result.
+
+```{r}
+#| label: problem 1
+#| message: false
+#| warning: false
+
+flights_sm <- flights %>% 
+  select(
+    dest, 
+    sched_dep_time, 
+    dep_time, 
+    dep_delay, 
+    sched_arr_time, 
+    arr_time, 
+    arr_delay
+  ) 
+
+glimpse(flights_sm)
+```
+
+### Problem 2
+
+Use `flights_sm` for each of the following. Glimpse your results. 
+
+a. Find all flights that flew to Boston (BOS) or Atlanta (ATL). 
+b. Find all flights that left at least an hour late but arrived early. Create a table of your results. 
+c. Read about the `between()` helper. Use it to find all flights that arrived between 1am and 7am, inclusive.
+
+##### Problem 2 (a)
+
+```{r}
+#| label: problem 2 (a)
+#| message: false
+#| warning: false
+
+flights_BOSorATL <- flights_sm %>% 
+  filter(
+    dest == "BOS" | dest == "ATL"
+  )
+
+glimpse(flights_BOSorATL)
+```
+
+##### Problem 2 (b)
+
+```{r}
+#| label: problem 2 (b)
+#| message: false
+#| warning: false
+
+flights_lateEarly <- flights_sm %>% 
+  filter(
+    dep_delay >= 60 & arr_delay < 0
+  )
+
+glimpse(flights_lateEarly)
+```
+
+##### Problem 2 (c)
+
+```{r}
+#| label: problem 2 (c)
+#| message: false
+#| warning: false
+
+flights_1to7 <- flights_sm %>% 
+  filter(
+    between(
+      arr_time, 
+      100, 
+      700
+    )
+  )
+
+glimpse(flights_1to7)
+```
+
+### Problem 3
+
+a.  Sort `flights_sm` according to departure delay, breaking ties with arrival delay. In each case, the longest delays should be first.
+
+b.  Sort the set `flights_sm` so that all flights with missing departure times are first.
+
+##### Problem 3 (a)
+
+```{r}
+#| label: problem 3 (a)
+#| message: false
+#| warning: false
+
+flights_sorted <- flights_sm %>% 
+  arrange(
+    desc(dep_delay), 
+    desc(arr_delay)
+  )
+
+glimpse(flights_sorted)
+```
+
+##### Problem 3 (b)
+
+```{r}
+#| label: problem 3 (b)
+#| message: false
+#| warning: false
+
+flights_missingDep <- flights_sm %>% 
+  arrange(
+    is.na(dep_time)
+  )
+
+glimpse(flights_missingDep)
+```
+
+### Problem 4
+
+Add a column to `flights_sm` showing the difference between delays in departure and arrival
+for each flight. Add a second column indicating if the flight gained time while in the air. The
+latter should be a logical vector (one consisting of `TRUE` and `FALSE`).
+
+```{r}
+#| label: problem 4
+#| message: false
+#| warning: false
+
+flights_diff <- flights_sm %>% 
+  mutate(
+    delay_diff = dep_delay - arr_delay,
+    gained_time = delay_diff > 0
+  )
+
+glimpse(flights_diff)
+```
+

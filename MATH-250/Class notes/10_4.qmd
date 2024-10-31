@@ -1,0 +1,89 @@
+---
+title: "10/4 Notes"
+author: "Sepehr Akbari"
+date: "10/04/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| message: FALSE
+s
+library(tidyverse)
+library(readxl)
+library(gt)
+
+astronauts <- read_excel(file.path(base_dir, "Data/astronauts.xlsx"))
+```
+
+## Astronauts HW Problem 2 (top occupations)
+
+Rough and ready:
+
+```{r}
+table(astronauts$occupation)
+```
+
+Notice the inconsistent coding. We should spend some time on this, ideally. Let's start by ignoring it though, since the numbers are small.
+
+Let's be a bit more methodical about our counting.
+
+```{r}
+astronauts %>% 
+  group_by(occupation) %>%
+  summarise(count = n()) %>% 
+  slice_max(order_by = count, n = 5) %>%
+  gt()
+```
+
+You could also use `count()` instead of `group_by()` and `filter()` instead of `slice_max()`.
+
+Let's improve the `occupation` column a little with a mutate.
+
+```{r}
+astronauts <- astronauts %>% 
+  mutate(occupation = tolower(occupation))
+
+table(astronauts$occupation)
+```
+
+A useful tool for more fine grained recoding of categorical data is `case_when`. 
+
+## Problem 3
+
+```{r}
+mil_civ_year <- astronauts %>% 
+  group_by(year_of_mission, military_civilian) %>%
+  summarise(eva_tot = sum(eva_hrs_mission)) %>%
+  ungroup()
+
+mil_civ_year %>%
+  slice_head(n = 10) %>% 
+  gt()
+```
+
+## Tidy Data
+
+compare the following
+
+```{r}
+table1
+table4a
+table4b
+```
+
+In the last two, some of the column names are actually values of an unnamed variable. In 4a and 4b, the variables have been divided between the two sets.
+
+```{r}
+table2
+```
+
+
+
+
+
+
+
+

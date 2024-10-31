@@ -1,0 +1,91 @@
+---
+title: "9/11 Notes"
+author: "Sepehr Akbari"
+date: "9/11/2024"
+format: html
+embed-resources: true
+---
+
+```{r}
+#| message: false
+#| label: setup
+
+library(tidyverse)
+library(readxl)
+scooby <- read_excel(file.path(base_dir, "Data/scooby.xlsx"))
+```
+
+
+## Scooby and `imdb`
+
+Last time we looked at the `imdb` variable alone. Now let's consider a second.
+
+Let's start with time:
+
+```{r}
+#| label: time & imdb
+
+ggplot(
+  scooby,
+  aes(
+    x = date_aired,
+    y = imdb
+  )
+) +
+  geom_point()
+```
+
+What's goind on around 2008-2009? Does it have to do with series name or network?
+
+```{r}
+ggplot(
+  scooby,
+  aes(
+    x = date_aired,
+    y = imdb,
+    color = series_name
+  )
+) +
+  geom_point()
+```
+
+This plot is cluttered and unclear.
+
+First let's deal with those missing values and eliminate the warning message. We have seen that the most recent episodes don't have `imdb` rating yet. We comment on this in our report and then suppress R's warning message.
+
+*Principle*: having lots of categories in a plot is generaly not clear. Limit use of color to six if possible and four if you can.
+
+Let's stop considering time, and instead just look at imdb vs series and vs network.
+
+```{r}
+#| label: imdb & series
+#| warning: false
+
+ggplot(
+  scooby,
+  aes(
+    x = imdb,
+    y = series_name
+  )
+) +
+  geom_boxplot()
+```
+
+Let's try network:
+
+```{r}
+#| label: imdb & network
+#| warning: false
+
+ggplot(
+  scooby,
+  aes(
+    x = imdb,
+    y = network
+  )
+) +
+  geom_boxplot()
+```
+
+It looks like *The CW's "Shaggy & Scooby-Doo Get a Clue!"* was hated. We should read about it.
+

@@ -1,0 +1,108 @@
+---
+title: "10/28 Notes"
+author: "Sepehr Akbari"
+date: "10/28/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+```
+
+## Two-sample t-test example
+
+Suppose we have a random sample of 100 diamonds.
+
+```{r}
+set.seed(0)
+
+diamonds_sample <- diamonds %>% 
+  slice_sample(n = 100)
+```
+
+Are colors D and E more expensive than the others? 
+
+First, we need a column that is gonna indicate whether each diamond is D/E or not. 
+
+```{r}
+diamonds_sample <- diamonds_sample %>% 
+  mutate(
+    clear = color %in% c("D", "E")
+  )
+
+glimpse(diamond_sample)
+```
+
+Now we can do a two-sample t-test.
+
+Null: The prices are the same for T and F
+
+Alternative: the prices are different
+
+```{r}
+t.test(diamonds_sample$price ~ diamonds_sample$clear)
+```
+
+The p-value is small, not infinitesimally small, but small enough to reject the null hypothesis. The prices in the two groups in the population appear different.
+
+Can we conclude the clear ones are more expensive? No it appears that the clear ones tend to be less expensive in the population (interesting).
+
+## Testing for a categorical variable
+
+Let's get a new sample of diamonds. This time let's take 250.
+
+```{r}
+diamonds_sample2 <- diamonds %>% 
+  slice_sample(n = 250)
+```
+
+A store with this stock claims that in the larger population, the cuts of diamonds have proportionsas follows:
+
+```{r}
+props <- c(0.05, 0.1, 0.2, 0.25, 0.4)
+cuts <- c("Fair", "Good", "Very Good", "Premium", "Ideal")
+
+df <- data.frame(cuts, props)
+gt::gt(df)
+```
+
+Let's find the proportions in the sample.
+
+```{r}
+table(diamonds_sample2$cut)
+table(diamonds_sample2$cut) / 250
+```
+
+Is the store's claim plausible based on this data?
+
+First, notice that we can't really do a confidence interval for a catagerical variable. We can only do a sig-test.
+
+Null: the props claimed by the store are correct for the population.
+
+Alternative: the props are different.
+
+We'll test this using a **chi-squared goodness of fit test**, which compares the observed counts with the ones expected if the null is true.
+
+```{r}
+expected <- props * 250
+table(diamonds_sample2$cut)
+
+chisq.test(table(diamonds_sample2$cut), p = props)
+```
+
+The Chi-squared statistic measures how far observed counts are from expected ones across multiple categories.
+
+$$ \chi^2 = \sum\frac{(O - E)^2}{E} $$
+Where O is observed and E is expected. In R, we run the with `chisq.test()`, which needs a vector of counts and another vector of expected proportions.
+
+```{r}
+chisq.test(table(diamonds_sample2$cut), p = props) # p = x is necessary
+```
+
+Where p is a vector of expected proportions. Here p is very large. The null hypothesis is consistent with the data. We draw no further conclusions.
+
+
+

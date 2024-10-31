@@ -1,0 +1,142 @@
+---
+title: "Tidy Data"
+author: "Sepehr Akbari"
+date: "10/11/2024"
+format: html
+embed-resources: true
+---
+
+## Setup
+
+Loading required libraries and the `airport_data_speeds` dataset.
+
+```{r}
+#| label: hidden
+#| message: FALSE
+#| warning: FALSE
+#| error: FALSE
+#| echo: FALSE
+base_dir <- "/Users/sepehrakbari/Documents/LFC/Semester 3/MATH 250/MATH_250"
+```
+
+```{r}
+#| label: setup
+#| message: FALSE
+#| warning: FALSE
+#| error: FALSE
+
+library(tidyverse)
+library(readxl)
+library(gt)
+
+airport_data_speeds <- read_excel(file.path(base_dir, "Data/airport_data_speeds.xlsx"))
+```
+
+## Problem 1
+
+**The actual variables:**
+
+- Year: The year of construction (e.g 2018)
+
+- Month: The month of construction (e.g June)
+
+- 1 unit: The number of constructions that had 1 unit
+
+- 2 to 4 units: The number of constructions that had 2-4 units
+
+- 5 units or more: The number of constructions that had more than 5 units
+
+- Northeast: The number of constructions that took place in the northeast region
+
+- Midwest: The number of constructions that took place in the midwest region
+
+- South: The number of constructions that took place in the southern region
+
+- West: The number of constructions that took place in the western region
+
+**Tidy dataset's format**:
+
+- Year: The year of construction (e.g 2018)
+
+- Month: The month of construction (e.g June)
+
+- Scale/Size: How many units the construction has/had (e.g 1 unit)
+
+- Scale Count: Count of the construction by month
+
+- Region: The region where the construction is/was taking place (e.g Midwest)
+
+- Region Count: Count of the construction by region
+
+
+```{r}
+construction_tidy <- construction %>% 
+  pivot_longer(
+    cols = `1 unit`:`5 units or more`,
+    names_to = "Scale",
+    values_to = "Scale Count"
+  ) %>% 
+  pivot_longer(
+    cols = Northeast:West,
+    names_to = "Region",
+    values_to = "Region Count"
+  )
+
+glimpse(construction_tidy)
+```
+
+As we can see by the results above, the dataset is tidy, but the rows still don't represent an obervation, because of how the data was collected.
+
+
+## Problem 2
+
+Tidying the data:
+
+```{r}
+airport_data_speed_tidy <- airport_data_speeds %>%
+  pivot_longer(
+    cols = !`AIRPORT CODE`,
+    names_to = "Carrier",
+    values_to = "Speed"
+  )
+
+glimpse(airport_data_speed_tidy)
+```
+
+Plotting the data:
+
+```{r}
+#| fig-alt: "Boxplot of the speed of carriers at US airports"
+
+ggplot(
+  airport_data_speed_tidy,
+  aes(
+    x = Speed,
+    y = Carrier,
+    fill = Carrier
+  )
+) + 
+  geom_boxplot(show.legend = FALSE) +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+## Problem 3
+
+I'll use `group_by()`, and `max()` to get only the highest speed in each airport, and then just use `filter()` to only show the rows with Verizon as their carrier.
+
+```{r}
+airport_data_speed_tidy %>%
+  group_by(`AIRPORT CODE`) %>% 
+  filter(Speed == max(Speed)) %>% 
+  ungroup() %>%
+  filter(Carrier == "VERIZON") %>% 
+  count(Carrier) %>% 
+  gt()
+```
+
+So, Verizon has the highest speed in 21 airports.
+
+
+
+

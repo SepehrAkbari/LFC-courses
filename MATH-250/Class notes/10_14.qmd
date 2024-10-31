@@ -1,0 +1,50 @@
+---
+title: "10/14 Notes"
+author: "Sepehr Akbari"
+date: "10/14/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+## Unite
+
+In table5, the year variable is split between two columns.
+
+```{r}
+table5
+
+table5 %>% 
+  unite(
+    col = "year",
+    century, year,
+    sep = "") # don't seperate the parts of the new string
+```
+
+## Joining data sets
+
+It's common to want to add column from one data project to another.
+
+```{r}
+band_members
+
+band_instruments
+```
+
+We do this with `left_join`. We need to specify both datasets starting with the one we want to modify. We also need to specify one or more **key columns**, ones that identify observations, letting R know how to match up the rows.
+
+```{r}
+band_members %>%
+  left_join(band_instruments, 
+            by = "name")
+```
+
+By default, `left_join` adds all columns in the second set to th firstm with the exception of the key columns.
+
+You can also use `rbind` and `cbind` to just combine sets by row or column. For instance if you have two sets with identical variables and different observations, use `rbind.`

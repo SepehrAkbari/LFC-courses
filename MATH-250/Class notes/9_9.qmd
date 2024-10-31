@@ -1,0 +1,66 @@
+---
+title: "9/9 Notes"
+author: "Sepehr Akbari"
+date: "9/9/2024"
+format: html
+embed-resources: true
+---
+
+## Troubkeshooting
+
+What is your progress when you get an error?
+
+- Read the error message carefully. R messages are often very specific. Quarto rendering errors for instance, include the line numbers where the problem is.
+
+- Check spelling and syntax.
+
+- AI (like GPTs) can be really useful for finding syntax and/or logical errors sometimes.
+
+- Read about the problem function or tool.
+
+- Restarting R.
+
+- Ask someone.
+
+## Projects & file management
+
+By now, you probably have a folder for this class. We like to identify that folder as representing the home for a particular data science project (set of related tasks). We'd like R to now it's where all our related files live.
+
+We do this with an **RStudio Project**.
+
+When you work inside a project, data import is much easier. 
+
+```{r}
+library(readxl)
+scooby <- read_excel(file.path(base_dir, "Data/scooby.xlsx"))
+```
+
+## Scooby and IMDB
+
+Let's explore the ratings of scooby Doo episodes a little.
+
+```{r}
+library(tidyverse)
+glimpse(scooby)
+```
+
+First, let's get a one-variable plot for IMDB, our primary variable of interest. This 
+
+```{r}
+ggplot(
+  scooby,
+  aes(x = imdb)
+) +
+  geom_histogram()
+```
+
+Similarly we should consider numerical summeries.
+
+```{r}
+mean(scooby$imdb, na.rm = TRUE)
+```
+
+Next, we'll explore relations of other variables with this one. We'll start with  `date_aired` next time.
+
+
+

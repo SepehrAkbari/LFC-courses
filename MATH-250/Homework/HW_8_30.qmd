@@ -1,0 +1,86 @@
+---
+title: "8/30 Homework"
+author: "Sepehr Akbari"
+date: "8/30/2024"
+format: html
+embed-resources: true
+---
+
+###### Sepehr Akbari
+
+###### MATH 250 — Aug 30th, 2024
+
+# Working with ggplot2
+
+## Problem 1
+
+Find and download the ggplot2 cheat sheet from the Posit (the company that makes RStudio) website. According to this, what are four possible (and equivalent) ways of plotting one categorical and one quantitative variable?
+
+**Answer**
+
+`f + geom_col()`, `f + geom_boxplot()`, `f + geom_dotplot()`, and `f + geom_violin()`
+
+{{< pagebreak >}}
+
+## Problem 2
+
+Take a look at the economics data set, which becomes available in R after loading tidyverse. Obtain a line chart showing changes in unemployment over time. Change the labels and add a title. Export the plot and include it with the assignment. Also include the code used to generate it.
+
+**Answer**
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse) ## Loading tidyverse
+```
+
+```{r}
+ggplot(
+  economics,
+  aes(date, unemploy)
+  ) +
+  geom_line() +
+  labs(
+    x = "Year",
+    y = "Unemployment",
+    title = "The Trend of Unemployment"
+  )
+```
+
+{{< pagebreak >}}
+
+## Problem 3
+
+What happens if you add the argument alpha = .1 inside the geom from the last problem? Explain in words; you do not need to include a plot for this part.
+
+**Answer**
+
+Using `?geom_line()` we can see, that `alpha` is used to change the opacity of the line.
+
+## Problem 4
+
+The plot represents data from the famous gapminder data set. There are four primary aesthetics here. Identify them by specifying both the variable and the way it’s being represented. Also identify at least 3 non-data aspects of this plot.
+
+![](images/Screenshot%202024-08-29%20at%2014.21.48.png){fig-align="center"}
+
+{{< pagebreak >}}
+
+**Answer**
+
+The aesthetic variables are:
+
+1)  First variable is `x` which declares the x-axis data with value `gdpPercap`.
+
+2)  Similarly, `y` declares the y-axis with value `lifeExp`.
+
+3)  We can see that the data is being color filled by continent name, so, `fill = continent` exists as well.
+
+4)  We see that the names of the countries are also shown on top of the data points, which can be achieved by `label = country`.
+
+5)  As the size of the circles match the population of the country, `linewidth = pop` also exists.
+
+Other:
+
+1)  The labels of the axis are both changed, using `labs()`.
+
+2)  The chart has a POOR/RICH and HEALTHY/SICK scale, which follows the pattern of the division of the data by four categories. The data scientists may or may not have used the five-number summary for example.
+
+3)  The legend is adjusted to be more user-friendly. (ex. has a map showing the color devision)

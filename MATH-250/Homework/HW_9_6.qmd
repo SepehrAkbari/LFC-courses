@@ -1,0 +1,89 @@
+---
+title: "Practice With ggplot2"
+author: "Sepehr Akbari"
+date: "9/6/2024"
+format: html
+embed-resources: true
+---
+### Loading Packages
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(modeldata)
+```
+
+## Problem 1
+
+```{r}
+ggplot(
+  attrition,
+  aes(
+    x = MonthlyIncome,
+    y = Education,
+    fill = Education
+  )
+) +
+  geom_boxplot(show.legend = FALSE) +
+  labs(
+    x = "Monthly income",
+    title = "Learn to Earn"
+  ) +
+  scale_fill_manual(values=c("#1c9e78", "#d95f01", "#7570b3", "#e7298a", "#67a61f"))
+```
+
+## Problem 2
+
+```{r}
+ggplot(
+  attrition,
+  aes(
+    x = Age
+  )
+) +
+  geom_histogram(show.legend = FALSE, 
+                 binwidth = 4.7, 
+                 color = '#036703', 
+                 fill = '#90ee8f'
+  )
+```
+
+## Problem 3
+
+```{r}
+ggplot(
+  attrition,
+  aes(
+    x = JobSatisfaction,
+    fill = Attrition
+  )
+) +
+  geom_bar(position = "dodge") +
+  labs(
+    x = "Job Satisfaction",
+    y = "Count",
+    title = "Corrolation of Satisfaction and Attrition",
+    caption = "from attrition db",
+    fill = "Attrition Status"
+  ) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+## Problem 4
+
+```{r}
+ggplot(
+  attrition,
+  aes(
+    x = Attrition,
+    fill = JobSatisfaction
+  )
+) +
+  geom_bar(position = "fill") +
+  labs(
+    x = "Attrition Status",
+    y = "Count",
+    title = "Comparison of Satisfaction and Attrition",
+    caption = "from attrition db",
+    fill = "Job Satisfaction"
+  ) +
+  scale_fill_brewer(palette = "Dark2")
+```

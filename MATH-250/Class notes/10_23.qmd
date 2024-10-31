@@ -1,0 +1,85 @@
+---
+title: "10/23 Notes"
+author: "Sepehr Akbari"
+date: "10/23/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(modeldata)
+```
+
+## More on CI
+
+Let's consider the `mtcars` set, which is built-in. Learn about it with `?mtcars`. We'll view this as a random sample of cars from 1974. We'll like a level 90% confidence interval for `mpg`. We'll also get a 95% CI to compare.
+
+```{r}
+t.test(mtcars$mpg,
+       conf.level = 0.90)
+```
+
+By the way, `conf.level = 0.95` is the default, so you can omit it for a 95% CI. BUT DON'T.
+
+```{r}
+mpg_ci <- t.test(mtcars$mpg,
+       conf.level = 0.95)
+```
+
+the output is a list a very general data structure that we should now. You think of a list as a generalized dataframe where the columns don't have to have the same length and there are more options for their types.
+
+The structure command, `str`, helps us learn about the structures in R, including lists.
+
+```{r}
+str(mpg_ci)
+```
+
+We extract items from a list the same way as we do from data frames.
+
+```{r}
+mpg_ci$conf.int
+```
+
+We won't use lists a lot in here, but they come up a lot if you go in R.
+
+## Significance testing
+
+Confidence intervals are great! Sometimes however, we're specifically interested in a single possible parameter value. This is particularly true in medicine and related sciences.
+
+For instance, perhaps we have an old book that says the average bill length of penguins is 42mm. Using the `penguins` data set as a random sample (assumption), is this claim plausible?
+
+We call the claimed value the **null hypotheses**. Usually this is the thing we think/hope isn't true. The opposite of this is the **alternative hypothesis**, Which is the thing we actually are trying to get evidence for.
+
+These hypotheses should be set and written down before sample data is considered. The data is then used to calculate a **test statistic** that measures how far the data is from what's expected under the null hypotheses. For a single quantitative variable, we use a t-test with a test statistic from the t-distribution. 
+
+In turn, this statistic is used to compute a **p-value** expressing how likely such test statistic is if the null is true. A low p-value casts doubt on the null hypothesis. Often p = 0.05 is used a s a cutoff, but there is no theoretical reason for this.
+
+Back to the penguins:
+
+- Null hypothesis: avg bill length = 42
+
+- Alternative hypothesis: it's not 42
+
+Before we run the test, let's see a visualization of this variable.
+
+```{r}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm)) +
+  geom_histogram() +
+  geom_vline(
+    xintercept = 42,
+    linetype = "dotted"
+  )
+```
+
+```{r}
+t.test(penguins$bill_length_mm,
+       mu = 42) # null hypothesis value
+```
+
+The p-value expresses the level of evidence against the null. Here p is so small that we can confidently reject the null, and support the alternative. Concluding that bill length in all penguins is not 42mm.
+

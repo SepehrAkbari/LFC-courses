@@ -1,0 +1,80 @@
+---
+title: "9/27 Notes"
+author: "Sepehr Akbari"
+date: "9/27/2024"
+format: html
+embed-resources: true
+---
+
+## Making great looking tables in Quarto
+
+We'll do this using the `gt` package, which we can install with: `install.packages("gt")`.
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+library(tidyverse)
+library(modeldata)
+library(readxl)
+library(gt)
+
+scooby <- read_excel(file.path(base_dir, "Data/scooby.xlsx"))
+```
+
+In the package `gt`, the function `gt` just makes a nice table out of data frames. Let's use this to make a nice table of mean bill lengths for different species of penguins.
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarize(avg_bill = mean(bill_length_mm, na.rm = TRUE))
+
+# ok... but not great looking
+```
+
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarize(avg_bill = mean(bill_length_mm, na.rm = TRUE)) %>% 
+  gt()
+
+# much better!
+```
+
+## Some group summery practice with scooby
+
+Did scooby use his catchphrase more over the years? Less? Or was he consistent?
+
+Let's start with a rough explaratory plot
+
+```{r}
+ggplot(
+  scooby,
+  aes(
+    x = date_aired,
+    y = rooby_rooby_roo
+  )
+) +
+  geom_point()
+```
+
+We should resolve the warning. Let's not dwell on this too much, so let's do it fast. 
+
+```{r}
+scooby_missing <- scooby %>%
+  filter(is.na(rooby_rooby_roo))
+  #glimpse()
+table(scooby_missing$series_name)
+```
+
+Let's just drop these. They're all the same show, which we should consider separately.
+
+```{r}
+scooby <- scooby %>%
+  filter(!is.na(rooby_rooby_roo))
+```
+
+
+By the way, `drop_na()` is a good option for this.
+
+New idea: group by year and get mean scoobies per episode every year.

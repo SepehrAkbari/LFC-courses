@@ -1,0 +1,106 @@
+---
+title: "10/30 Notes"
+author: "Sepehr Akbari"
+date: "10/30/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(modeldata)
+```
+
+Let's consider another sample of diamonds. 
+
+```{r}
+set.seed(1234)
+
+diamonds_sample <- diamonds %>% 
+  slice_sample(n = 250)
+```
+
+In the larger population which we ordinarily don't have, are the different colors equally likely? Use the sample data to decide.
+
+Null: the proportions in the population are all equal.
+
+Alternative: the proportions in the population are not all equal.
+
+Let's start with a visualization.
+
+```{r}
+ggplot(
+  diamonds_sample,
+  aes(x = color)
+) +
+  geom_bar()
+```
+
+It looks like the colors aren't evenly distributed but this could be due to random chance in the sampling procedure. A p-value will tell us how likely that is.
+
+Next, let's get observed counts.
+
+```{r}
+obs <- table(diamonds_sample$color)
+```
+
+Now let's run our test on these observed counts.
+
+```{r}
+chisq.test(obs, 
+           p = rep(1/7, 7)) # repeats 1/7, 7 times
+```
+
+if we accept the null, we draw no further conclusion, but if we reject the null, we conclude that the colors are not evenly distributed in the larger population. The infentestimal p-value indicates small evidence against the null hypothesis. We conclude that diamond colors are not evenly distributed in the larger population.
+
+A little shortcut:
+
+```{r}
+chisq.test(obs) # same as above
+```
+
+the default null is equal proportions in the population. But its better to be explicit about the null hypothesis.
+
+## Two-variable inference: categorical data
+
+We're now considering whether two variables of interest are independent or not. That is, does knowing the value of one of the variables give us information about the value of the other variable?
+
+We'll start with two categorical variables, using the **chi-squared test of independence**.
+
+Example: the `stackoverflow` set.
+
+```{r}
+glimpse(stackoverflow)
+```
+
+We view this set as a random sample from a much larger population. Note this is an assumption!
+
+Question: are the variables `Remote` and `Country` independent? That is if I know your country, does that help me guess whether you work remotely?
+
+null: the variables are independent
+
+alternative: the variables are not independent
+
+```{r}
+table(stackoverflow$Remote, 
+      stackoverflow$Country) # a numerical summary
+```
+
+To visualize two categorical variables, we can use a bar chart.
+
+```{r}
+ggplot(
+  stackoverflow,
+  aes(x = Country, fill = Remote)
+) +
+  geom_bar(position = "fill") +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+
+
+
+
+

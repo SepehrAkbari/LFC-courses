@@ -1,0 +1,242 @@
+---
+title: "Scat!"
+author: "Sepehr Akbari"
+date: "9/13/2024"
+format: html
+embed-resources: true
+---
+
+# Question
+
+Refer to the `scat` data set from the `modeldata` package. Explore this set visually for patterns and associations between variables, then write a short narrative with 1-2 conclusions. Create at least 3 clear and interesting plots which support those conclusions. You may need to do a small amount of outside reading to learn what the relevant variables are and how they might be interpreted. Such information should be included in your narrative.
+
+Note: I recommend against using time as a variable in this assignment as it’s split between two columns
+
+# Answer
+
+### Loading Packages
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(modeldata)
+```
+
+### Data Exploration
+
+```{r}
+glimpse(scat)
+```
+
+The `scat` dataset contains measurements and characteristics of scat samples collected from various species, including details like species, location found, physical dimensions, and isotope ratios, allowing for ecological and dietary analysis of the animals. This kind of data set can be useful to make data supported assumptions, or even conclusions, about different scat species.
+
+### Conclusion 1
+
+One of the interesting data collected in this data set is delta-C 13 measurement for Carbon 12 and 13 isotopes' spread ratio, which can give us insight on the scat's dietary habits.
+
+We can try and see if there is any relation between the scats' locations and their diet. To do so, let's compare `d13C` and `Location` by species. As `Mass` also has a significant affect on a scat's diet, we'll include that as well.
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(
+  scat,
+  aes(
+    x = Location,
+    y = d13C,
+    fill = Species
+  )
+) + 
+  geom_boxplot() +
+  geom_jitter(
+    aes(color = Species, size = Mass),
+    width = 0.2, alpha = 0.5
+  ) +
+  labs(
+    title = " Scats' Location & Carbon Spread Ratio Correlation",
+    x = "Location",
+    y = "Delta-C 13",
+    size = "Mass",
+    caption = "Reid, R. E. B. (2015)."
+  ) +
+  scale_color_brewer(palette = 'Dark2') +
+  scale_fill_brewer(palette = 'Dark2') +
+  theme_minimal()
+```
+
+From this data we can see that:
+
+-   At the middle location, coyotes dominate the samples, showing a wider range of d13C values compared to other species. Their d13C values vary from around -20 to -30, suggesting a more varied diet. They also have higher d13C values compared to bobcats and gray foxes, indicating they might rely on different food sources compared to the other two species.
+
+-   The median of the coyote box plots suggest that most of their carbon spread ratio is not corrolated with their entire population, but rather the one's with higher mass than the other, or even potential outliers.
+
+-   Gray foxes, at both middle and off_edge locations, show a narrower range of d13C values, suggesting a more consistent or specialized diet.
+
+-   Larger scat samples are found among coyote and bobcat scat. This may imply that coyotes and bobcats consume more food or larger prey compared to gray foxes, whose scat samples tend to be smaller.
+
+**Summary**
+
+Coyotes,seem to have a more varied diet, especially in the middle of the habitat. In contrast, bobcats and gray foxes exhibit more specialized diets with lower d13C values. In the off_edge locations, coyotes' diet is completely different from the other species.
+
+The size of the scat seems to correlate with species dietary behavior, which has led to a smaller size gray_fox scat sample.
+
+### Conclusion 2
+
+Another interesting data collected in this data set is the `Age` of the scat samples. We can try and see if there is any relation between the scats' age, and the number of samples collected from each specie. To get more insights from this data, we can also include the `Mass` and `Location` of the scat samples as well.
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(
+  scat,
+  aes(
+    x = Number,
+    y = Age,
+    color = Location,
+    size = Mass
+  )
+) + 
+  geom_jitter(alpha = 0.8) +
+  facet_wrap(~ Species) +
+  labs(
+    title = "Identifying Scats' behavious using Age, Location, and Mass",
+    x = "Number of Samples Collected",
+    y = "Age",
+    size = "Mass",
+    color = "Location found",
+    caption = "Reid, R. E. B. (2015)."
+  ) +
+  scale_color_brewer(palette = "Dark2") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme_minimal()
+```
+
+From this data we can see that:
+
+-   It can be seen that the mass of gray fox scats is generally lower than the other species, with a few exceptions. This could be due to the smaller size of gray foxes compared to coyotes and bobcats. The number of scat samples is also higher for coyotes and bobcats compared to gray foxes, this could suggest gray foxes are less common generally especially in edge and off edge areas.
+
+-   Bobcats are seen to have more mass as they age, which could be due to their diet or the size of their prey. This could also be due to the fact that older bobcats are more experienced hunters and are able to catch larger prey. This corrolation between age and mass does not seem to be bold in other species.
+
+-   Mass is almost evenly distributed across the age groups for coyotes, suggesting that age may not be a significant factor in determining the mass of coyote scat samples. Their location also seems to not have a significant effect on their mass either.
+
+-   All samples especially gray foxes seem to have a lower number of young samples which might just suggest the danger of extinction for this species, especially as the total number of samples is lower than the other species as well.
+
+**Summary**
+
+The mass of scat samples varies across species, with gray foxes generally having lower mass compared to coyotes and bobcats. The number of scat samples is also higher for coyotes and bobcats compared to gray foxes, suggesting differences in population density or behavior. The mass of bobcat scat samples increases with age, which could be due to their diet or hunting behavior.
+
+### Conclusion 3
+
+An in important factor in the data set is the `segmented` column which indicates whether the scat is segmented or not. Let's first see how much of our samples are segmented or not, and how it is distributed among different species and locations.
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(
+  scat, 
+  aes(
+    x = Location, 
+    fill = factor(segmented, 
+                  labels = c("Not Segmented", "Segmented"))
+  )
+) +
+  geom_bar(position = "fill") +
+  facet_wrap(~ Species) +
+  labs(
+    title = "Segmentations in different Locations & Species",
+    x = "Location",
+    y = "Scale",
+    fill = "Segmentation",
+    caption = "Reid, R. E. B. (2015)."
+  ) +
+  scale_color_brewer(palette = "Dark2") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme_minimal()
+```
+
+From this data we can see that:
+
+-   This shows that bobcats are most likely to have segmented scat samples, especially in the off edge location. This could be due to their diet or the size of their prey.
+
+-   Coyotes also have a higher proportion of segmented scat samples compared to gray foxes, especially in the off_edge locations. From the data on gray foxes, we can say that they are the most resistant to segmentation.
+
+Now let's see how the segmentation of the scat samples is related to their mass. This might tell us if the physical characteristics of scats differ significantly when it’s segmented, adding another layer to our understanding of the species’ behavior. For example we might find that larger animals or heavier scat samples tend to be segmented more frequently.
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(
+  scat, 
+  aes(
+    x = factor(segmented, 
+               labels = c("No", "Yes")), 
+    y = Mass, 
+    fill = Location
+  )
+) +
+  geom_boxplot() +
+  facet_wrap(~ Species) +
+  labs(
+    title = "Segmentation & Mass Correlation",
+    x = "Segmentation",
+    y = "Mass",
+    fill = "Location",
+    caption = "Reid, R. E. B. (2015)."
+  ) +
+  scale_color_brewer(palette = "Dark2") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme_minimal()
+```
+
+From this data we can see that:
+
+-   Bobcats and coyotes have a higher mass for segmented scat samples compared to non-segmented samples. This could be due to the size of their prey or the type of food they consume. In Gray foxes however, the mass of segmented and non-segmented scat samples is more similar, suggesting that the physical characteristics of their scat samples may not differ significantly based on segmentation.
+
+-   It is also notable that a bold range of the highest mass in the samples come from a single group of segmented Coyote scats in the off edge location.
+
+As we explore mass and segmentation further, it is interesting to know if they are one of the effective factor to determine Delta-N 15 and Delta-C 13 values in the scat samples? Let's see if there is any correlation between these variables.
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(
+  scat, 
+  aes(
+    x = factor(segmented, 
+               labels = c("No", "Yes")), 
+    y = d15N, 
+    color = Species, 
+    size = Mass
+  )
+) +
+  geom_jitter(alpha = 0.7) +
+  labs(
+    title = "",
+    x = "Segmentation",
+    y = "Delta-N 15",
+    color = "Segmented",
+    caption = "Reid, R. E. B. (2015)."
+  ) +
+    theme_minimal() +
+    scale_color_brewer(palette = "Dark2")
+```
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(
+  scat, 
+  aes(
+    x = factor(segmented, 
+               labels = c("No", "Yes")), 
+    y = d13C, 
+    color = Species, 
+    size = Mass
+  )
+) +
+  geom_jitter(alpha = 0.7) +
+  labs(
+    title = "",
+    x = "Segmentation",
+    y = "Delta-C 13",
+    color = "Segmented",
+    caption = "Reid, R. E. B. (2015)."
+  ) +
+    theme_minimal() +
+    scale_color_brewer(palette = "Dark2")
+```
+
+From this data we can see that:
+
+- Although its evident that Coyote scats have the most amount of Carbon and Nitrogen spread ratio by far, it cannot be concluded that the segmentation of the scat samples has a significant effect on the Delta-N 15 and Delta-C 13 values. This could be due to the fact that the physical characteristics of the scat samples do not differ significantly based on segmentation, or that the diet of the species is not significantly affected by segmentation.
+
+**Summary**
+
+Bobcats and coyotes have a higher proportion of segmented scat samples compared to gray foxes, especially in the off_edge locations. The mass of segmented scat samples is higher for bobcats and coyotes compared to non-segmented samples, suggesting that the physical characteristics of their scat samples may differ based on segmentation. However, the Delta-N 15 and Delta-C 13 values do not seem to be significantly affected by segmentation, suggesting that the diet of the species is not significantly affected by segmentation.

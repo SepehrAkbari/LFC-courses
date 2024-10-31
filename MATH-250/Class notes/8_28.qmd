@@ -1,0 +1,100 @@
+---
+title: "8/28 Notes"
+author: "Sepehr Akbari"
+date: "8/28/2024"
+format: html
+embed-resources: true
+---
+```{r}
+library(tidyverse)
+library(modeldata)
+```
+
+## Getting a histogram (of the bill_lengths)
+```{r}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm)
+) +
+  geom_histogram()
+```
+
+## Adding bins (default bin number is 30)
+```{r}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm)
+) +
+  geom_histogram(binwidth = 150)
+```
+
+## Adding Color (Shades Actually)
+```{r}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm)
+) +
+  geom_histogram(color = "lightblue") # Color means border color
+```
+
+## Adding Color
+```{r}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm)
+) +
+  geom_histogram(fill = "lightblue")
+
+## Mix & Match...
+ggplot(
+  penguins,
+  aes(x = bill_length_mm)
+) +
+  geom_histogram(fill = "lightblue",
+                 color = "darkblue")
+```
+
+## To see all color names in R: `colors()` # Can also use HEX
+
+## To visualize by species
+```{r}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm,
+      fill = species)
+) +
+  geom_histogram()
+```
+
+## Better labels
+```{r}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm)
+) +
+  geom_histogram() +
+  labs(x = "Bill Length (mm)",
+       y = "Count",
+       title = "Antarctic Penguins",
+       caption = "Gorman KB, Williams TD, Fraser WR (2014)")
+```
+
+## All the component functions have help files, accessible through "?x()"
+for example, `?labs()`
+
+## Lets add the species aesthetic
+```{r}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm,
+      fill = species)
+) +
+  geom_histogram() +
+  labs(
+    x = "Bill Length (mm)",
+    y = "Count",
+    fill = "Species", # accessible by whatever it was called in the aesthetics
+    title = "Antarctic Penguins",
+    caption = "Gorman KB, Williams TD, Fraser WR (2014)"
+  )
+```
