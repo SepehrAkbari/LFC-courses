@@ -1,0 +1,351 @@
+<? 
+$page_title = 'Blocks | CSCI 270'; 
+
+$li_1 = 'na';
+$li_2 = 'na';
+$li_3 = 'active_nav';
+$li_4 = 'na';
+$li_5 = 'na';
+?>
+<? require '../../templates/site_header.php'; ?>
+<style>
+    /****************************************************************************************************
+    Styles for the structure of this worksheet
+    ****************************************************************************************************/
+    #wrapper {
+      font-size:11pt;
+      text-align:left;
+    }
+
+    #wrapper fieldset {
+      margin: 0px 5px 15px 0px;  /*TRBL*/
+      border-color:#009;
+    }
+    #wrapper legend {
+      font-weight:bold;
+      color:#009;
+    }
+
+    #wrapper code {
+      font-size:.8em;
+    }
+
+    span.section_title {
+      font-weight:bold;
+    }
+    div.section {
+      margin: 5px 5px 5px 5px;  /*TRBL*/
+      border-top: 1px dotted #000 ;
+    }
+
+    div.answer {
+      margin: 0px 5px 10px 10px;  /*TRBL*/
+      color:#339;
+    }
+
+    /****************************************************************************************************
+    Styles for the Box Sizing Examples
+    ****************************************************************************************************/
+    div.red_block {
+      /* when box-sizing is not set, the default is content-box */
+  	  margin: 5px 10px 15px 20px;  /*TRBL*/
+  	  border: 2px solid #000;
+  	  padding: 5px;
+  	  width: 500px;
+  	  background-color: #FEE;  /* red */
+  	}
+
+    div.green_block {
+  	  box-sizing: border-box;
+  	  margin: 5px 10px 15px 20px;  /*TRBL*/
+  	  border: 2px solid #000;
+  	  padding: 5px;
+  	  width: 500px;
+  	  background-color: #EFE; /* green */
+  	}
+
+  	div.blue_block {
+  	  margin: 10px 5px 20px 15px;  /*TRBL*/
+  	  border: 10px solid #FFF;
+  	  padding: 5px 7px;   /*TB & LR*/
+  	  width: 500px;
+  	  background-color: #EEF; /* blue */
+  	}
+
+  	/*
+  	It's not considered good practice to use style class names like above.  If you later change the
+  	actual colors, the class names would no longer be accurate unless you change them too.
+  	A professional developer might instead use names like box_sizing1, box_sizing2, ...
+  	where the names are still accurate even if the styles inside change.
+  	*/
+
+    /****************************************************************************************************
+    Styles for the Child Expansion Example
+    ****************************************************************************************************/
+    #parent {
+  	  margin: 5px 10px 5px 10px;  /*TRBL*/
+  	  border: 1px solid #000;
+  	  padding: 5px;
+  	  width:300px;
+  	  background-color:#DDD;
+  	}
+  	#child {
+  	  margin: 5px 10px 5px 10px;  /*TRBL*/
+  	  border: 1px solid #000;
+  	  padding: 5px;
+  	  background-color:#EEE;
+  	}
+
+    /* New CSS added: */
+
+    #my_parent {
+      background-color: #edcc27;
+      color: #961313;
+      border: 2px solid #da7305;
+      cursor: pointer;
+      text-align: center;
+      font-family: 'Courier New', Courier, monospace;
+      font-style: italic;
+      font-weight: bold;
+      margin: 30px;
+      padding: 30px;
+      width: 300px;
+    }
+
+    #my_child {
+      border: 2px solid #d20e0e;
+    }
+</style>
+
+<div id="wrapper">
+    <h3>Blocks Worksheet: Box Sizing and Inheritance</h3>
+
+    <b>Important:</b> Make sure you examine the
+    <a href="http://www.w3schools.com/css/css_boxmodel.asp" target="_blank">W3Schools Box Model Overview</a>
+    before doing this Worksheet.
+    <br><br>
+
+    <span class="section_title">Some (unofficial) Terminology:</span>
+    <div class="section" style="font-size:.75em;">
+      <b>Content Width</b>  - The content-box width of the block -- the default for the CSS width property.
+      <br>
+      <b>Full Width</b>  - The complete width the block takes up in the page, including any left/right margins.
+      <br>
+      &nbsp;&nbsp;&nbsp; The full width can be larger than the width set by the CSS width property.
+      <br>
+      <b>Visible Width</b> - The extent of the block that is visible to the human eye. (May be less than full width.)
+      <br>
+      &nbsp;&nbsp;&nbsp; If you can see it (background color, border) it contributes to the visible width.
+      <br>
+      &nbsp;&nbsp;&nbsp; A block could have no visible width if no parts of it have color contrast with it's surroundings.
+    </div>
+
+    <br>
+
+    <!--************************************************************************************-->
+    <fieldset>
+      <legend>Box Sizing</legend>
+
+      <div class="red_block">
+        <code>
+          /* when box-sizing is not set, the default is content-box */<br>
+          margin: 5px 10px 15px 20px;  /*TRBL*/<br>
+          border: 2px solid #000;<br>
+          width: 500px;<br>
+          padding: 5px;<br>
+        </code>
+      </div>
+
+      <div class="green_block">
+        <code>
+          box-sizing: border-box;<br>
+          margin: 5px 10px 15px 20px  /*TRBL*/<br>
+          border: 2px solid #000;<br>
+          width: 500px;<br>
+          padding: 5px;<br>
+        </code>
+      </div>
+
+      <div class="blue_block">
+        <code>
+          margin: 10px 5px 20px 15px;  /*TRBL*/<br>
+          border: 10px solid #FFF;<br>
+          width: 500px;<br>
+          padding: 5px 7px; /*TB & LR*/<br>
+        </code>
+      </div>
+
+
+      <span class="section_title">Question 1:</span>
+      <div class="section">
+        Calculate the different widths for each block and enter them into the table below:
+        <div class="answer">
+          <table cellspacing="5" cellpadding="5">
+              <tr>
+                <td>&nbsp;</td>
+                <td>Content Width</td>
+                <td>Full Width</td>
+                <td>Visible Width</td>
+              </tr>
+              <tr>
+                <td>Red Block</td>
+                <td><b>500</b></td>
+                <td><b>544</b> = 500+10+4+30</td>
+                <td><b>514</b> = 500+10+4</td>
+              </tr>
+              <tr>
+                <td>Green Block</td>
+                <td><b>486</b> = 500-4-10</td>
+                <td><b>530</b> = 500+30</td>
+                <td><b>500</b></td>
+              </tr>
+              <tr>
+                <td>Blue Block</td>
+                <td><b>500</b></td>
+                <td><b>554</b>= 500+14+20+20</td>
+                <td><b>514</b> = 500+14</td>
+              </tr>
+          </table>
+       </div>
+      </div>
+
+      <br>
+
+      <span class="section_title">Question 2:</span>
+      <div class="section">
+        Notice the style class names for the three blocks above.  Are those good style class names to use in practice?  Why or why not?
+        <div class="answer">
+          They are not wrong, but less than ideal. For example, if you were to change a background color, then the style class names would no longer be accurate unless you change them too.  It's best to use names indicating the purpose of the style classes (e.g. box_model_exercise1, box_model_exercise2, ...) rather than names dependent upon the values of particular styles inside the class.
+        </div>
+      </div>
+    </fieldset>
+
+    <br>
+
+    <!--************************************************************************************-->
+    <fieldset>
+      <legend>Child Expansion within Parent Block</legend>
+
+      <div id="parent">
+          <code>
+            border: 1px solid #000;<br>
+            padding:5px;<br>
+            width:300px;
+          </code>
+          <div id="child">
+            <code>
+              margin: 5px 10px 5px 10px; /*TRBL*/<br>
+              border: 1px solid #000;<br>
+              padding: 5px;<br>
+            </code>
+          </div>
+      </div>
+
+      <br>
+
+      <span class="section_title">Question 3:</span>
+      <div class="section">
+        Calculate the <i>content width</i> of the child block and list it below. Briefly explain your calculation.
+        <div class="answer">
+          <b>268</b>
+          <br><br>
+          Parent content width: 300
+          <br>
+          Child content width: 268 = 300-20-2-10
+          <br><br>
+          The child will expand as much as it can inside the content area of the parent.  The child content width is the parent's content width - child margin - child border - child padding.
+        </div>
+      </div>
+
+      <br>
+
+      <span class="section_title">Question 4:</span>
+      <div class="section">
+        Suppose you apply <i>box-sizing:border-box;</i> to both the parent and child blocks above.  Calculate the <i>content width</i> of the child block and list it below.
+        <div class="answer">
+        <b>256</b>
+        <br><br>
+        The only difference is the parent content width is only 288 = 300-2-10 since the parent width:300px includes both the parent border and padding because of <i>box-sizing:border-box;</i>.  Thus the child content width is 12 less than in question 3.  Note that <i>box-sizing:border-box;</i> ONLY <i>directly</i> affects the parent block since the child has no width set in the css.
+        </div>
+      </div>
+
+      <br>
+
+      <span class="section_title">Question 5:</span>
+      <div class="section">
+        The grey blocks in this section use CSS ID selectors but the 3 colored blocks in the first section use class selectors.
+        There was no compelling to choose one type over the other for this worksheet, other than to contrast the difference.
+        In general, you can always use a class selector instead of an ID selector, but not vise-versa (the other way around).
+        Briefly explain why.
+        <div class="answer">
+          ID selectors can only be applied once in the HTML since you shouldn't use the same ID value twice.  You can create a class selector and only apply it once in the HTML.  But class selectors are more versatile since you can call the same class as many times as you want in the HTML.
+        </div>
+      </div>
+    </fieldset>
+
+    <br>
+
+    <!--************************************************************************************-->
+    <fieldset>
+      <legend>Child Inheritance from Parent</legend>
+
+      <span class="section_title">Task to Complete:</span>
+      <div class="section">
+        Make your own example. Create a <b>parent</b> div with the following style properties set:
+        <br>
+        <code>background-color, color, border, cursor, text-align, font-family, font-style, font-weight, margin, padding, width</code>
+        <br>
+        Set each value to something other than the default so that you can easily see the effect of your CSS in your blocks.
+        For example, set text-align to something other than left so that you can see it's doing something,
+        set large margins and padding (like 30px or more) so that they are obvious, use a strange font, etc.
+        Put the following sentence in the parent block:
+        This task is to determine what properties from a parent block (like me) are inherited by a child block.
+
+        <br><br>
+
+        Put a <b>child</b> div inside the parent below that sentence.
+        The <b>ONLY</b> style property the child block should have set is border so that you can see its outline.
+        <br><br>
+        <b>Inside the child block, answer the following questions:</b>
+        <br>
+        Which style properties did the child inherit from from the parent and which ones it did not?
+        Can you categorize the general types of properties that are inherited and what general types are not?
+        Note that border is one property that will <b>not</b> inherit, which is why the child needs it's own border set so its outline is apparent.
+      </div>
+
+      <!-- Put the HTML code for your Task here -->
+      <div id="my_parent">
+        This task is to determine what properties from a parent block (like me) are inherited by a child block.
+        <div id="my_child">
+          <p>1) It inhereited all the styles except for border which was made as it was specified in the child block, and also all the css box-model properties (margin, padding, width) which will not be inherited but rather calculated for the child based of the parent. <br>
+            2) The ones that relate to the box-model are not inherited, but the ones that relate to the visual appearance are inherited.</p>
+          </p>
+        </div>
+      <!-- Put the CSS for this in a new structured CSS comment block below the other styles in the head section -->
+      <!--
+        #my_parent {
+          background-color: #edcc27;
+          color: #961313;
+          border: 2px solid #da7305;
+          cursor: pointer;
+          text-align: center;
+          font-family: 'Courier New', Courier, monospace;
+          font-style: italic;
+          font-weight: bold;
+          margin: 30px;
+          padding: 30px;
+          width: 300px;
+        }
+        #my_child {
+          border: 2px solid #d20e0e;
+        }
+      -->
+
+    </fieldset>
+    
+    <br><br>
+
+</div> <!-- end of wrapper -->
+
+
+<? require '../../templates/site_footer.php'; ?>

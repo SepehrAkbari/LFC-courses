@@ -1,0 +1,38 @@
+#contact_form_wrapper {
+	width: 600px;
+	margin: 20px auto;
+	padding: 10px;
+}
+
+#contact_form_wrapper * {
+  /* The * selects everything inside the wrapper. */
+	box-sizing: border-box;
+}
+
+#contact_form_wrapper label {
+  display: inline-block;
+  text-align: right;
+  padding: 5px;
+  width: 100px;
+}
+
+#contact_form_wrapper label[for=Message] {
+  float: left;
+  margin-top: 10px;
+}
+
+#contact_form_wrapper input {
+	padding: 5px;
+}
+
+#contact_form_wrapper textarea {
+  padding: 5px;
+  width: 490px;
+}
+
+
+#contact_form_wrapper button {
+	width: 140px;
+	float: right;
+	margin-right: 5px;
+}
