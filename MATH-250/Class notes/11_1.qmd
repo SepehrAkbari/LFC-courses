@@ -15,7 +15,7 @@ library(tidyverse)
 library(modeldata)
 ```
 
-Let's consider another sample of diamonds. 
+Let's consider another sample of diamonds.
 
 ```{r}
 set.seed(1234)
@@ -112,20 +112,57 @@ s_table <- table(stackoverflow$Remote,
                  stackoverflow$Country)
 ```
 
+To test the hypotheses, compare observed counts in this table to the counts we'd expect if the null were true.
 
+```{r}
+chisq.test(s_table) # run the test for independence
+```
 
+The very low p-value ($3.3\times10^{-16}$) provides very strong evidence against the null hypothesis. We conclude that `Remote` and `Country` are not independent. Meaning `Country` gives information about `Remote`.
 
+Notice that the differences while statistically significant aren't large in magnitude. The **chi-squared test for independence doesn't measure size of difference, and it doesn't say anything about which groups might be different**
 
+## Another example: `scat`
 
+Do different species poop in different locations?
 
+```{r}
+glimpse(scat)
+```
 
+Null: the variables are independent. Knowing location doesn't give information about species and vice versa.
 
+Alternative: the variables are not independent. Knowing location gives information about species and vice versa.
 
+Let's get a visualization.
 
+```{r}
+ggplot(
+  scat,
+  aes(x = Location, fill = Species)
+) +
+  geom_bar(position = "fill") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme_minimal()
+```
 
+Now for a table.
 
+```{r}
+poop_table <- table(scat$Species,
+                    scat$Location)
 
+poop_table
+```
 
+And the test itself:
 
+```{r}
+chisq.test(poop_table)
+```
 
+The p-value is only kinda small. Typically a cutoff of 0.05 is used, but this isn't gospel. Always view the p-value as giving the strength of evidence against the null hypothesis. We fail to reject the null.
 
+However, in this case, we still wonder if the variables are dependent in the population. It's very possible we just didn't detect the differences, because of the small sample.
+
+*Next-up: **ANOVA**. Which tests whether a quantitative variable is independent of a categorical variable.*
