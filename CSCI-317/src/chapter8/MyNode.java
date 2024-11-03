@@ -1,40 +1,55 @@
 package chapter8;
 
-public abstract class MyBinaryTree {
-	protected int data;
-	protected MyBinaryTree left;
-	protected MyBinaryTree right;
-	
-	public MyBinaryTree(int data) {
+public class MyNode {
+
+	private int data;
+	private int frequency;
+	private MyNode left;
+	private MyNode right;
+
+	public MyNode(int data) {
 		this.data = data;
+		frequency = 1;
 		left = null;
 		right = null;
 	}
-	
+
 	public int getData() {
 		return data;
 	}
-	
-	public MyBinaryTree getLeft() {
+
+	public MyNode getLeft() {
 		return left;
 	}
-	
-	public MyBinaryTree getRight() {
+
+	public MyNode getRight() {
 		return right;
 	}
-	
+
 	public void setData(int data) {
 		this.data = data;
 	}
-	
-	public void setLeft(MyBinaryTree node) {
+
+	public void setLeft(MyNode node) {
 		left = node;
 	}
-	
-	public void setRight(MyBinaryTree node) {
+
+	public void setRight(MyNode node) {
 		right = node;
 	}
 	
+	public int getFrequency() {
+		return frequency;
+	}
+	
+	public void increaseFrequency() {
+		frequency++;
+	}
+	
+	public void decreaseFrequency() {
+		frequency--;
+	}
+
 	public int height() {
 		int h;
 		if(left==null && right==null)
@@ -49,10 +64,5 @@ public abstract class MyBinaryTree {
 			h = right.height()+1;
 		return h;
 	}
-
-	
-	public abstract void insert(int key);
-	public abstract boolean remove(int key);
-	public abstract boolean search(int key);	
 
 }
