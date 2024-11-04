@@ -1,0 +1,59 @@
+---
+title: "Statistical Inference II"
+author: "Sepehr Akbari"
+date: "11/8/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+::: {.callout-note appearance="minimal" icon="false"}
+These problems refer to the `pokemon_sample` data set, available on Moodle, which represents
+a simple random sample of cards from the Pokemon trading card game. All questions refer
+to the population of all Pokemon that were ever released in generations 1-6. Adhere to all
+best-practices covered in class.
+:::
+
+## Setup
+
+```{r}
+library(tidyverse)
+library(readxl)
+
+pokemon <- read_excel("Data/pokemon_sample.xlsx")
+```
+
+## Problem 1
+
+::: {.callout-note appearance="minimal" icon="false"}
+Do Pokemon from different generations have the same attack rating, on average?
+:::
+
+## Problem 2
+
+::: {.callout-note appearance="minimal" icon="false"}
+Is it plausible that the same number of Pokemon have been released in every generation?
+:::
+
+## Problem 3
+
+::: {.callout-note appearance="minimal" icon="false"}
+A friend tells you that the average attack rating of all Pokemon is 70. Does the data provide
+evidence against (or for) this claim?
+:::
+
+## Problem 4
+
+::: {.callout-note appearance="minimal" icon="false"}
+Recreate the table below and then create an attractive visualization showing showing attack
+rating vs type for the five most common types of Pokemon. Note that Type is split between
+two columns and you must consider both equally.
+:::
+
+## Problem 5
+
+::: {.callout-note appearance="minimal" icon="false"}
+Is it plausible that the top 5 most common types of Pokemon all have the same defense rating,
+on average?
+:::
