@@ -196,6 +196,7 @@ Modifying the data to include a Type column with the top 5 appeared selected:
 ranking_types <- pokemon %>% 
   pivot_longer(
     cols = c(`Type 1`, `Type 2`),
+    names_to = NULL,
     values_to = "Type"
   ) %>% 
   filter(Type != "NA") %>% 
