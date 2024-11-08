@@ -4,8 +4,6 @@ author: "Sepehr Akbari"
 date: "11/8/2024"
 format: html
 embed-resources: true
-editor_options: 
-  chunk_output_type: console
 ---
 
 ::: {.callout-note appearance="minimal" icon="false"}
@@ -18,10 +16,13 @@ best-practices covered in class.
 ## Setup
 
 ```{r}
+#| message: FALSE
+#| warning: FALSE
 library(tidyverse)
 library(readxl)
+library(gt)
 
-pokemon <- read_excel("Data/pokemon_sample.xlsx")
+pokemon <- read_excel("../Data/pokemon_sample.xlsx")
 ```
 
 ## Problem 1
@@ -30,11 +31,99 @@ pokemon <- read_excel("Data/pokemon_sample.xlsx")
 Do Pokemon from different generations have the same attack rating, on average?
 :::
 
+To begin, let’s explore the structure of the data and familiarize ourselves with its contents.
+
+```{r}
+glimpse(pokemon)
+```
+
+Now that we know what we are working with, let's lay our hypothesis:
+
+Null Hypothesis ($H_0$): The mean attack rating of Pokemon is the same across generations.
+
+Alternative Hypothesis ($H_1$): The mean attack rating of Pokemon differs by generation.
+
+To get a sense of the average attack rating across generations, let’s calculate the mean attack rating for each generation.
+
+```{r}
+pokemon %>% 
+  group_by(Generation) %>% 
+  summarise(mean_attack = mean(Attack))
+```
+
+The initial summary suggests some variation in mean attack ratings between generations. To gain further insight into the distribution and potential impact of outliers, lets do a visualization.
+
+```{r}
+ggplot(
+  pokemon, 
+  aes(x = Generation, 
+      y = Attack)
+  ) +
+  geom_boxplot() +
+  labs(
+    title = "Attack Rating Distribution by Generation",
+    x = "Generation",
+    y = "Attack Rating"
+  ) +
+  theme_minimal()
+```
+
+The boxplot indicates noticeable differences in the distributions across generations, with some variability and outliers. However, it’s still unclear whether these differences are statistically significant or simply due to sampling. To formally test this, we’ll conduct an ANOVA test.
+
+```{r}
+anova_result <- aov(Attack ~ Generation, data = pokemon)
+summary(anova_result)
+```
+
+The p-value for the effect of generation on attack rating is 0.163, which is above the common significance level of 0.05. Therefore, we fail to reject the null hypothesis. This suggests that there is no statistically significant difference in the average attack rating across Pokémon generations in this sample. While some variation exists in the data, it does not appear to be strong enough to conclude that different generations have distinct average attack ratings.
+
 ## Problem 2
 
 ::: {.callout-note appearance="minimal" icon="false"}
 Is it plausible that the same number of Pokemon have been released in every generation?
 :::
+
+Let's start by laying the hypothesis:
+
+Null Hypothesis ($H_0$): The number of Pokemon released is the same for each generation.
+
+Alternative Hypothesis ($H_1$): The number of Pokemon released is not the same for each generation.
+
+To begin investigating, let's examine the number of Pokemon released in each generation by getting a summary table.
+
+```{r}
+pokemon_counts <- pokemon %>%
+  group_by(Generation) %>%
+  summarise(Count = n()) %>% 
+  arrange(-Count)
+
+gt::gt(pokemon_counts)
+```
+
+The table displays the counts of Pokemon released by generation, indicating variability across different generations. To further explore, we can visualize this data with a bar chart.
+
+```{r}
+ggplot(
+  pokemon_counts, 
+  aes(x = Generation, 
+      y = Count)
+) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Number of Pokemon Released by Generation",
+    x = "Generation",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+The bar chart reveals noticeable variation in the number of Pokemon released across generations, with some generations having more releases than others. However, we need a formal test to determine if these differences are statistically significant.
+
+```{r}
+chisq.test(pokemon_counts$Count, p = rep(1/6, 6))
+```
+
+With a p-value of 0.06466, which is just above the standard significance level of 0.05, we do not have sufficient evidence to reject the null hypothesis. This suggests that the variation in the number of Pokemon released across generations could plausibly be due to random chance rather than a systematic difference. Therefore, it is statistically plausible that the same number of Pokemon could have been released in each generation, despite the observed differences.
 
 ## Problem 3
 
@@ -42,6 +131,56 @@ Is it plausible that the same number of Pokemon have been released in every gene
 A friend tells you that the average attack rating of all Pokemon is 70. Does the data provide
 evidence against (or for) this claim?
 :::
+
+Laying the hypothesis:
+
+Null Hypothesis ($H_0$): The average attack rating of all Pokemon is 70.
+
+Alternative Hypothesis ($H_1$): The average attack rating of all Pokemon is not 70.
+
+Let’s begin by calculating the sample mean of the attack ratings.
+
+```{r}
+mean(pokemon$Attack)
+```
+
+No let's get a visualization to see where the mean of the attack ratings in this sample falls relative to our null hypothesis, 70.
+
+```{r}
+ggplot(
+  pokemon, 
+  aes(x = Attack)
+) +
+  geom_histogram(
+    binwidth = 5, 
+    fill = "gray", 
+    color = "white"
+  ) +
+  geom_vline(
+    aes(xintercept = 70), 
+    color = "Red", 
+    linetype = "dashed"
+  ) +
+  geom_vline(
+    aes(xintercept = mean(Attack)), 
+    color = "Black"
+  ) +
+  labs(
+    title = "Distribution of Pokemon Attack Ratings",
+    x = "Attack Rating",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+The distribution of attack ratings shows that the sample mean is above 70, but it is essential to determine if this difference is statistically significant. To do this, we can conduct a t-test.
+
+```{r}
+t.test(pokemon$Attack, 
+       mu = 70)
+```
+
+With a p-value of 0.0002647, which is well below the common significance level of 0.05, we reject the null hypothesis. This indicates that there is strong statistical evidence to conclude that the average attack rating of all Pokemon is significantly different from 70. So, the data does not support the friend’s claim!
 
 ## Problem 4
 
@@ -51,9 +190,139 @@ rating vs type for the five most common types of Pokemon. Note that Type is spli
 two columns and you must consider both equally.
 :::
 
+Modifying the data to include a Type column with the top 5 appeared selected:
+
+```{r}
+ranking_types <- pokemon %>% 
+  pivot_longer(
+    cols = c(`Type 1`, `Type 2`),
+    values_to = "Type"
+  ) %>% 
+  filter(Type != "NA") %>% 
+  group_by(Type) %>%
+  summarize(
+    Count = n(),
+    mean_attack = mean(Attack),
+    mean_defense = mean(Defense)
+  ) %>% 
+  arrange(-Count)
+
+top_types <- ranking_types %>%
+  slice_max(Count, n = 5)
+```
+
+Displaying the table:
+
+```{r}
+top_types %>% 
+  gt() %>% 
+  cols_label(
+    Type = "Type",
+    Count = "Count",
+    mean_attack = "Avg attack",
+    mean_defense = "Avg defense"
+  ) %>% 
+  fmt_number( # formatting for the decimals
+    columns = c(mean_attack, mean_defense),
+    decimals = 1
+  )
+```
+
+Visualization showing attack rating and defense rating:
+
+```{r}
+top_types_long <- top_types %>%
+  pivot_longer(
+    cols = c(mean_attack, mean_defense), 
+    names_to = "Stat", 
+    values_to = "Value"
+  ) %>%
+  mutate(
+    Stat = ifelse(Stat == "mean_attack", "Attack", "Defense")
+  )
+
+ggplot(
+  top_types_long,
+  aes(x = Type, 
+      y = Value, 
+      fill = Stat)
+) +
+  geom_col(position = "dodge", show.legend = FALSE) +
+  facet_wrap(~Stat) +
+  labs(
+    title = "Attack & Defense of Top 5 Most Common Pokemon Types",
+    x = "Type of Pokemon",
+    y = "Rating"
+  ) +
+  scale_fill_brewer(palette = "Dark2") +
+  theme_minimal()
+  
+```
+
 ## Problem 5
 
 ::: {.callout-note appearance="minimal" icon="false"}
 Is it plausible that the top 5 most common types of Pokemon all have the same defense rating,
 on average?
 :::
+
+Let's lay the hypothesis:
+
+Null Hypothesis ($H_0$): The average defense rating is the same across the top 5 most common Pokemon types.
+
+Alternative Hypothesis ($H_1$): The average defense rating is different for at least one of the top 5 types.
+
+For this, we cannot use the `top_types` data frame as it only contains the mean defense rating for each type. We need to use the original data to conduct an ANOVA test. So let's create a new data frame that has a single column for Type, and filter the set to only include the top 5 types.
+
+```{r}
+top_types_data <- pokemon %>%
+  pivot_longer(
+    cols = c(`Type 1`, `Type 2`),
+    values_to = "Type"
+  ) %>%
+  filter(Type %in% top_types$Type)
+```
+
+Now that we have the dataset that we needed, let's get a visualization to see how the defense ratings are distributed across the top 5 types.
+
+```{r}
+ggplot(
+  top_types_data,
+  aes(x = Type, 
+      y = Defense)
+) +
+  geom_boxplot() +
+  labs(
+    title = "Defense Rating Distribution of the Top 5 Pokemon Types",
+    x = "Type of Pokemon",
+    y = "Defense Rating"
+  ) +
+  theme_minimal()
+```
+
+In first glance, it definetly seems like there are some differences in the average defense ratings across the top 5 types. To formally test this, we can conduct an ANOVA test.
+
+```{r}
+anova_result <- aov(Defense ~ Type, data = top_types_data)
+summary(anova_result)
+```
+
+The p-value is 0.0429 which is below the common significance level of 0.05. Therefore, we reject the null hypothesis and conclude that the average defense rating is different across the top 5 most common Pokemon types. This suggests that there are statistically significant differences in defense ratings among these types, indicating that they do not all have the same defense rating, on average.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
