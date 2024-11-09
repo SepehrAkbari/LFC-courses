@@ -6,9 +6,21 @@ public class MyHashTable {
 	
 	public MyHashTable(int size) {
 		/* Should we use size directly? More on this later... */
-		data = new long[size];
+		int s = size;
+		while(!isPrime(s++));
+		data = new long[s-1];
+		System.out.println("Created a hash table of size "+data.length);
 		count = 0;
 	}
+	
+	private boolean isPrime(int num) {
+		for(int i = 2; i <= Math.sqrt(num); i++) {
+			if(num % i == 0)
+				return false;
+		}
+		return true;
+	}
+	
 	
 	private int hash(long value) {
 		int key = (int)(value % data.length);
