@@ -3,21 +3,16 @@ package chapter8;
 public class MyBinarySearchTree {
 
 	private MyNode root;
-	private int count;
-
 	public MyBinarySearchTree() {
 		root = null;
-		count = 0;
 	}
 
 	public MyBinarySearchTree(int data) {
 		root = new MyNode(data);
-		count = 1;
 	}
 
 	public MyBinarySearchTree(MyNode root) {
 		this.root = root;
-		count = 1;//This may cause problems
 	}
 
 
@@ -43,7 +38,6 @@ public class MyBinarySearchTree {
 
 		else // if key == data
 			root.increaseFrequency();
-		count++;
 	}
 
     /*

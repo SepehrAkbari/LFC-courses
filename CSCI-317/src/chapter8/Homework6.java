@@ -1,8 +1,5 @@
 package chapter8;
 
-import chapter8.MyBinaryTree;
-import chapter8.MyBinarySearchTree;
-
 // MyLink Class from chapter5.MyLink (modified for HuffmanNode Type)
 class MyLink {
     public HuffmanNode data;
