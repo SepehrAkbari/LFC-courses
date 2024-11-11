@@ -1,0 +1,44 @@
+---
+title: "11/11 Notes"
+author: "Sepehr Akbari"
+date: "11/11/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+```
+
+View the `msleep` set as a random sample of mammals. Is rem sleep amount related to diet (carnivore, omnivore, herbivore, etc)?
+
+Null: the mean of `sleep_total` is the same for all `vore`.
+
+Alternative: the mean isn't the same for all `vore`.
+
+```{r}
+ggplot(
+  msleep,
+  aes(y = vore,
+      x = sleep_total)
+) +
+  geom_boxplot()
+```
+
+(I should look at the NA's)
+
+```{r}
+model <- aov(sleep_total ~ vore, data = msleep)
+summary(model)
+```
+
+The p-value isn't very small. There is a 9.1% chance of data like this happening at random when the null is true. There is insufficient evidence to conclude that `sleep_total` is dependent on `vore`.
+
+Can we say anything about pairwise comparisons?
+
+```{r}
+TukeyHSD(model)
+```
+

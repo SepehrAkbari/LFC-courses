@@ -22,7 +22,7 @@ library(tidyverse)
 library(readxl)
 library(gt)
 
-pokemon <- read_excel("../Data/pokemon_sample.xlsx")
+pokemon <- read_excel("Data/pokemon_sample.xlsx")
 ```
 
 ## Problem 1
@@ -310,16 +310,10 @@ summary(anova_result)
 
 The p-value is 0.0429 which is below the common significance level of 0.05. Therefore, we reject the null hypothesis and conclude that the average defense rating is different across the top 5 most common Pokemon types. This suggests that there are statistically significant differences in defense ratings among these types, indicating that they do not all have the same defense rating, on average.
 
-
-
-
-
-
-
-
-
-
-
+```{r}
+anova_result <- aov(mean_defense ~ Type, data = top_types)
+summary(anova_result)
+```
 
 
 

@@ -1,7 +1,7 @@
 ---
-title: "10/30 Notes"
+title: "11/1 Notes"
 author: "Sepehr Akbari"
-date: "10/30/2024"
+date: "11/1/2024"
 format: html
 embed-resources: true
 editor_options: 
