@@ -136,7 +136,7 @@ gt(amy_sm_summary) # displaying the summary table
 
 We are asking if the data provide evidence that danceability is related to the album, implying an interest in testing whether album choice affects danceability. The null hypothesis assumes no relationship, meaning album choice does not influence the average danceability of Amy Winehouse’s songs.
 
-***Null hypothesis:*** *The average danceability of Amy Winehouse’s songs is the same across all albums.*
+***Null hypothesis:*** *The average danceability of Amy Winehouse’s songs is the same across albums.*
 
 $H_0: \mu_{At The BBC} = \mu_{Frank (Deluxe Edition)} = \mu_{Back To Black (Deluxe Edition)}$
 
@@ -244,7 +244,7 @@ The alternative hypothesis represents the possibility that the numbers of childr
 
 $H_1: \text{At least one } \mu_i \text{ differs from the others}$
 
-Let’s visualize the distribution of children across neighborhoods to explore potential differences in counts. I’ll use a bar plot, which is ideal for displaying categorical counts and allows us to easily compare the numbers of children across neighborhoods.
+Let’s visualize the distribution of children across neighborhoods to explore potential differences in counts. I’ll use a bar chart, which is ideal for displaying categorical counts and allows us to easily compare the numbers of children across neighborhoods.
 
 ```{r}
 #| message: False
@@ -333,6 +333,7 @@ block_stacking_long <- block_stacking %>%
 Now that we have the data in the desired format, we can create a density plot to visualize the distribution of the number of block stackings by shape.
 
 ```{r}
+#| label: fig-plot
 #| message: False
 #| warning: False
 #| fig-alt: "Density plot showing the distribution of the number of block stackings by shape."
@@ -366,7 +367,7 @@ The alternative hypothesis represents the possibility that children stack more c
 
 $H_1: \mu_{\text{Cubes}} \ne \mu_{\text{Cylinders}}$
 
-The density plot (shown in Problem 6) indicates that children may find it easier to stack cubes than cylinders. The distribution for cubes is shifted to the right, with more children stacking higher numbers of cubes, peaking around 8 blocks. In contrast, the distribution for cylinders has a peak at a lower value, around 5 blocks, suggesting that children stack fewer cylinders on average.
+The density plot (shown in @fig-plot) indicates that children may find it easier to stack cubes than cylinders. The distribution for cubes is shifted to the right, with more children stacking higher numbers of cubes, peaking around 8 blocks. In contrast, the distribution for cylinders has a peak at a lower value, around 5 blocks, suggesting that children stack fewer cylinders on average.
 
 Let’s look at a numeric summary to support our observations. We’ll do so by calculating the mean and standard deviation of the number of cubes and cylinders stacked by children.
 
@@ -397,7 +398,7 @@ summary_stats %>%
   )
 ```
 
-The numeric summary confirms the trend observed in the density plot. On average, children stack more cubes than cylinders, with a higher mean for cubes and greater variability, as shown by the standard deviation. This suggests that cubes may allow children to stack a higher number of blocks, but further statistical testing is needed to confirm if this difference is statistically significant.
+The numeric summary confirms the trend observed in the density plot. On average, children stack more cubes than cylinders, with a higher mean for cubes and greater variability, as shown by the standard deviation. This suggests that cubes may allow children to stack a higher number of blocks, but further statistical testing is needed to confirm if this difference is statistically significant to be applied to the population.
 
 Since each child in the sample performed the stacking task with both cubes and cylinders, we have paired data. A paired t-test is appropriate here, as it compares the mean difference in the number of cubes and cylinders stacked for each child, taking into account the relationship between the paired measurements. This test will help us determine if the observed difference in means is statistically significant.
 
