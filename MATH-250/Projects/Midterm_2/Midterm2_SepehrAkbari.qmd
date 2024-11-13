@@ -29,24 +29,28 @@ block_stacking <- read_excel("block_stacking.xlsx")
 
 ## Problem 1
 
+To (re)create the summary table, we first group the data by album name and calculate the number of tracks, the average danceability, and the total duration in seconds for each album. We can then add two additional columns to represent the total duration in minutes and seconds. Finally, we arrange the table in descending order based on the number of tracks.
+
 ```{r}
 #| message: False
 #| warning: False
 #| filename: "album(s) summary"
 
 amy_winehouse_albums <- amy_winehouse %>%
-  group_by(album_name) %>%
+  group_by(album_name) %>% # grouping by albums
   summarize(
-    tracks = n(),
-    mean_danceability = mean(danceability),
-    total_seconds_rounded = round(sum(duration_ms) / 1000)
+    tracks = n(), # number of tracks per album
+    mean_danceability = mean(danceability), # average danceability per album
+    total_seconds_rounded = round(sum(duration_ms) / 1000) # total duration in seconds per album
   ) %>%
   mutate(
-    whole_min = floor(total_seconds_rounded / 60),
-    seconds = total_seconds_rounded %% 60
+    whole_min = floor(total_seconds_rounded / 60), # whole minutes from total seconds
+    seconds = total_seconds_rounded %% 60 # remaining seconds from total seconds
   ) %>%
-  arrange(desc(tracks))
+  arrange(desc(tracks)) # arranging by number of tracks in descending order
 ```
+
+We use `gt()` to display the summary table, using `cols_label()` to rename the columns to match the prompt's requirements.
 
 ```{r}
 #| message: False
@@ -54,8 +58,8 @@ amy_winehouse_albums <- amy_winehouse %>%
 #| filename: "displaying data"
 
 amy_winehouse_albums %>%
-  gt() %>%
-  cols_label(
+  gt() %>% # displaying the summary table
+  cols_label( # renaming the columns
     album_name = "Album name",
     tracks = "Tracks",
     mean_danceability = "Avg danceability",
@@ -67,19 +71,21 @@ amy_winehouse_albums %>%
 
 ## Problem 2
 
+We use the `filter()` function to show only the specified albums from the original dataset. We then use the `select()` function to include only the columns starting with "track", and other specified columns. All saved into a new data frame called `amy_sm`.
+
 ```{r}
 #| message: False
 #| warning: False
 #| filename: "filtering data"
 
 amy_sm <- amy_winehouse %>% 
-  filter(
+  filter( # filtering the data to only contain the specified albums
     album_name %in% c("At The BBC", 
                       "Frank (Deluxe Edition)", 
                       "Back To Black (Deluxe Edition)")
   ) %>% 
-  select(
-    starts_with("track"),
+  select( # including only the specified columns
+    starts_with("track"), # getting all columns starting with "track"
     album_name,
     explicit,
     energy,
@@ -87,15 +93,19 @@ amy_sm <- amy_winehouse %>%
   )
 ```
 
+`amy_sm` is then displayed using `glimpse()` to provide a concise overview of the data frame's structure.
+
 ```{r}
 #| message: False
 #| warning: False
 #| filename: "displaying data"
 
-glimpse(amy_sm)
+glimpse(amy_sm) # glimpse the new data frame (to see the structure)
 ```
 
 ## Problem 3
+
+We group the data by album name and explicit content, calculating the average energy and the total number of tracks for **each combination**. We then ungroup the data and arrange it by album name to match the order of the prompt's requirements.
 
 ```{r}
 #| message: False
@@ -103,21 +113,23 @@ glimpse(amy_sm)
 #| filename: "albums summary"
 
 amy_sm_summary <- amy_sm %>% 
-  group_by(album_name, explicit) %>%
+  group_by(album_name, explicit) %>% # grouping by album name and explicit to get combinations
   summarize(
-    avg_energy = mean(energy),
-    tracks = n()
+    avg_energy = mean(energy), # average energy per combination
+    tracks = n() # number of tracks per combination
   ) %>% 
-  ungroup() %>% 
-  arrange(album_name)
+  ungroup() %>% # ungrouping the data so we can arrange it
+  arrange(album_name) # arranging by album name (alphabetical order)
 ```
+
+We can then use `gt()` to display the table.
 
 ```{r}
 #| message: False
 #| warning: False
 #| filename: "displaying data"
 
-gt(amy_sm_summary)
+gt(amy_sm_summary) # displaying the summary table
 ```
 
 ## Problem 4
@@ -142,25 +154,29 @@ Let’s visualize the distribution of danceability across albums in the sample d
 #| fig-alt: "Boxplot showing the distribution of danceability across a sample of Amy Winehouse albums."
 #| filename: "visualizing data"
 
-ggplot(
+# alt-text included for accessibility
+ggplot( # plotting
   amy_sm, 
-  aes(x = album_name, 
+  aes(x = album_name,
       y = danceability, 
-      fill = album_name)
+      fill = album_name) # just for color distinction and aesthetics
   ) +
-  geom_boxplot(show.legend = FALSE) + 
-  geom_jitter(aes(color = album_name), 
+  geom_boxplot(show.legend = FALSE) + # boxplot, and no need for legend
+  # adding jitter for individual points to get a better sense of the data
+  geom_jitter(aes(color = album_name),
               width = 0.2, 
               alpha = 0.6, 
               show.legend = FALSE
+              # these parameters are for aesthetics
   ) + 
+  # improving clarity with labels and title
   labs(x = "Album",
        y = "Danceability",
        title = "Danceability of Amy Winehouse Songs by Album"
   ) +
-  theme_minimal() +
+  theme_minimal() + # minimal theme for more clarity
   scale_fill_brewer(palette = "Dark2") +
-  scale_color_brewer(palette = "Dark2")
+  scale_color_brewer(palette = "Dark2") # accessible color palette
 ```
 
 The plot reveals variation in the distribution of danceability scores across Amy Winehouse’s albums. We can observe that “Frank (Deluxe Edition)” has a higher median danceability compared to the other albums, with a wider range, while “At The BBC” shows a lower and more consistent spread. “Back To Black (Deluxe Edition)” falls in between, with moderate spread and median values. Let's look at a summary of mean danceability across albums to make a more informed comparison.
@@ -171,9 +187,10 @@ The plot reveals variation in the distribution of danceability scores across Amy
 #| filename: "danceability means"
 
 amy_sm_danceability <- amy_sm %>%
-  group_by(album_name) %>%
+  group_by(album_name) %>% # grouping by album name
+  # calculating the mean danceability for each album and rounding results
   summarise(mean_danceability = round(mean(danceability),2)) %>%
-  ungroup()
+  ungroup() 
 ```
 
 ```{r}
@@ -182,8 +199,8 @@ amy_sm_danceability <- amy_sm %>%
 #| filename: "displaying data"
 
 amy_sm_danceability %>%
-  gt() %>%
-  cols_label(
+  gt() %>% # displaying the data
+  cols_label( # renaming the columns for clarity
     album_name = "Album",
     mean_danceability = "Mean Danceability"
   )
@@ -198,8 +215,8 @@ ANOVA is appropriate for this analysis because it allows us to compare the mean 
 #| warning: False
 #| filename: "running ANOVA"
 
-model <- aov(danceability ~ album_name, data = amy_sm)
-summary(model)
+model <- aov(danceability ~ album_name, data = amy_sm) # ANOVE test
+summary(model) # displaying the ANOVA results
 ```
 
 The ANOVA test yields a p-value of $9.53 \times 10^{-5}$, which is well below the typical significance level of 0.05. This low p-value provides strong statistical evidence to **reject the null hypothesis**, indicating that the average danceability of Amy Winehouse’s songs significantly differs across albums. Thus, we conclude that **album choice is related to the danceability of her songs, suggesting that certain albums may have distinct levels of danceability.**
@@ -227,18 +244,20 @@ Let’s visualize the distribution of children across neighborhoods to explore p
 #| fig-alt: "Bar plot showing the distribution of children across neighborhoods."
 #| filename: "visualizing data"
 
-ggplot(
+# alt-text included for accessibility
+ggplot( # plotting
   block_stacking, 
   aes(x = factor(Neighborhood),
-      fill = factor(Neighborhood))
+      fill = factor(Neighborhood)) # just for color distinction and aesthetics 
   ) +
-  geom_bar(show.legend = FALSE) +
+  geom_bar(show.legend = FALSE) + # bar plot, and no need for legend
+  # improving clarity with labels and title
   labs(x = "Neighborhood",
        y = "Number of Children",
        title = "Distribution of Children Across Neighborhoods"
   ) +
-  theme_minimal() +
-  scale_fill_brewer(palette = "Dark2")
+  theme_minimal() + # minimal theme for more clarity
+  scale_fill_brewer(palette = "Dark2") # accessible color palette
 ```
 
 The plot shows that the number of children varies across neighborhoods, with Neighborhood 1 having the highest count, followed by Neighborhood 2, and then Neighborhood 3. To confirm our observations, let’s display the total number of children in each neighborhood numerically.
@@ -249,9 +268,9 @@ The plot shows that the number of children varies across neighborhoods, with Nei
 #| filename: "neighborhood counts"
 
 neighborhood_counts <- block_stacking %>%
-  group_by(Neighborhood) %>%
-  summarize(Count = n()) %>% 
-  arrange(desc(Count))
+  group_by(Neighborhood) %>% # grouping by neighborhoods
+  summarize(Count = n()) %>%  # counting the number of children in each neighborhood
+  arrange(desc(Count)) # arranging by number of children (descending order)
 ```
 
 ```{r}
@@ -260,8 +279,8 @@ neighborhood_counts <- block_stacking %>%
 #| filename: "displaying data"
 
 neighborhood_counts %>%
-  gt()  %>% 
-  cols_label(
+  gt()  %>% # displaying the data
+  cols_label( # renaming the columns for clarity
     Count = "Number of Children"
   )
 ```
@@ -275,13 +294,16 @@ A Chi-square goodness of fit test is appropriate here because it allows us to de
 #| warning: False
 #| filename: "running Chi-square"
 
-chisq.test(neighborhood_counts$Count,
-           p = rep(1/3, 3))
+# running the Chi-square goodness of fit test
+chisq.test(neighborhood_counts$Count, # observed counts
+           p = rep(1/3, 3)) # expected (equal distribution)
 ```
 
 The Chi-square goodness-of-fit test yields a p-value of 0.162. Since the p-value is greater than the typical significance level of 0.05, we **fail to reject the null hypothesis**. This suggests that there is no statistically significant evidence to conclude that the numbers of children differ across the three neighborhoods. Therefore, **the observed differences in counts could reasonably be attributed to random variation in sampling, we cannot draw any further conclusions.**
 
 ## Problem 6
+
+To have Cube and Cylinder be seperate columns, we use `pivot_longer()` to reshape the data into a long format. We then use `mutate()` to create a new column called "Shape" that flags each shape type as either a cube or a cylinder.
 
 ```{r}
 #| message: False
@@ -289,14 +311,18 @@ The Chi-square goodness-of-fit test yields a p-value of 0.162. Since the p-value
 #| filename: "tidying data"
 
 block_stacking_long <- block_stacking %>%
-  pivot_longer(cols = starts_with("Number"), 
-               names_to = "Shape", 
-               values_to = "Number"
+  # reshaping the data to long format for visualization
+  pivot_longer(cols = starts_with("Number"), # columns to pivot
+               names_to = "Shape", # new column for shape type
+               values_to = "Number" # new column for number of blocks
   ) %>%
-  mutate(
+  mutate( # flagging each shape type
     Shape = ifelse(Shape == "Number_Cube", "Cube", "Cylinder")
+    ### this means if the shape is "Number_Cube", it's a cube, otherwise it's a cylinder
   )
 ```
+
+Now that we have the data in the desired format, we can create a density plot to visualize the distribution of the number of block stackings by shape.
 
 ```{r}
 #| message: False
@@ -304,16 +330,17 @@ block_stacking_long <- block_stacking %>%
 #| fig-alt: "Density plot showing the distribution of the number of block stackings by shape."
 #| filename: "visualizing data"
 
+# alt-text included for accessibility
 ggplot(
   block_stacking_long, 
-  aes(x = Number, 
+  aes(x = Number,
       fill = Shape)
   ) +
-  geom_density(alpha = 0.4) +
+  geom_density(alpha = 0.4) + # the alpha parameter controls transparency (0.4 looks accurate)
   labs(x = "Number", 
-       y = "density"
+       y = "density" # lower case "density" to match the requirements
   ) +
-  theme_minimal() +
+  theme_minimal() + 
   scale_fill_brewer(palette = "Dark2")
 ```
 
@@ -325,7 +352,7 @@ We are investigating whether there is a difference in the average number of cube
 
 $H_0: \mu_{\text{Cubes}} = \mu_{\text{Cylinders}}$
 
-The alternative hypothesis represents the possibility that children stack more cubes than cylinders, suggesting that the shape of the blocks affects stacking ability. Theoretically, this is a 
+The alternative hypothesis represents the possibility that children stack more cubes than cylinders, suggesting that the shape of the blocks affects stacking ability. Theoretically, this is a one-sided test, as we are interested in whether cubes allow for higher stacking than cylinders, but we will perform a two-sided test for a more general comparison of means. If the sample mean is what we are interested in, we can make the one-sided conclusion.
 
 ***Alternative hypothesis:*** *The average number of cubes stacked is different from the average number of cylinders stacked.*
 
@@ -340,11 +367,11 @@ Let’s look at a numeric summary to support our observations. We’ll do so by 
 #| warning: False
 #| filename: "numeric summary"
 
-summary_stats <- block_stacking_long %>%
-  group_by(Shape) %>%
+summary_stats <- block_stacking_long %>% # using the long format data
+  group_by(Shape) %>% # grouping by shape
   summarise(
-    avg = mean(Number,),
-    std = sd(Number)
+    avg = mean(Number), # mean of number of blocks stacked
+    std = sd(Number) # standard deviation of number of blocks stacked
   )
 ```
 
@@ -354,8 +381,8 @@ summary_stats <- block_stacking_long %>%
 #| filename: "displaying data"
 
 summary_stats %>% 
-  gt() %>% 
-  cols_label(
+  gt() %>% # displaying the data
+  cols_label( # renaming the columns for clarity
     Shape = "Block Type",
     avg = "Mean",
     std = "Standard Deviation"
@@ -371,14 +398,15 @@ Since each child in the sample performed the stacking task with both cubes and c
 #| warning: False
 #| filename: "displaying data"
 
-t.test(block_stacking$Number_Cube, 
-       block_stacking$Number_Cylinder, 
-       paired = TRUE)
+# running the paired t-test
+t.test(block_stacking$Number_Cube, # number of cubes
+       block_stacking$Number_Cylinder, # number of cylinders
+       paired = TRUE) # specifying paired data
 ```
 
 The paired t-test yields a p-value of $1.066 \times 10^{-12}$, which is well below the standard significance level of 0.05. This extremely low p-value allows us to **reject the null hypothesis** and conclude that there is a statistically significant difference in the number of cubes and cylinders stacked by children.
 
-The mean difference of 2.68 blocks (with a 95% confidence interval roughly 2.11 to 3.25) suggests that, on average, children stack significantly more cubes than cylinders. This provides strong evidence that **the shape of the blocks influences stacking ability, with cubes allowing for higher stacking than cylinders**.
+Although we performed a two-sided test, the observed mean difference (2.68 blocks, with a 95% confidence interval of approximately 2.11 to 3.25) is in the hypothesized direction (more cubes than cylinders). This allows us to make a one-sided conclusion: on average, children stack significantly more cubes than cylinders. This finding provides strong evidence that **the shape of the blocks influences stacking ability, with cubes allowing for higher stacking than cylinders.**
 
 
 
