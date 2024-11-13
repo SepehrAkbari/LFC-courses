@@ -1,2 +1,2 @@
-base_dir <- "/Users/sepehrakbari/Documents/LFC/Semester 3/MATH 250/MATH_250"
+base_dir <- "/Users/sepehrakbari/Documents/LFC/LFC-courses/MATH-250/"
 print("start up script is running...")

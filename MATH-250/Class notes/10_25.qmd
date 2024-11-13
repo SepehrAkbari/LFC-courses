@@ -13,7 +13,7 @@ library(tidyverse)
 library(ISLR2)
 library(readxl)
 
-fresh15 <- read_excel(file.path(base_dir, "Data/freshman _15.xlsx"))
+fresh15 <- read_excel("Data/freshman _15.xlsx")
 ```
 
 Let's just glimpse this
@@ -64,7 +64,7 @@ Alternative: mean price is different
 This is a two-sample test which is **not** paired. The math is hard for this, but we can ignore it, as long as we understand the basics of sig-tests.
 
 ```{r}
-t.test(Carseats$Price - Carseats$US) # mu = 0 is default
+t.test(Carseats$Price ~ Carseats$US) # mu = 0 is default
 ```
 
 Here p = 0.27. If the mans in the two groups in the population are really the same, we'd still get data like ours about 72% of the time. This data is consistent with the null. We can't conclude the means are different in the US and non-US stores. 

@@ -1,0 +1,402 @@
+---
+title: "Math 250 Midterm 2"
+author: "Sepehr Akbari"
+date: "11/15/2024"
+format: html
+embed-resources: true
+---
+
+## Setup
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "packages & libraries"
+
+library(tidyverse)
+library(gt)
+library(readxl)
+```
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "loading data"
+
+amy_winehouse <- read_csv("amy_winehouse.csv")
+block_stacking <- read_excel("block_stacking.xlsx")
+```
+
+## Problem 1
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "album(s) summary"
+
+amy_winehouse_albums <- amy_winehouse %>%
+  group_by(album_name) %>%
+  summarize(
+    tracks = n(),
+    mean_danceability = mean(danceability),
+    total_seconds_rounded = round(sum(duration_ms) / 1000)
+  ) %>%
+  mutate(
+    whole_min = floor(total_seconds_rounded / 60),
+    seconds = total_seconds_rounded %% 60
+  ) %>%
+  arrange(desc(tracks))
+```
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "displaying data"
+
+amy_winehouse_albums %>%
+  gt() %>%
+  cols_label(
+    album_name = "Album name",
+    tracks = "Tracks",
+    mean_danceability = "Avg danceability",
+    total_seconds_rounded = "Tot sec (rounded)",
+    whole_min = "Whole min",
+    seconds = "Sec"
+  )
+```
+
+## Problem 2
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "filtering data"
+
+amy_sm <- amy_winehouse %>% 
+  filter(
+    album_name %in% c("At The BBC", 
+                      "Frank (Deluxe Edition)", 
+                      "Back To Black (Deluxe Edition)")
+  ) %>% 
+  select(
+    starts_with("track"),
+    album_name,
+    explicit,
+    energy,
+    danceability
+  )
+```
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "displaying data"
+
+glimpse(amy_sm)
+```
+
+## Problem 3
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "albums summary"
+
+amy_sm_summary <- amy_sm %>% 
+  group_by(album_name, explicit) %>%
+  summarize(
+    avg_energy = mean(energy),
+    tracks = n()
+  ) %>% 
+  ungroup() %>% 
+  arrange(album_name)
+```
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "displaying data"
+
+gt(amy_sm_summary)
+```
+
+## Problem 4
+
+We are asking if the data provide evidence that danceability is related to the album, implying an interest in testing whether album choice affects danceability. The null hypothesis assumes no relationship, meaning album choice does not influence the average danceability of Amy Winehouse’s songs.
+
+***Null hypothesis:*** *The average danceability of Amy Winehouse’s songs is the same across all albums.*
+
+$H_0: \mu_{At The BBC} = \mu_{Frank (Deluxe Edition)} = \mu_{Back To Black (Deluxe Edition)}$
+
+The alternative hypothesis suggests a relationship between album and danceability, where at least one album has a different average danceability. This aligns with our question's aim of finding evidence that album choice is related to danceability.
+
+***Alternative hypothesis:*** *The average danceability of Amy Winehouse’s songs differs across albums.*
+
+$H_1: \text{At least one } \mu_i \text{ differs from the others}$
+
+Let’s visualize the distribution of danceability across albums in the sample data to explore how danceability may vary between different albums. I'll use boxplots, as they are ideal for displaying the distribution of danceability across albums, highlighting the median, spread, and any potential outliers within each album category. Additionally, adding `geom_jitter` helps visualize individual song data points, providing a clearer view of variability and overlap between albums.
+
+```{r}
+#| message: False
+#| warning: False
+#| fig-alt: "Boxplot showing the distribution of danceability across a sample of Amy Winehouse albums."
+#| filename: "visualizing data"
+
+ggplot(
+  amy_sm, 
+  aes(x = album_name, 
+      y = danceability, 
+      fill = album_name)
+  ) +
+  geom_boxplot(show.legend = FALSE) + 
+  geom_jitter(aes(color = album_name), 
+              width = 0.2, 
+              alpha = 0.6, 
+              show.legend = FALSE
+  ) + 
+  labs(x = "Album",
+       y = "Danceability",
+       title = "Danceability of Amy Winehouse Songs by Album"
+  ) +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Dark2") +
+  scale_color_brewer(palette = "Dark2")
+```
+
+The plot reveals variation in the distribution of danceability scores across Amy Winehouse’s albums. We can observe that “Frank (Deluxe Edition)” has a higher median danceability compared to the other albums, with a wider range, while “At The BBC” shows a lower and more consistent spread. “Back To Black (Deluxe Edition)” falls in between, with moderate spread and median values. Let's look at a summary of mean danceability across albums to make a more informed comparison.
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "danceability means"
+
+amy_sm_danceability <- amy_sm %>%
+  group_by(album_name) %>%
+  summarise(mean_danceability = round(mean(danceability),2)) %>%
+  ungroup()
+```
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "displaying data"
+
+amy_sm_danceability %>%
+  gt() %>%
+  cols_label(
+    album_name = "Album",
+    mean_danceability = "Mean Danceability"
+  )
+```
+
+The spread and median differences highly suggest possible variations in danceability across albums. Therefore, we need to do a further statistical analysis to determine if these observed differences are significant or not.
+
+ANOVA is appropriate for this analysis because it allows us to compare the mean danceability across multiple albums to determine if there are statistically significant differences. By comparing a quantitative variable (danceability) across multiple levels of a categorical variable (album), ANOVA is well-suited to test whether the mean danceability varies between albums.
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "running ANOVA"
+
+model <- aov(danceability ~ album_name, data = amy_sm)
+summary(model)
+```
+
+The ANOVA test yields a p-value of $9.53 \times 10^{-5}$, which is well below the typical significance level of 0.05. This low p-value provides strong statistical evidence to **reject the null hypothesis**, indicating that the average danceability of Amy Winehouse’s songs significantly differs across albums. Thus, we conclude that **album choice is related to the danceability of her songs, suggesting that certain albums may have distinct levels of danceability.**
+
+## Problem 5
+
+We are asking if the data provide evidence that the numbers of children in each neighborhood are equal, meaning that any differences in observed counts would be due to random variation in sampling rather than an actual disparity.
+
+***Null hypothesis:*** *The number of children in each neighborhood is the same.*
+
+$H_0: \mu_{1} = \mu_{2} = \mu_{3}$
+
+
+The alternative hypothesis represents the possibility that the numbers of children differ between neighborhoods, implying that at least one neighborhood has a different number of children. This would suggest that the observed distribution does not match an equal distribution across neighborhoods.
+
+***Alternative hypothesis:*** *The number of children in each neighborhood differs.*
+
+$H_1: \text{At least one } \mu_i \text{ differs from the others}$
+
+Let’s visualize the distribution of children across neighborhoods to explore potential differences in counts. I’ll use a bar plot, which is ideal for displaying categorical counts and allows us to easily compare the numbers of children across neighborhoods.
+
+```{r}
+#| message: False
+#| warning: False
+#| fig-alt: "Bar plot showing the distribution of children across neighborhoods."
+#| filename: "visualizing data"
+
+ggplot(
+  block_stacking, 
+  aes(x = factor(Neighborhood),
+      fill = factor(Neighborhood))
+  ) +
+  geom_bar(show.legend = FALSE) +
+  labs(x = "Neighborhood",
+       y = "Number of Children",
+       title = "Distribution of Children Across Neighborhoods"
+  ) +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+The plot shows that the number of children varies across neighborhoods, with Neighborhood 1 having the highest count, followed by Neighborhood 2, and then Neighborhood 3. To confirm our observations, let’s display the total number of children in each neighborhood numerically.
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "neighborhood counts"
+
+neighborhood_counts <- block_stacking %>%
+  group_by(Neighborhood) %>%
+  summarize(Count = n()) %>% 
+  arrange(desc(Count))
+```
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "displaying data"
+
+neighborhood_counts %>%
+  gt()  %>% 
+  cols_label(
+    Count = "Number of Children"
+  )
+```
+
+The summary table confirms our visual observations, showing differences in the number of children across neighborhoods. These differences suggest that the numbers may not be equal, prompting further statistical analysis to determine if the observed differences are statistically significant.
+
+A Chi-square goodness of fit test is appropriate here because it allows us to determine whether the observed counts of children in each neighborhood differ significantly from an expected equal distribution. This test is well-suited for categorical data when comparing observed frequencies to expected frequencies under a specific hypothesis. Since we’re only interested in comparing categorical counts (number of children per neighborhood) rather than means or other continuous measures, the Chi-square test is ideal.
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "running Chi-square"
+
+chisq.test(neighborhood_counts$Count,
+           p = rep(1/3, 3))
+```
+
+The Chi-square goodness-of-fit test yields a p-value of 0.162. Since the p-value is greater than the typical significance level of 0.05, we **fail to reject the null hypothesis**. This suggests that there is no statistically significant evidence to conclude that the numbers of children differ across the three neighborhoods. Therefore, **the observed differences in counts could reasonably be attributed to random variation in sampling, we cannot draw any further conclusions.**
+
+## Problem 6
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "tidying data"
+
+block_stacking_long <- block_stacking %>%
+  pivot_longer(cols = starts_with("Number"), 
+               names_to = "Shape", 
+               values_to = "Number"
+  ) %>%
+  mutate(
+    Shape = ifelse(Shape == "Number_Cube", "Cube", "Cylinder")
+  )
+```
+
+```{r}
+#| message: False
+#| warning: False
+#| fig-alt: "Density plot showing the distribution of the number of block stackings by shape."
+#| filename: "visualizing data"
+
+ggplot(
+  block_stacking_long, 
+  aes(x = Number, 
+      fill = Shape)
+  ) +
+  geom_density(alpha = 0.4) +
+  labs(x = "Number", 
+       y = "density"
+  ) +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+## Problem 7
+
+We are investigating whether there is a difference in the average number of cubes and cylinders stacked by the children. The null hypothesis assumes that there is no difference in the mean number of cubes and cylinders stacked, meaning any observed difference is due to random variation.
+
+***Null hypothesis:*** *The average number of cubes stacked is equal to the average number of cylinders stacked.*
+
+$H_0: \mu_{\text{Cubes}} = \mu_{\text{Cylinders}}$
+
+The alternative hypothesis represents the possibility that children stack more cubes than cylinders, suggesting that the shape of the blocks affects stacking ability. Theoretically, this is a 
+
+***Alternative hypothesis:*** *The average number of cubes stacked is different from the average number of cylinders stacked.*
+
+$H_1: \mu_{\text{Cubes}} \ne \mu_{\text{Cylinders}}$
+
+The density plot (shown in Problem 6) indicates that children may find it easier to stack cubes than cylinders. The distribution for cubes is shifted to the right, with more children stacking higher numbers of cubes, peaking around 8 blocks. In contrast, the distribution for cylinders has a peak at a lower value, around 5 blocks, suggesting that children stack fewer cylinders on average.
+
+Let’s look at a numeric summary to support our observations. We’ll do so by calculating the mean and standard deviation of the number of cubes and cylinders stacked by children.
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "numeric summary"
+
+summary_stats <- block_stacking_long %>%
+  group_by(Shape) %>%
+  summarise(
+    avg = mean(Number,),
+    std = sd(Number)
+  )
+```
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "displaying data"
+
+summary_stats %>% 
+  gt() %>% 
+  cols_label(
+    Shape = "Block Type",
+    avg = "Mean",
+    std = "Standard Deviation"
+  )
+```
+
+The numeric summary confirms the trend observed in the density plot. On average, children stack more cubes than cylinders, with a higher mean for cubes and greater variability, as shown by the standard deviation. This suggests that cubes may allow children to stack a higher number of blocks, but further statistical testing is needed to confirm if this difference is statistically significant.
+
+Since each child in the sample performed the stacking task with both cubes and cylinders, we have paired data. A paired t-test is appropriate here, as it compares the mean difference in the number of cubes and cylinders stacked for each child, taking into account the relationship between the paired measurements. This test will help us determine if the observed difference in means is statistically significant.
+
+```{r}
+#| message: False
+#| warning: False
+#| filename: "displaying data"
+
+t.test(block_stacking$Number_Cube, 
+       block_stacking$Number_Cylinder, 
+       paired = TRUE)
+```
+
+The paired t-test yields a p-value of $1.066 \times 10^{-12}$, which is well below the standard significance level of 0.05. This extremely low p-value allows us to **reject the null hypothesis** and conclude that there is a statistically significant difference in the number of cubes and cylinders stacked by children.
+
+The mean difference of 2.68 blocks (with a 95% confidence interval roughly 2.11 to 3.25) suggests that, on average, children stack significantly more cubes than cylinders. This provides strong evidence that **the shape of the blocks influences stacking ability, with cubes allowing for higher stacking than cylinders**.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

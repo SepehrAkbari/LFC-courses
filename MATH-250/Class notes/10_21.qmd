@@ -52,7 +52,7 @@ optical_sample2 <- optical_full %>%
 mean(optical_sample2$Age)
 ```
 
-A **level C confidence interval** is an interval created  using sample data that using a process that is known to capture the true value of the paramter C percent of the time.
+A **level C confidence interval** is an interval created  using sample data that using a process that is known to capture the true value of the parameter C percent of the time.
 
 In an introductory stats class, we learn to do this with a t-distribution. Here is the formula:
 
