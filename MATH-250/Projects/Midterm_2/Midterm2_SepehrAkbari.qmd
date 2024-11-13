@@ -208,7 +208,7 @@ amy_sm_danceability %>%
 
 The spread and median differences highly suggest possible variations in danceability across albums. Therefore, we need to do a further statistical analysis to determine if these observed differences are significant or not.
 
-ANOVA is appropriate for this analysis because it allows us to compare the mean danceability across multiple albums to determine if there are statistically significant differences. By comparing a quantitative variable (danceability) across multiple levels of a categorical variable (album), ANOVA is well-suited to test whether the mean danceability varies between albums.
+ANOVA is appropriate for this analysis (assuming conditions such as normality, Homogeneity of variance, etc. is met) because it allows us to compare the mean danceability across multiple albums to determine if there are statistically significant differences. By comparing a quantitative variable (danceability) across multiple levels of a categorical variable (album), ANOVA is well-suited to test whether the mean danceability varies between albums.
 
 ```{r}
 #| message: False
@@ -221,18 +221,26 @@ summary(model) # displaying the ANOVA results
 
 The ANOVA test yields a p-value of $9.53 \times 10^{-5}$, which is well below the typical significance level of 0.05. This low p-value provides strong statistical evidence to **reject the null hypothesis**, indicating that the average danceability of Amy Winehouse’s songs significantly differs across albums. Thus, we conclude that **album choice is related to the danceability of her songs, suggesting that certain albums may have distinct levels of danceability.**
 
+Since our ANOVA analysis revealed significant differences in danceability between albums, we proceed with a Tukey HSD post-hoc test. This test will help pinpoint which specific pairs of albums exhibit these differences, providing further insight into how danceability varies across Amy Winehouse’s discography.
+
+```{r}
+TukeyHSD(model) # Tukey's HSD test for post-hoc comparisons
+```
+
+The Tukey HSD test confirms that only “Frank (Deluxe Edition)” and “At The BBC” exhibit a significant difference in mean danceability, with “Frank (Deluxe Edition)” songs being more danceable on average. This suggests that while “Frank (Deluxe Edition)” stands out in terms of danceability, “Back To Black (Deluxe Edition)” and “At The BBC” do not differ significantly in this characteristic, indicating that album-specific features in danceability are not uniformly distinct across all albums.
+
 ## Problem 5
 
 We are asking if the data provide evidence that the numbers of children in each neighborhood are equal, meaning that any differences in observed counts would be due to random variation in sampling rather than an actual disparity.
 
-***Null hypothesis:*** *The number of children in each neighborhood is the same.*
+***Null hypothesis:*** *The proportion of children in each of the 3 neighborhoods are all 1/3.*
 
 $H_0: \mu_{1} = \mu_{2} = \mu_{3}$
 
 
 The alternative hypothesis represents the possibility that the numbers of children differ between neighborhoods, implying that at least one neighborhood has a different number of children. This would suggest that the observed distribution does not match an equal distribution across neighborhoods.
 
-***Alternative hypothesis:*** *The number of children in each neighborhood differs.*
+***Alternative hypothesis:*** *The proportion of children in each of the 3 neighborhoods are not all 1/3.*
 
 $H_1: \text{At least one } \mu_i \text{ differs from the others}$
 
@@ -299,7 +307,7 @@ chisq.test(neighborhood_counts$Count, # observed counts
            p = rep(1/3, 3)) # expected (equal distribution)
 ```
 
-The Chi-square goodness-of-fit test yields a p-value of 0.162. Since the p-value is greater than the typical significance level of 0.05, we **fail to reject the null hypothesis**. This suggests that there is no statistically significant evidence to conclude that the numbers of children differ across the three neighborhoods. Therefore, **the observed differences in counts could reasonably be attributed to random variation in sampling, we cannot draw any further conclusions.**
+The Chi-square goodness-of-fit test yields a p-value of 0.162. Since the p-value is greater than the typical significance level of 0.05, we **fail to reject the null hypothesis**. This suggests that there is no statistically significant evidence or sufficient evidence to conclude that the number of children in each neighborhood differ. Therefore, **the observed differences in counts could reasonably be attributed to random variation in sampling; we cannot draw any further conclusions.**
 
 ## Problem 6
 
@@ -406,21 +414,7 @@ t.test(block_stacking$Number_Cube, # number of cubes
 
 The paired t-test yields a p-value of $1.066 \times 10^{-12}$, which is well below the standard significance level of 0.05. This extremely low p-value allows us to **reject the null hypothesis** and conclude that there is a statistically significant difference in the number of cubes and cylinders stacked by children.
 
-Although we performed a two-sided test, the observed mean difference (2.68 blocks, with a 95% confidence interval of approximately 2.11 to 3.25) is in the hypothesized direction (more cubes than cylinders). This allows us to make a one-sided conclusion: on average, children stack significantly more cubes than cylinders. This finding provides strong evidence that **the shape of the blocks influences stacking ability, with cubes allowing for higher stacking than cylinders.**
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The paired t-test provides strong statistical evidence to conclude that children stack more cubes than cylinders on average, with a mean difference of 2.68 blocks (95% CI: 2.11 to 3.25). This finding provides strong evidence that **the shape of the blocks influences stacking ability, with cubes allowing for higher stacking than cylinders.**
 
 
 
