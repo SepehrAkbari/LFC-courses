@@ -1,5 +1,7 @@
 # Lake Forest College - Courses
 
+---
+
 I am a Computer Science major, with minors in Data Science and Mathematics, at Lake Forest College. These are some of the courses I've taken so far:
 
 - [MATH 110: Calculus I](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-110) – Fall 2023
