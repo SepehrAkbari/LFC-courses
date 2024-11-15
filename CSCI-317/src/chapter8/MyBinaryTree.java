@@ -50,7 +50,6 @@ public abstract class MyBinaryTree {
 		return h;
 	}
 
-	
 	public abstract void insert(int key);
 	public abstract boolean remove(int key);
 	public abstract boolean search(int key);	
