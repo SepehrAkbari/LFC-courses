@@ -1,0 +1,82 @@
+---
+title: "11/15 Notes"
+author: "Sepehr Akbari"
+date: "11/15/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(readxl)
+```
+
+
+## Finding files nested inside folders
+
+My parenting dataset lies inside a folder called `data`. which is indside my project.
+
+A bad idea is to use the `setwd()` command which forces a change to the working directory.
+
+```{r}
+library(here)
+```
+
+We build file paths using the `here()` command in the `here` package. For me `parenting.xlsx` sits inside my `Data` in the project folder
+
+```{r}
+path <- here("Data", "parenting.xlsx")
+
+parenting <- read_excel(path)
+```
+
+## A bit more prep for spotifyr project
+
+Its not a good idea to download artist data inside your quarto for the final project. Please don't. Instead, download it once and then write in to a csv file with the following code `write_csv`. Like this:
+
+```{r}
+#| eval: false
+
+write_csv(amy, "amy.csv")
+```
+
+now you can start your project #2 quarto with a `read_csv` command to import the set.
+
+## Intro to simple linear regression
+
+The `parenting` set includes 100 observations of a parent's mood after a night in which they and the baby slept a certain amount. BTW, this set is credited to Danielle Navarro, a big name in R and DSCI.
+
+Is her mood related to the amount of sleep the baby got? Note that this is a question about two quantitatiive variables.
+
+```{r}
+ggplot(
+  parenting,
+  aes(x = baby.sleep,
+      y = dan.grump)
+) +
+  geom_point()
+```
+
+The trend is linear, lets add a line of best fit.
+
+```{r}
+ggplot(
+  parenting,
+  aes(x = baby.sleep,
+      y = dan.grump)
+) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              se = FALSE)
+```
+
+Let's get the equation of this line.
+
+```{r}
+lm(dan.grump ~ baby.sleep, data = parenting)
+```
+
+The model says `dan.grump` = 85.8 - 2.7 * `baby.sleep` + (random noise).
+
