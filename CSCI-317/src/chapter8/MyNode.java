@@ -65,4 +65,8 @@ public class MyNode {
 		return h;
 	}
 
+	public String toString() {
+		return data + "(" + frequency + ")";
+	}
+
 }

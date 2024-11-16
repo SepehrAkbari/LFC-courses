@@ -69,9 +69,11 @@ public class MyBinarySearchTree {
 				else if(root.getRight()==null)// we only have the left child
 					return root.getLeft();
 				else {//we have two children
-					int min = findMin(root);
+					int min = findMin(root.getRight());
 					root.setData(min);
-					root.setRight(removeRec(root.getRight(), min));
+					root.setFrequency(min.getFrequency());
+					min.setFrequency(1);
+					root.setRight(removeRec(root.getRight(), min.getData()));
 				}
 			}
 			count--;
