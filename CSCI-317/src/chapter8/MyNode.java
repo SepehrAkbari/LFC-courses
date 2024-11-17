@@ -42,6 +42,10 @@ public class MyNode {
 		return frequency;
 	}
 	
+	public void setFrequency(int f) {
+		frequency = f;
+	}
+	
 	public void increaseFrequency() {
 		frequency++;
 	}
@@ -64,7 +68,7 @@ public class MyNode {
 			h = right.height()+1;
 		return h;
 	}
-
+	
 	public String toString() {
 		return data + "(" + frequency + ")";
 	}
