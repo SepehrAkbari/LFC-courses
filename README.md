@@ -13,6 +13,8 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 - [CS 212: Object Oriented Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-212) <samp>– Spring 2024</samp>
 - [CS 270: Web Development](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-270) <samp>– Spring 2024</samp>
 - [CS 317: Data Structures and Algorithms](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-317) <samp>– Fall 2024</samp>
+- [CS 327: Database Systems]() <samp>– Spring 2025</samp>
+
 
 ---
 
