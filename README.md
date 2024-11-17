@@ -5,6 +5,7 @@
 I am a Computer Science major, with minors in Data Science and Mathematics, at Lake Forest College. These are some of the courses I've taken so far:
 
 - [MATH 110: Calculus I](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-110) <samp>– Fall 2023</samp>
+- [MATH 111: Calculus II](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-111)
 - [MATH 150: Probablity & Statistics](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-150) <samp>– Spring 2023</samp>
 - [MATH 230: Abstract & Discrete Mathematics](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-230) <samp>– Fall 2024</samp>
 - [MATH 231: Linear Algebra](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-231) <samp>– Spring 2025</samp>
