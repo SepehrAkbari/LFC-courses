@@ -17,6 +17,7 @@ public class MyBinarySearchTree {
 	
 	public void insert(int key) {
 		root = insertRec(root, key);
+		count++;
 	}
 
 	private MyNode insertRec(MyNode root, int key) {
@@ -35,16 +36,19 @@ public class MyBinarySearchTree {
 		}
 		else // if key == data
 			root.increaseFrequency();
-		count++;
+		
 		return root;
 	}
 
-	public void remove(int key) {
+	public boolean remove(int key) {
+		int prevCount = count;
 		root = removeRec(root, key);
-
+		return (prevCount != count);
+		
 	}
 	
-	public MyNode removeRec(MyNode root, int key) {
+	private MyNode removeRec(MyNode root, int key) {
+		//System.out.println("Trying to delete "+key+" from tree rooted at "+root);
 		if(root==null)
 			return root;
 		
@@ -69,23 +73,24 @@ public class MyBinarySearchTree {
 				else if(root.getRight()==null)// we only have the left child
 					return root.getLeft();
 				else {//we have two children
-					int min = findMin(root.getRight());
-					root.setData(min);
+					MyNode min = findMin(root.getRight());
+					root.setData(min.getData());
 					root.setFrequency(min.getFrequency());
 					min.setFrequency(1);
 					root.setRight(removeRec(root.getRight(), min.getData()));
 				}
+				count--;
 			}
-			count--;
+			
 		}
 		
 		return root;
 
 	}
 	
-	public int findMin(MyNode root) {
+	public MyNode findMin(MyNode root) {
 		if(root.getLeft()==null)
-			return root.getData();
+			return root;
 		else
 			return findMin(root.getLeft());
 	}
@@ -119,6 +124,43 @@ public class MyBinarySearchTree {
 			System.out.print(root.getData()+" ");
 		
 		inorderRec(root.getRight());
+	}
+	public void balance() {
+		root = balanceRec(root);
+	}
+	
+	private MyNode balanceRec(MyNode root) {
+		if(root==null)
+			return null;
+		int imbalance;
+		if(root.getLeft()==null && root.getRight()==null)
+			imbalance = 0;
+		else if(root.getLeft()==null && root.getRight()!=null)
+			imbalance = root.getRight().height();
+		else if(root.getRight()==null && root.getLeft()!=null)
+			imbalance = root.getLeft().height();
+		else
+			imbalance = Math.abs(root.getLeft().height() - root.getRight().height());
+		if( imbalance > 1) {
+			System.out.println("Imbalance at tree rooted at "+root);
+			MyNode l = root.getLeft();
+			MyNode n = new MyNode(root.getData());
+			n.setFrequency(root.getFrequency());
+			n.setRight(root.getRight());
+			n.setLeft(l.getRight());
+			l.setRight(n);
+			return l;
+		}
+		else {
+			System.out.println("Tree rooted at "+root+" balanced.");
+			root.setLeft(balanceRec(root.getLeft()));
+			root.setRight(balanceRec(root.getRight()));
+			return root;
+			
+		}
+		
+		
+			
 	}
 
 	public int getHeight() {
