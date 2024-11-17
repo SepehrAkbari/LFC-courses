@@ -4,6 +4,19 @@
 
 I am a Computer Science major, with minors in Data Science and Mathematics, at Lake Forest College. These are some of the courses I've taken so far:
 
+#### CS Courses
+
+- [CS 107: Web Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-107) 
+- [CS 212: Object Oriented Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-212)
+- [CS 231: Linear Algebra](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-231)
+- [CS 240: Computational Math](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-240) 
+- [CS 250: Programming for Data Applications](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-250)
+- [CS 270: Web Development](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-270)
+- [CS 317: Data Structures and Algorithms](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-317) 
+- [CS 327: Database Systems](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-327) 
+- [CS 336: Operating Systems](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-336) 
+- [CS 450: Computer Vision & Machine Learning](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-450) 
+
 #### Math Courses
  
 - [MATH 110: Calculus I](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-110) 
@@ -13,17 +26,6 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 - [MATH 231: Linear Algebra](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-231) 
 - [MATH 240: Computational Math](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-240) 
 - [MATH 250: Statistical Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-250)
-
-#### CS Courses
-
-- [CS 107: Web Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-107) 
-- [CS 212: Object Oriented Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-212) 
-- [CS 250: Programming for Data Applications](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-250)
-- [CS 270: Web Development](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-270)
-- [CS 317: Data Structures and Algorithms](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-317) 
-- [CS 327: Database Systems](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-327) 
-- [CS 336: Operating Systems](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-336) 
-- [CS 450: Computer Vision & Machine Learning](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-450) 
 
 ---
 
