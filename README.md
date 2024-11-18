@@ -14,7 +14,6 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 - [CS 270: Web Development](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-270)
 - [CS 317: Data Structures and Algorithms](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-317) 
 - [CS 327: Database Systems](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-327) 
-- [CS 336: Operating Systems](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-336) 
 - [CS 450: Computer Vision & Machine Learning](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-450) 
 
 #### Math Courses
