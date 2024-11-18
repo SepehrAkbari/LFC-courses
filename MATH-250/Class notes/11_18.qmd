@@ -1,0 +1,32 @@
+---
+title: "11/18 Notes"
+author: "Sepehr Akbari"
+date: "11/18/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## More parenting regrssion
+
+```{r}
+library(tidyverse)
+library(readxl)
+
+parenting <- read_excel("Data/parenting.xlsx")
+```
+
+We view this as a random sample, imagining a much larger population of days with the same variables. We might be interested in whether there is a relationship between two quantitative variables, like `baby.sleep` and `dan.grump`. Linear regression does this, specifically testing for a linear relationship.
+
+NULL: The average of `dan.grump` (the response variable) is not linearly related to the value of `baby.sleep` (the explanatory variable).
+
+ALT: The average of `dan.grump` is linearly related to the value of `baby.sleep`. Specifically, the slope of the regression line is not zero.
+
+As usual you should set hypotheses before looking at the sample data. You should also make a plot (we did this on 11/15).
+
+```{r}
+lm(dan.grump ~ baby.sleep, data = parenting) %>% 
+  summary()
+```
+
