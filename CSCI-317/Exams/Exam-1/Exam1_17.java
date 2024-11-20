@@ -1,5 +1,3 @@
-package Exams;
-
 // Question 17
 
 /* Time complexity: O(n)

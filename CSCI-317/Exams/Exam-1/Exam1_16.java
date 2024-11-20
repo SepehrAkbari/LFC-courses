@@ -1,5 +1,3 @@
-package Exams;
-
 // Question 16
 
 public class Exam1_16 {
