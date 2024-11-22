@@ -1,0 +1,226 @@
+---
+title: "11/22 Notes"
+author: "Sepehr Akbari"
+date: "11/22/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## 11/18 notes
+
+## More parenting regrssion
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(broom)
+
+parenting <- read_excel("Data/parenting.xlsx")
+```
+
+We view this as a random sample, imagining a much larger population of days with the same variables. We might be interested in whether there is a relationship between two quantitative variables, like `baby.sleep` and `dan.grump`. Linear regression does this, specifically testing for a linear relationship.
+
+NULL: The average of `dan.grump` (the response variable) is not linearly related to the value of `baby.sleep` (the explanatory variable).
+
+ALT: The average of `dan.grump` is linearly related to the value of `baby.sleep`. Specifically, the slope of the regression line is not zero.
+
+As usual you should set hypotheses before looking at the sample data. You should also make a plot (we did this on 11/15).
+
+```{r}
+model <- lm(dan.grump ~ baby.sleep, data = parenting)
+summary(model)
+```
+
+The p-value is very small so we reject the null hypotheses. There is strong evidence that daniel's mood is not independent from the amount of sleep her baby got.
+
+## Using a regression line
+
+We use the regression model to make predictions, by plugging into the equation, so the equation of the line her is:
+
+$$ dan.grump = 85.8 - 2.7 \times baby.sleep $$
+
+Suppose the baby gets 7.92 hours of sleep. We predict Daniel's mood to be $85.8 - 2.7 \times 7.92 = 64.4$. This is called a *fitted value*. 
+
+```{r}
+ggplot(
+  parenting,
+  aes(x = baby.sleep, 
+      y = dan.grump)
+) +
+  geom_point() +
+  geom_smooth(method = "lm", 
+              se = FALSE)
+```
+
+In our dataset, there is a point baby slept 7.92 hours and Daniel's mood the next day 82. Our prediction was off. The difference is called *residual* of the observation.
+
+*The formula is: residual = observed - fitted.*
+
+For this observation, the residual is $82 - 64.4 = 17.6$.
+
+The residual represents th vertical distance from the line to the point. Positive values mean the point is above the line, negative values mean the point is below the line.
+
+## Assumptions & Diagnostics
+
+Linear regression has 4 basic assumptions:
+
+- The relationship between variables is linear, at least mostly.
+
+- The observations are independent of one another. This is a study design issue and stats can't do anything about it.
+
+- For every x-value, the residuals are normally distributed.
+
+- For every x-value, the variance of the residuals is the equal.
+
+The acronym "LINE" summarizes this. All 4 of these must hold if inference is to be valid. The first two are essential, the last two are less impactful unless the sample size is small.
+
+## Checking Assumptions (model diagnostics)
+
+The initial scatterplot was a good first step for checking assumptions. But its not as clear as what we really want, so we check our model afterwards with a residual plot. To make one we need residuals and fitted values for all our observations. Let's do it in two ways
+
+First, we have R functions to extract them.
+
+```{r}
+fitted.values(model)
+residuals(model)
+```
+
+We could add columns to our dataset with this stuff using `mutate`. A better way uses the `augment` command from `broom`.
+
+```{r}
+parenting_aug <- augment(model)
+```
+
+Now we ca make a nice looking residual plot to check our assumptions.
+
+```{r}
+ggplot(
+  parenting_aug,
+  aes(x = .fitted,
+      y = .resid)
+) +
+  geom_point() +
+  geom_hline(yintercept = 0)
+```
+
+There is no visible trend to the residuals. Yay, our model is usable forinference.
+
+
+## 11/22 notes
+
+The slope in our model is about -2.7. When the explantory 
+
+**However** this x-value lies outside the range of the data, so we shouldn't rely on the model to give us information about it. Doing so is called **extrapolation**.
+
+This is often the case for the intercept term in a model.
+
+## Predictions for new observations
+
+```{r}
+parenting_new <- read_csv("Data/parenting_new.csv")
+```
+
+We can apply our model to these new observations using the `predict` command.
+
+```{r}
+predict(model, parenting_new)
+```
+
+## Correlation & Spread about a line
+
+Correlation measures the variablity of the data about the regression line. A good model can have low correlation and a bad model can have a high correlation. Correlation is a property of the data not of the model.
+
+```{r}
+cor(parenting$baby.sleep, parenting$dan.grump)
+```
+
+One drawback is that correlation can only consider a simple regression model with one explanatory variable. A closely related but more general measure of spread about a regression line is **the coefficient of determination**, or $R^2$. For a simple variable regression, this is literally just the square of the correlation.
+
+## A second model for comparison
+
+Let's instead model `dan.grump` using `dan.sleep`. Let's do this as an inference.
+
+Null: `dan.sleep` gives no info about the mean of `dan.grump`.
+
+Alt: it does give info.
+
+Lets get a scatterplot.
+
+```{r}
+ggplot(
+  parenting,
+  aes(x = dan.sleep,
+      y = dan.grump)
+) + 
+  geom_point() +
+  geom_smooth(method = "lm",
+              se = FALSE)
+```
+
+A regression seems reasonable.
+
+```{r}
+model_dan <- lm(dan.grump ~ dan.sleep, data = parenting)
+summary(model_dan)
+```
+
+p-value of `dan.sleep` is infinitesimally small, so the null hypothesis is not plausible. We conclude there is a relationship between `dan.sleep` and `dan.grump` in the population.
+
+```{r}
+cor(parenting$dan.grump, parenting$dan.sleep)
+```
+
+Lets get a residual plot.
+
+```{r}
+model_dan_aug <- broom::augment(model_dan)
+```
+
+```{r}
+ggplot(
+  model_dan_aug,
+  aes(x = .fitted,
+      y = .resid)
+) +
+  geom_point() +
+  geom_hline(yintercept = 0)
+```
+
+No visible trend. This regression model is reasonable for inference.
+
+Next time: what about if we make a model using **Both** explanatory variables?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

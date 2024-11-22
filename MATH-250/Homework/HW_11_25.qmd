@@ -1,0 +1,124 @@
+---
+title: "Simple Linear Regression"
+author: "Sepehr Akbari"
+date: "11/25/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+::: {.callout-note appearance="minimal" icon="false"}
+The first 5 problems refer to the `modeldata::penguins` data set, which we may view as
+representing a simple random sample of antarctic penguins. Adhere to all the best-practices
+covered in class.
+:::
+
+```{r}
+library(tidyverse)
+library(modeldata)
+```
+
+
+## Problem 1
+
+::: {.callout-note appearance="minimal" icon="false"}
+Create a scatterplot with regression line showing the relationship between bill length and bill
+depth for gentoo penguins. Use depth as the explanatory variable. Omit the standard error
+ribbon and suppress all output other than the plot and code.
+:::
+
+As we are only interested in the gentoo penguins, lets filter our sample to only include them.
+
+```{r}
+gentoos <- penguins %>% 
+  filter(species == "Gentoo")
+```
+
+Now we plot.
+
+```{r}
+ggplot(
+  gentoos,
+  aes(x = bill_depth_mm, 
+      y = bill_length_mm)
+) +
+  geom_point() +
+  geom_smooth(method = "lm", 
+              se = FALSE
+  ) +
+  labs(
+    title = "Gentoos' Bill Length vs Depth",
+    x = "Bill Depth (mm)",
+    y = "Bill Length (mm)"
+  ) +
+  theme_minimal()
+```
+
+
+## Problem 2
+
+::: {.callout-note appearance="minimal" icon="false"}
+Determine the equation of this regression line and use it to predict the bill length of a gentoo
+penguin with a bill depth of 15.5 millimeters. What is the residual of the observation in this
+set with an actual bill depth of 15.5 millimeters?
+:::
+
+The equation of a line is in the form of: 
+
+$$ y = mx + b $$
+
+where $m$ is the slope and $b$ is the intercept.
+
+We can get the equation of the regression line by fitting a linear model to the data.
+
+```{r}
+model <- lm(bill_length_mm ~ bill_depth_mm, data = gentoos)
+summary(model)
+```
+
+So the estimated slope is $2.0208$ and the estimated intercept is $17.2295$.
+
+$$ y = 2.0208x + 17.2295 $$
+
+
+
+
+## Problem 3
+
+::: {.callout-note appearance="minimal" icon="false"}
+Does the data provide evidence of a linear relationship between `bill_length_mm` and
+`bill_depth_mm` among gentoos in the larger population of penguins? Follow all best-practices
+from class.
+:::
+
+## Problem 4
+
+::: {.callout-note appearance="minimal" icon="false"}
+Create an attractive residual plot for the regression model above. Are any trends apparent
+that might raise concerns about the model?
+::::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
