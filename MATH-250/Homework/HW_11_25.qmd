@@ -79,8 +79,8 @@ We can get the equation of the regression line by fitting a linear model to the 
 ```{r}
 #| message: false
 #| warning: false
-model <- lm(bill_length_mm ~ bill_depth_mm, data = gentoos)
-summary(model)
+model_gentoos <- lm(bill_length_mm ~ bill_depth_mm, data = gentoos)
+summary(model_gentoos)
 ```
 
 So the estimated slope is $2.0208$ and the estimated intercept is $17.2295$.
@@ -114,10 +114,10 @@ Now, we can find the residual, with $\text{residual} = \text{predicted} - \text{
 #| message: false
 #| warning: false
 
-residual <- predicted_length - true_length
+residual_gentoos <- predicted_length - true_length
 ```
 
-So the residual is **`{r} residual` mm**.
+So the residual is **`{r} residual_gentoos` mm**.
 
 ## Problem 3
 
@@ -160,7 +160,7 @@ We can use the same linear model fit that we did in Problem 2, to test the hypot
 #| message: false
 #| warning: false
 
-summary(model)
+summary(model_gentoos)
 ```
 
 The p-value of $1.02 \times 10^{-15}$ is very small, so we have sufficient evidence to **reject the null hypothesis**. We can conclude there is a linear relationship between `bill_length_mm` and `bill_depth_mm` among gentoos in the larger population of penguins.
@@ -176,7 +176,7 @@ We can create a residual plot by plotting the residuals against the fitted value
 ```{r}
 #| message: false
 #| warning: false
-gentoos_aug <- augment(model)
+gentoos_aug <- augment(model_gentoos)
 ```
 
 Now we can plot the residuals against the fitted values, to see if the model is reasonable for inference.
@@ -210,6 +210,8 @@ Obtain a colored scatterplot showing bill length vs bill depth for all three spe
 We can simply use the `species` variable as the color aesthetic in the plot. 
 
 ```{r}
+#| message: false
+#| warning: false
 ggplot(
   penguins,
   aes(x = bill_depth_mm, 
@@ -240,7 +242,43 @@ Does the data provide evidence for a linear relationship between fat content and
 content? Treat `protein` as the explanatory variable and follow all best-practices from class.
 :::
 
+Before analyzing the data, we set up the hypotheses:
 
+- Null Hypothesis ($H_0$):  The average `fat` content is not linearly related to `protein` content. Specifically, the slope of the regression line is zero
+
+- Alternative Hypothesis ($H_1$): The average `fat` content is linearly related to `protein` content. Specifically, the slope of the regression line is not zero.
+
+Let's look at the data points to see if there is an obvious linear or non-linear relationship.
+
+```{r}
+#| message: false
+#| warning: false
+ggplot(
+  meats,
+  aes(x = protein, 
+      y = fat)
+) +
+  geom_point() +
+  labs(
+    title = "Fat & Protein Content",
+    x = "Protein Content (%)",
+    y = "Fat Content (%)"
+  ) +
+  theme_minimal()
+```
+
+It seems like there is a linear relationship between `fat` and `protein` content. There is a slight variablity when protein content is lower, but it is not enough to suggest a non-linear relationship. Lets look at the probability of the slope being zero in the larger population of meats.
+
+We can use a linear model to test the hypothesis.
+
+```{r}
+#| message: false
+#| warning: false
+model_meats <- lm(fat ~ protein, data = meats)
+summary(model_meats)
+```
+
+The p-value of $2 \times 10^{-16}$ is very small, so we have sufficient evidence to **reject the null hypothesis**. We can conclude there is a linear relationship between `fat` and `protein` content in the larger population of meats.
 
 ## Problem 7
 
@@ -248,6 +286,38 @@ content? Treat `protein` as the explanatory variable and follow all best-practic
 Create an attractive residual plot for the model above. Are any trends apparent that might
 raise concerns about the model?
 :::
+
+Lets use the `augment` function to get the residuals and fitted values.
+
+```{r}
+#| message: false
+#| warning: false
+
+meats_aug <- augment(model_meats)
+```
+
+Now we can plot the residuals against the fitted values, to see the data trends and check if the model is reasonable for inference.
+
+```{r}
+#| message: false
+#| warning: false
+
+ggplot(
+  meats_aug,
+  aes(x = .fitted, 
+      y = .resid)
+) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  labs(
+    title = "Residual Plot (Meats)",
+    x = "Fitted Values",
+    y = "Residuals"
+  ) +
+  theme_minimal()
+```
+
+The residuals do not appear to be randomly scattered around zero. Specifically, there seems to be a curvature or wave-like pattern in the residuals, suggesting a possible non-linear relationship between the variables. This violates the linearity assumption of the model. Moreover, the spread of residuals increases as fitted values increase, which violates the constant variance assumption. These trends raise concerns about the model. Meaning that **this model may not be suitable for inference**.
 
 ## Problem 8
 
@@ -257,8 +327,51 @@ with a protein content of 13.1%? What is the residual of the observation with th
 content?
 :::
 
+We can get the equation of the regression line by fitting a linear model to the data.
 
+```{r}
+#| message: false
+#| warning: false
+summary(model_meats)
+```
 
+So the estimated slope is $-3.6358$ and the estimated intercept is $82.4334$.
+
+$$ 
+\text{fat} = -3.6358 \cdot \text{protein} + 82.4334
+$$
+So, the predicted `fat` content of an observation with a `protein` content of 13.1%, we plug in $protein = 13.1$ into the equation.
+
+```{r}
+#| message: false
+#| warning: false
+
+predicted_fat <- -3.6358 * 13.1 + 82.4334
+```
+
+So the predicted fat content is **`{r} predicted_fat`%**.
+
+Now, to find the residual, we need to find the actual fat content of the observation with a protein content of 13.1%. Then we can find the residual with $\text{residual} = \text{predicted} - \text{actual}$.
+
+```{r}
+#| message: false
+#| warning: false
+
+true_fat <- meats %>% 
+  filter(protein == 13.1) %>% 
+  pull(fat)
+```
+
+```{r}
+#| message: false
+#| warning: false
+
+residual_meats <- predicted_fat - true_fat
+```
+
+So the residual is **`{r} residual_meats`%**.
+
+Note, that this prediction used a linear model which may not be suitable for inference in this data, as we discussed in Problem 7.
 
 
 
