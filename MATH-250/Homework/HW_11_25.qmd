@@ -8,12 +8,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-::: {.callout-note appearance="minimal" icon="false"}
-The first 5 problems refer to the `modeldata::penguins` data set, which we may view as
-representing a simple random sample of antarctic penguins. Adhere to all the best-practices
-covered in class.
-:::
-
 ```{r}
 #| message: false
 #| warning: false
@@ -26,6 +20,10 @@ library(broom)
 ## Problem 1
 
 ::: {.callout-note appearance="minimal" icon="false"}
+The first 5 problems refer to the `modeldata::penguins` data set, which we may view as
+representing a simple random sample of antarctic penguins. Adhere to all the best-practices
+covered in class.
+
 Create a scatterplot with regression line showing the relationship between bill length and bill
 depth for gentoo penguins. Use depth as the explanatory variable. Omit the standard error
 ribbon and suppress all output other than the plot and code.
@@ -131,9 +129,9 @@ from class.
 
 Before analyzing the data, we set up the hypotheses:
 
-- Null Hypothesis (H_0): The average `bill_length_mm` is not linearly related to `bill_depth_mm`. Specifically, the slope of the regression line is zero (\beta_1 = 0).
+- Null Hypothesis ($H_0$): The average `bill_length_mm` is not linearly related to `bill_depth_mm`. Specifically, the slope of the regression line is zero.
 
-- Alternative Hypothesis (H_1): The average `bill_length_mm` is linearly related to `bill_depth_mm`. Specifically, the slope of the regression line is not zero (\beta_1 \neq 0).
+- Alternative Hypothesis ($H_1$): The average `bill_length_mm` is linearly related to `bill_depth_mm`. Specifically, the slope of the regression line is not zero.
 
 Let's look at the data points again to see if there is an obvious linear or non-linear relationship.
 
@@ -170,8 +168,7 @@ The p-value of $1.02 \times 10^{-15}$ is very small, so we have sufficient evide
 ## Problem 4
 
 ::: {.callout-note appearance="minimal" icon="false"}
-Create an attractive residual plot for the regression model above. Are any trends apparent
-that might raise concerns about the model?
+Create an attractive residual plot for the regression model above. Are any trends apparent that might raise concerns about the model?
 ::::
 
 We can create a residual plot by plotting the residuals against the fitted values. Lets form a dataset with the residuals and the fitted values, using the `augment` function.
@@ -204,10 +201,61 @@ ggplot(
 
 The residual plot shows no obvious patterns, which is a good sign. The model seems reasonable for inference.
 
+## Problem 5
+
+::: {.callout-note appearance="minimal" icon="false"}
+Obtain a colored scatterplot showing bill length vs bill depth for all three species. Include all 3 regression lines. Note: in order to specify such a model, we will eventually need to identify 3 slopes and 3 intercepts.
+:::
+
+We can simply use the `species` variable as the color aesthetic in the plot. 
+
+```{r}
+ggplot(
+  penguins,
+  aes(x = bill_depth_mm, 
+      y = bill_length_mm,
+      color = species)
+) +
+  geom_point() +
+  geom_smooth(method = "lm", 
+              se = FALSE
+  ) +
+  labs(
+    title = "Penguins' Bill Length vs Depth",
+    x = "Bill Depth (mm)",
+    y = "Bill Length (mm)",
+    color = "Species"
+  ) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Dark2")
+```
+
+## Problem 6
+
+::: {.callout-note appearance="minimal" icon="false"}
+The last three problems refer to the `modeldata::meats` set, which can be regarded as a random
+sample of meat.
+
+Does the data provide evidence for a linear relationship between fat content and protein
+content? Treat `protein` as the explanatory variable and follow all best-practices from class.
+:::
 
 
 
+## Problem 7
 
+::: {.callout-note appearance="minimal" icon="false"}
+Create an attractive residual plot for the model above. Are any trends apparent that might
+raise concerns about the model?
+:::
+
+## Problem 8
+
+::: {.callout-note appearance="minimal" icon="false"}
+What is the equation of the regression line? What is the predicted fat content of an observation
+with a protein content of 13.1%? What is the residual of the observation with that protein
+content?
+:::
 
 
 
