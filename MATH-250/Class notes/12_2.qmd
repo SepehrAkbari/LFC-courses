@@ -63,7 +63,7 @@ ggplot(
 A parallel-slopes model makes sense. There is a linear trend in each group with vary similar-looking slopes.
 
 ```{r}
-model_par <- lm(Sepal.Length ~ Sepal.Width * Species, data = iris_sm)
+model_par <- lm(Sepal.Length ~ Sepal.Width + Species, data = iris_sm)
 ```
 
 
