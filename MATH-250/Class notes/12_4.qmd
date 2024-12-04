@@ -1,0 +1,134 @@
+---
+title: "12/4 Notes"
+author: "Sepehr Akbari"
+date: "12/4/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# 12/2 notes
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(readxl)
+library(here)
+
+path <- here("data", "parenting.xlsx")
+parenting <- read_excel(path)
+```
+
+Today we'll:
+
+1) compare our 3 parenting models
+
+2) consider a categorical variable
+
+## Parenting model comparison
+
+```{r}
+model_baby <- lm(dan.grump ~ baby.sleep,
+                 data = parenting)
+model_dan <- lm(dan.grump ~ dan.sleep,
+                 data = parenting)
+model_full <- lm(dan.grump ~ baby.sleep + dan.sleep,
+                 data = parenting)
+```
+
+A generally poor way of comparing models is using R^2. First, this measures the spread of the data about the regression line, not whether the model is well-fit. Second, adding variables to a regression model (like how we added `dan.sleep` to `model_baby`) can only increase R^2, even if the new variables is just noise.
+
+An improvement is **adjusted R^2**, which imposes a penalty for complex models. There are others, for instance AIC. 
+
+```{r}
+summary(model_baby)
+summary(model_dan)
+summary(model_full)
+```
+
+We prefer `model_dan` over the others. 
+
+Warning: if you're using R^2 and/or p-values for model selection, don't also do a hypothesis test. 
+
+## Categorical variables
+
+Let's look at `iris` and restrict ourselves to virginica and versicolors.
+
+```{r}
+glimpse(iris)
+
+iris_sm <- iris %>% 
+  filter(Species != "setosa")
+
+ggplot(iris_sm, 
+       aes(x = Sepal.Width,
+           y = Sepal.Length,
+           color = Species)) + 
+  geom_point() +
+  geom_smooth(method = "lm",
+              se = FALSE) +
+  scale_color_brewer(palette = "Dark2")
+```
+
+A parallel-slopes model makes sense. There is a linear trend in each group with vary similar-looking slopes. 
+
+```{r}
+model_par <- lm(Sepal.Length ~ Sepal.Width + Species, 
+                data = iris_sm)
+summary(model_par)
+```
+
+# 12/4 notes
+
+## Residual plots
+
+Let's make a residual plot for `model_par`.
+
+```{r}
+iris_aug <- broom::augment(model_par)
+glimpse(iris_aug)
+
+ggplot(iris_aug, 
+       aes(x = .fitted, 
+           y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  scale_color_brewer(palette = "Dark2")
+```
+
+## A third group
+
+Let's rebuild our model for the full iris data set.
+
+```{r}
+ggplot(iris, 
+       aes(x = Sepal.Width,
+           y = Sepal.Length,
+           color = Species)) +
+  geom_point() + 
+  geom_smooth(method = "lm",
+              se = FALSE) +
+  scale_color_brewer(palette = "Dark2")
+```
+
+A parallel-slopes model:
+
+```{r}
+model_iris <- lm(Sepal.Length ~ Sepal.Width + Species, data = iris)
+summary(model_iris)
+```
+
+The model is: Length = 2.3 +  .8(width) + 1.5(versicolor) + 1.9(virginica)
+
+Notice that we have a separate p-value for each level of the categorical variable. We interpret these **separately** for each level of the categorical variable other than the reference level (setosa in this case).
+
+One potential concern: we already have 4 p-values (3 ignoring the reference intercept). In a larger real-world example, this could lead to false positives or even p-hacking. 
+
+
+
+
+
+
+
