@@ -1,0 +1,174 @@
+---
+title: "Multiple regression with R"
+author: "Sepehr Akbari"
+date: "12/6/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+::: {.callout-note appearance="minimal" icon="false"}
+The goal of this set is to model the length of the bills of penguins in the `modeldata::penguins` set.
+:::
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(modeldata)
+```
+
+## Problem 1
+
+::: {.callout-note appearance="minimal" icon="false"}
+Remove all observations that do not include information about the sex of the penguin. Save your result as `penguins_sm` and use it for all questions going forward.
+:::
+
+```{r}
+#| message: false
+#| warning: false
+penguins_sm <- penguins %>% 
+  filter(!is.na(sex))
+```
+
+## Problem 2
+
+::: {.callout-note appearance="minimal" icon="false"}
+Create an attractive scatterplot showing bill length on the y-axis (it’s the response variable) and flipper length on the x-axis. Color the points according to sex and add regression lines for the two groups.
+:::
+
+```{r}
+#| message: false
+#| warning: false
+ggplot(
+  penguins_sm,
+  aes(x = flipper_length_mm, 
+      y = bill_length_mm,
+      color = sex)
+) +
+  geom_point() +
+  geom_smooth(method = "lm", 
+              se = FALSE) +
+  labs(
+    x = "Flipper length (mm)",
+    y = "Bill length (mm)",
+    title = "Penguins Bill & Flipper Length",
+    color = "Sex"
+  ) +
+  scale_color_brewer(palette = "Dark2") +
+  theme_minimal()
+```
+
+
+## Problem 3
+
+::: {.callout-note appearance="minimal" icon="false"}
+Build a linear model for bill length as explained by flipper length. What is the equation of the model? What is the adjusted $R^2$ value?
+:::
+
+```{r}
+#| message: false
+#| warning: false
+modelBill_flipper <- lm(bill_length_mm ~ flipper_length_mm, 
+                         data = penguins_sm)
+summary(modelBill_flipper)
+```
+
+The equation of the model is:
+
+$$
+\text{bill length} = 0.25 (\text{flipper length}) -7.22
+$$
+
+The adjusted $R^2$ value is **0.4248**, meaning approximately 42.48% of the variability in bill length is explained by flipper length. The predictor, flipper length, is highly significant (p < 2e-16), indicating a strong relationship with bill length.
+
+## Problem 4
+
+::: {.callout-note appearance="minimal" icon="false"}
+Build a linear model for bill length as explained by flipper length and body mass. What is the equation of the model? What is the adjusted $R^2$ value?
+:::
+
+```{r}
+#| message: false
+#| warning: false
+modelBill_flipper_mass <- lm(bill_length_mm ~ flipper_length_mm + body_mass_g, 
+                              data = penguins_sm)
+summary(modelBill_flipper_mass)
+```
+
+
+The equation of the model is:
+
+$$
+\text{bill length} = 0.23 (\text{flipper length}) + 0.00055 (\text{body mass}) - 3.98
+$$
+
+The adjusted $R^2$ value is **0.4246**, meaning approximately 42.46% of the variability in bill length is explained by flipper length and body mass together. However, the inclusion of body mass does not improve the model significantly (p = 0.342). This suggests that flipper length remains the primary predictor of bill length in this model.
+
+## Problem 5
+
+::: {.callout-note appearance="minimal" icon="false"}
+Build a linear model for bill length as explained by body mass and sex. What is the equation of the model? What is the adjusted $R^2$ value?
+:::
+
+```{r}
+#| message: false
+#| warning: false
+modelBill_mass_sex <- lm(bill_length_mm ~ body_mass_g + sex, 
+                         data = penguins_sm)
+summary(modelBill_mass_sex)
+```
+
+The equation of the model is:
+
+$$
+\text{bill length} = 0.0037 (\text{body mass}) + 1.25 (\text{sex}) + 27.91
+$$
+$\text{[Where Male = 1, Female = 0]}$
+
+The adjusted $R^2$ value is **0.3542**, meaning approximately 35.42% of the variability in bill length is explained by body mass and sex together. Both predictors are significant:
+
+- Body mass (p < 2e-16) has a small but meaningful positive contribution.
+
+- Sex (p = 0.0197) indicates that males have, on average, a bill length approximately 1.25 mm longer than females, holding body mass constant.
+
+## Problem 6
+
+::: {.callout-note appearance="minimal" icon="false"}
+Build a linear model for bill length as explained by flipper length, body mass, and sex. What is the equation of the model? What is the adjusted $R^2$ value?
+:::
+
+```{r}
+#| message: false
+#| warning: false
+modelBill_flipper_mass_sex <- lm(bill_length_mm ~ flipper_length_mm + body_mass_g + sex, 
+              data = penguins_sm)
+summary(modelBill_flipper_mass_sex)
+```
+
+The equation of the model is:
+
+$$
+\text{bill length} = 0.27  (\text{flipper length}) - 0.00067 (\text{body mass}) + 2.3 (\text{sex}) - 8.08
+$$
+
+$\text{[Where Male = 1, Female = 0]}$
+
+The adjusted $R^2$ value is **0.4572**, meaning approximately 45.72% of the variability in bill length is explained by flipper length, body mass, and sex together. However:
+
+- Flipper length (p < 2e-16) is the strongest predictor and significantly contributes to the model.
+
+- Sex (p = 7.27e-6) is also significant, with males having longer bills compared to females.
+
+- Body mass (p = 0.2853) is not significant, suggesting it does not meaningfully contribute to explaining bill length when flipper length and sex are already accounted for.
+
+
+
+
+
+
+
+
+
+
