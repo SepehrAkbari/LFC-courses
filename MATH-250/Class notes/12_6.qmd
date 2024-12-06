@@ -1,0 +1,61 @@
+---
+title: "12/6 Notes"
+author: "Sepehr Akbari"
+date: "12/6/2024"
+format: html
+embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+```
+
+Note the short survey assignment for Wednesday about a selected song. 
+
+## Multiple regression with interaction
+
+```{r}
+iris_sm <- iris %>% 
+  filter(Species != "setosa")
+
+ggplot(iris_sm, 
+       aes(x = Sepal.Width, 
+           y = Sepal.Length,
+           color = Species)) +
+  geom_point() + 
+  geom_smooth(method = "lm",
+              se = FALSE) +
+  scale_color_brewer(palette = "Dark2")
+```
+
+To allow for different slopes, we need a similar but slightly more complicated case-wise definition of the regression equation.
+
+(see notes from the board)
+
+```{r}
+model_int <- lm(Sepal.Length ~ Sepal.Width * Species,
+                data = iris_sm)
+summary(model_int)
+```
+
+This model is Length = 3.5 + .87(Width) + .4(Virginica) + .04(Virginica)*(Width)
+
+The p-value of the interaction term measures (roughly) the probability of data like this if the interaction term were actually zero in the population. The high value indicates that's very plausible. 
+
+The inclusion is still harmful. The usefulness of the difference in intercepts is masked here. 
+
+This gets even worse when we have more levels or more variables. 
+
+```{r}
+model_int2 <- lm(Sepal.Length ~ Sepal.Width * Species,
+                 data = iris) # the whole iris set
+summary(model_int2)
+```
+
+This model is extremely flexible and will almost certainly overfit the data, meaning that it will perform badly on new data. 
+
+
