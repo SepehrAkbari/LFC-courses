@@ -9,7 +9,7 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 - [CS 107: Web Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-107) 
 - [CS 212: Object Oriented Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-212)
 - [CS 231: Linear Algebra](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-231)
-- [CS 240: Computational Math](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-240) 
+- [CS 240: Computational Math](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-240) 
 - [CS 250: Programming for Data Applications](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-250)
 - [CS 270: Web Development](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-270)
 - [CS 317: Data Structures and Algorithms](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-317) 
@@ -23,7 +23,7 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 - [MATH 150: Probablity & Statistics](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-150) 
 - [MATH 230: Abstract & Discrete Mathematics](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-230)
 - [MATH 231: Linear Algebra](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-231) 
-- [MATH 240: Computational Math](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-240) 
+- [MATH 240: Computational Math](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-240) 
 - [MATH 250: Statistical Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-250)
 
 ---
