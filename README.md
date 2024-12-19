@@ -28,7 +28,7 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 
 ---
 
-During my time, I've also had multiple teaching assistant (TA) jobs:
+During my time, I've also had multiple teaching assistant (TA) positions:
 
 - [TA - CS 112: Functional Programming (Spring 2024)](https://github.com/SepehrAkbari/LFC-courses/tree/main/TA/TA-112-S24)
 - [TA - CS 112: Functional Programming (Fall 2024)](https://github.com/SepehrAkbari/LFC-courses/tree/main/TA/TA-112-F24)
