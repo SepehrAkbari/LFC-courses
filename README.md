@@ -30,8 +30,12 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 
 During my time, I've also had multiple teaching assistant (TA) jobs:
 
-- [TA - CS 112: Functional Programming (Spring 2024)](https://github.com/SepehrAkbari/LFC-courses/tree/main/Teaching%20Assistant/TA-112-Fall2024)
-- [TA - CS 112: Functional Programming (Fall 2024)](https://github.com/SepehrAkbari/LFC-courses/tree/main/Teaching%20Assistant/TA-112-Spring2024)
+- [TA - CS 112: Functional Programming (Spring 2024)](https://github.com/SepehrAkbari/LFC-courses/tree/main/TA/TA-112-S24)
+- [TA - CS 112: Functional Programming (Fall 2024)](https://github.com/SepehrAkbari/LFC-courses/tree/main/TA/TA-112-F24)
+- [TA - CS 107: Web Programming (Spring 2025)](https://github.com/SepehrAkbari/LFC-courses/tree/main/TA/TA-107-S25)
+- [TA - CS 112: Functional Programming (Spring 2025)](https://github.com/SepehrAkbari/LFC-courses/tree/main/TA/TA-112-S25)
+- [TA - CS/MATH 240: Computational Math (Spring 2025)](https://github.com/SepehrAkbari/LFC-courses/tree/main/TA/TA-240-S25)
+
 
 ---
 
