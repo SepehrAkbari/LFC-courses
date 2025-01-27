@@ -73,7 +73,7 @@ Find the correct values for x, y, and z after the following statements execute.
 '''
 Find the value of x after the statements execute in each of the following cases.
 '''
-# 1. x = 2
+# 1. x = 12
 # 2. x = 18
 # 3. x = 33
 
@@ -124,7 +124,7 @@ What is the type of the result in each of the cases? Explain.
 a = 2
 b = 5
 c = 1 
-type(3 * (a**2 + 2*b**2) - 2**c) # integer
+type(3 * (a**2 + 2*b**3) - 2**c) # integer
 
 # 2
 a = 3
