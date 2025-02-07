@@ -197,12 +197,14 @@ $(-1)v + v = (-1)v + 1v = (-1 + 1)v = 0v = 0$ so $(-1)v$ is the additive inverse
 
 #### Theorem 1.34:
 
-#A subset $U$ of $V$ is a subspace of $V$ if and only if $U$ satisfies the following three conditions.:
+"A subset $U$ of $V$ is a subspace of $V$ if and only if $U$ satisfies the following three conditions.:
 
-additive identity: $0 \in U$.
-closed under addition: $u, w \in U \implies u+w \in U$.
-closed under scalar multiplication: $a \in F, u \in U \implies au \in U$.
+- additive identity: $0 \in U$.
+
+- closed under addition: $u, w \in U \implies u+w \in U$.
+
+- closed under scalar multiplication: $a \in F, u \in U \implies au \in U$."
 
 #### Theorem 1.40:
 
-Suppose $V_1,...,V_m$ are subspaces of V. Then $V_1+...+V_m$ is the smallest subspace of $V$ containing $V_1,...,V_m$.
+"Suppose $V_1,...,V_m$ are subspaces of V. Then $V_1+...+V_m$ is the smallest subspace of $V$ containing $V_1,...,V_m$".
