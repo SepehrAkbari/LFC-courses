@@ -10,6 +10,8 @@
 
 - [Supspaces](#subspaces)
 
+- [Theorems](#theorems)
+
 ### Fields
 
 A field is a set $F$ with two operations, addition and multiplication, satisfying certain axioms.
@@ -126,3 +128,81 @@ Proving a Set is a Vector Space:
 
 1. Define vector addition and scalar multiplication.
 2. Verify all 8 vector space axioms hold.
+
+### Subspaces
+
+A subspace of a vector space  $V$  is a subset  $W$  that is itself a vector space under the same operations.
+
+Key Properties:
+
+For  $W \subseteq V$  to be a subspace:
+
+1. Non-emptiness:  
+
+$$0 \in W$$
+
+2. Closed under Addition:  
+
+$$u, v \in W \Rightarrow u + v \in W$$
+
+
+3. Closed under Scalar Multiplication:  
+
+$$a \in F, v \in W \Rightarrow av \in W$$
+
+Proving a Subset is a Subspace:
+
+1. Show that  $0 \in W$.
+2. Prove closure under addition and scalar multiplication.
+
+### Theorems
+
+#### Theorem 1.26: 
+
+"A vector space has a unique additive identity."
+
+**Proof:**
+
+Suppose $0$  and  $0'$  are both additive identities in  $V$.
+
+Then: $0 = 0 + 0'$ and $0' = 0 + 0'$, so $0 = 0'$.
+
+#### Theorem 1.27:
+
+"Every element in a vector space has a unique additive inverse."
+
+**Proof:**
+
+Suppose  $v \in V$  has two additive inverses,  $u$  and  $w$.
+
+Then: $u = u + 0 = u + (v+w) = (u+v) + w = 0 + w = w$.
+
+#### Theorem 1.30 and 1.31:
+
+"$0v = 0a = 0$ for every $v \in V$ and similarly $a \in F$."
+
+**Proof:**
+
+$0v = (0 + 0)v = 0v + 0v$, and adding $-(0v)$ to both sides gives $0 = 0v$.
+
+It also means because $a0 = a0 + a0$ then $a0$ is an additive identity.
+
+#### Theorem 1.32:
+
+"$(−1)v = -v$ for every $v \in V$."
+
+**Proof:**
+
+$(-1)v + v = (-1)v + 1v = (-1 + 1)v = 0v = 0$ so $(-1)v$ is the additive inverse of $v$ or written as $-v$.
+
+#### Theorem 1.34:
+
+#A subset $U$ of $V$ is a subspace of $V$ if and only if $U$ satisfies the following three conditions.:
+
+additive identity: $0 \in U$.
+closed under addition: $u, w \in U \implies u+w \in U$.
+closed under scalar multiplication: $a \in F, u \in U \implies au \in U$.
+
+#### Theorem 1.40:
+
+Suppose $V_1,...,V_m$ are subspaces of V. Then $V_1+...+V_m$ is the smallest subspace of $V$ containing $V_1,...,V_m$.
