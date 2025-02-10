@@ -1,5 +1,7 @@
 # Lake Forest College - Courses
 
+![Frame](./LFC-Frame.png)
+
 ---
 
 I am a Computer Science major, with minors in Data Science and Mathematics, at Lake Forest College. These are some of the courses I've taken so far:
