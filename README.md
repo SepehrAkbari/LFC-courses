@@ -38,7 +38,7 @@ During my time, I've also had multiple teaching assistant (TA) positions:
 
 I've also been on the board of the Computer Science Club at Lake Forest College, from Fall 2024. I became its president in Spring 2025; here's some of the events we've organized:
 
-- [CS Club - Spring 2025]
+- [CS Club - Spring 2025](https://github.com/SepehrAkbari/LFC-courses/tree/main/CS-Club/CSC-S25)
 
 ---
 
