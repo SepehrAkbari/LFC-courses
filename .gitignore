@@ -1,11 +1,20 @@
+# RSudio files
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+
+# VSC connection
 .vscode
+
+# No need for actual data here
 CSCI-250/Data/main/
 CSCI-450/Data/main/
+
+# Too large to store (links are provided in the README)
 CSCI-450/Data/caltech-101.zip
 CSCI-450/Data/oxford-flowers.tgz
 CSCI-450/Data/playing-cards.zip
+
+# Repository Preview
 LFC-Frame.jpg
