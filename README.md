@@ -38,10 +38,6 @@ During my time, I've also had multiple teaching assistant (TA) positions:
 - [TA - CS 112: Functional Programming (Spring 2025)](https://github.com/SepehrAkbari/LFC-courses/tree/main/TA/TA-112-S25)
 - [TA - CS/MATH 240: Computational Math (Spring 2025)](https://github.com/SepehrAkbari/LFC-courses/tree/main/TA/TA-240-S25)
 
-I've also been on the board of the Computer Science Club at Lake Forest College, from Fall 2024. I became its president in Spring 2025; here's some of the events we've organized:
-
-- [CS Club - Spring 2025](https://github.com/SepehrAkbari/LFC-courses/tree/main/CS-Club/CSC-S25)
-
 ---
 
 ###### Expected to graduate Spring 2027.
