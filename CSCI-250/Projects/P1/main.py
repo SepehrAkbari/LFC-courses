@@ -9,8 +9,10 @@ from sklearn.impute import IterativeImputer
 from sklearn.ensemble import RandomForestRegressor
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, roc_curve
+from sklearn.preprocessing import StandardScaler, PolynomialFeatures
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import mean_squared_error, r2_score, accuracy_score, classification_report, roc_auc_score
 
 warnings.filterwarnings('ignore')
 
@@ -35,3 +37,22 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 smote = SMOTE(random_state=250)
 X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
+
+## Shape of x_train, x_test, y_train, y_test: (7492, 29), (1126, 29), (7492,), (1126,)
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train_resampled)
+X_test_scaled = scaler.transform(X_test)
+
+model_linear = LinearRegression()
+model_linear.fit(X_train_scaled, y_train_resampled)
+y_pred_linear = model_linear.predict(X_test_scaled)
+
+plt.figure(figsize=(10, 6))
+plt.scatter(range(len(y_test)), y_test, color='blue', label='Actual Churn', alpha=0.6)
+plt.scatter(range(len(y_pred_linear)), y_pred_linear, color='red', label='Predicted Churn', alpha=0.6)
+plt.title("Linear Regression: Actual vs. Predicted Churn")
+plt.xlabel("Sample Index")
+plt.ylabel("Churn")
+plt.legend()
+plt.show()
