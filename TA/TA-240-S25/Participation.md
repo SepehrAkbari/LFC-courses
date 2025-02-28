@@ -6,5 +6,5 @@
 | Tong Hao | 2 | 2/10, 2/13 | Project1
 | Shellane Shettleworth | 2 | 2/4, 2/13 | Lagrange, Project1
 | Zachary Crawford | 1 | 2/6 | Jupyter
-| Alexa Velasquez | 2 | 2/6, 2/13 | Lagrange, Project1
+| Alexa Velasquez | 3 | 2/6, 2/13, 2/27 | Lagrange, Project1, def-eq
 | Lokshree Gautam | 1 | 2/13 | Project1
