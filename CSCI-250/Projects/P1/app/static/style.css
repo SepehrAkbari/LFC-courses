@@ -1,0 +1,20 @@
+body {
+    background-color: #f8f9fa;
+}
+  
+h1, h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.big-prediction {
+    font-size: 5rem;
+    font-weight: bold;
+}

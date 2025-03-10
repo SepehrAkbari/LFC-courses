@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Prediction Result</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="mb-4 text-center">Prediction Result</h1>
+    <div class="text-center">
+      <div class="big-prediction">{{ prediction }}</div>
+    </div>
+    <div class="text-center">
+        <a href="https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-250/Projects/P1" target="_blank">view the model's design</a>
+      </div>
+    <br>
+    <div class="text-center">
+      <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg">Try Another Prediction</a>
+    </div>
+  </div>
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
