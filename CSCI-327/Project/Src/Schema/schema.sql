@@ -1,0 +1,119 @@
+-- For Resetting
+DROP DATABASE IF EXISTS VideoStore;
+
+-- Create the VideoStore database
+CREATE DATABASE IF NOT EXISTS VideoStore;
+USE VideoStore;
+
+-- MEMBER table
+CREATE TABLE MEMBER (
+    Member_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Phone_Num VARCHAR(15) UNIQUE,
+    Email VARCHAR(100) UNIQUE,
+    Password VARCHAR(255) NOT NULL
+);
+
+-- STORE table
+CREATE TABLE STORE (
+    Store_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Address VARCHAR(255) NOT NULL,
+    Phone_Num VARCHAR(15)
+);
+
+-- MOVIE_PLAYER table
+CREATE TABLE MOVIE_PLAYER (
+    Player_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Features VARCHAR(255),
+    Rental_Price DECIMAL(5, 2) NOT NULL,
+    Type VARCHAR(50) NOT NULL
+);
+
+-- STUDIO table
+CREATE TABLE STUDIO (
+    Studio_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Start_Date DATE
+);
+
+-- DIRECTOR table
+CREATE TABLE DIRECTOR (
+    Director_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    B_Day DATE
+);
+
+-- ACTOR table
+CREATE TABLE ACTOR (
+    Actor_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    B_Day DATE
+);
+
+-- MOVIE_DISK table
+CREATE TABLE MOVIE_DISK (
+    Disk_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Film_ID INT,
+    Rental_Price DECIMAL(5, 2) NOT NULL,
+    Type VARCHAR(50) NOT NULL,
+    FOREIGN KEY (Film_ID) REFERENCES FILM(Film_ID)
+);
+
+-- RENTS table
+CREATE TABLE RENTS (
+    Rental_ID INT,
+    Member_ID INT,
+    Store_ID INT,
+    Start_Date DATE NOT NULL,
+    End_Date DATE,
+    PRIMARY KEY (Rental_ID, Member_ID, Store_ID),
+    FOREIGN KEY (Rental_ID) REFERENCES MOVIE_PLAYER(Player_ID),
+    FOREIGN KEY (Rental_ID) REFERENCES MOVIE_DISK(Disk_ID),
+    FOREIGN KEY (Member_ID) REFERENCES MEMBER(Member_ID),
+    FOREIGN KEY (Store_ID) REFERENCES STORE(Store_ID)
+);
+
+-- FILM table
+CREATE TABLE FILM (
+    Film_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Director_ID INT,
+    Num_Disks INT NOT NULL,
+    Title VARCHAR(255) NOT NULL,
+    Genre VARCHAR(50),
+    Plot_Sum TEXT,
+    Rating VARCHAR(10),
+    Studio_ID INT,
+    FOREIGN KEY (Director_ID) REFERENCES DIRECTOR(Director_ID),
+    FOREIGN KEY (Studio_ID) REFERENCES STUDIO(Studio_ID)
+);
+
+-- RESERVES table
+CREATE TABLE RESERVES (
+    Store_ID INT,
+    Member_ID INT,
+    Disk_ID INT,
+    Status BOOLEAN,
+    PRIMARY KEY (Store_ID, Member_ID, Disk_ID),
+    FOREIGN KEY (Store_ID) REFERENCES STORE(Store_ID),
+    FOREIGN KEY (Member_ID) REFERENCES MEMBER(Member_ID),
+    FOREIGN KEY (Disk_ID) REFERENCES MOVIE_DISK(Disk_ID)
+);
+
+-- OWNS table
+CREATE TABLE OWNS (
+    Store_ID INT,
+    Rental_ID INT,
+    Num_Copies INT NOT NULL,
+    PRIMARY KEY (Store_ID, Rental_ID),
+    FOREIGN KEY (Store_ID) REFERENCES STORE(Store_ID),
+    FOREIGN KEY (Rental_ID) REFERENCES RENTS(Rental_ID)
+);
+
+-- LEAD_ACTORS table
+CREATE TABLE LEAD_ACTORS (
+    Film_ID INT,
+    Actor_ID INT,
+    PRIMARY KEY (Film_ID, Actor_ID),
+    FOREIGN KEY (Film_ID) REFERENCES FILM(Film_ID),
+    FOREIGN KEY (Actor_ID) REFERENCES ACTOR(Actor_ID)
+);
