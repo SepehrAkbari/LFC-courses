@@ -102,8 +102,8 @@ should return 14 because 1^2 + 2^2 + 3^2 = 14.
 '''
 # this can be written as n ** k + (n - 1) ** k + ... + 1 ** k
 def recursiveSumOfPowers(n, k):
-    if n == 1:
-        return 1 ** k
+    if n == 0:
+        return 0
     return n ** k + recursiveSumOfPowers(n - 1, k)
 
 '''
