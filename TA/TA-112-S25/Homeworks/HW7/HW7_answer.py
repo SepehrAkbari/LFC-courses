@@ -1,126 +1,6 @@
-#### HOMEWORK 6 ####
+#### HOMEWORK 7 ####
 
 ## Problem 1
-'''
-Write a function named three largest(alist) that takes a list of numbers as
-input. The function should return a list containing the three largest values from alist,
-sorted from lowest to highest. If the list contains fewer than three numbers, return the
-original list sorted from lowest to highest. For example
-three_largest ([8, 3, 1, 9, 12])
-should return [8, 9, 12].
-'''
-
-def threeLargest(lst):
-    if len(lst) < 3:
-        return sorted(lst)
-    return sorted(lst)[-3:]
-
-
-## Problem 2
-'''
-Write a function named find median(alist) that takes a list of numbers alist
-as input. The function should return the median value of this list. Recall that the median
-is defined as follows
-• If the list has an odd number of elements: The median is the middle value in the
-sorted list.
-• If the list has an even number of elements: The median is the average of the two
-middle values.
-For example
-print(find_median ([7, 1, 4]))
-should return 4 and
-print(find_median ([7, 1, 4, 6]))
-should return 4+6/2 = 5.
-'''
-
-def findMedian(lst):
-    lst = sorted(lst)
-    if len(lst) % 2 == 0:
-        return (lst[len(lst) // 2] + lst[len(lst) // 2 - 1]) / 2
-    return lst[len(lst) // 2]
-
-
-## Problem 3
-'''
-Write a function named sort by price(products) that takes a list of tuples,
-where each tuple contains a product name and its price (e.g., (”apple”, 1.50)). The function
-should return a new list of these products sorted by their price. For example
-sort_by_price ([("banana", 1.5), ("apple", 2.91) , ("orange", 2.25)
-])
-should return
-[("banana", 1.5), ("orange", 2.25), ("apple", 2.91)].
-1
-To solve this problem, you need to create another function say, get price(a product) that
-takes a product as an input and returns its price. See the practice problem file for some
-more similar examples.
-'''
-
-def getPrice(product):
-    return product[1]
-
-def sortByPrice(lst):
-    return sorted(lst, key = getPrice)
-
-
-## Problem 4
-'''
-Write a function named sort names(name list) that takes a list of names
-name list as input. The function should return a new list with these names sorted in
-alphabetical order, ignoring case sensitivity (recall that, in Python lowercase letters are
-greater than all uppercase letters.) For example
-sort_names (["anne", "charlie", "David", "Armin"])
-should return [”anne”, ”Armin”, ”charlie”, ”David”]
-'''
-
-def sortNames(lst): 
-    return sorted(lst, key = str.lower)
-
-
-## Problem 5
-'''
-Write a function named sort title(alist) that takes a list of book titles as
-input. The function should return a new list with these titles sorted by the number of
-words in each title. For example
-alist = ["For whom the bell tolls",
-"The old man and the sea",
-"Please look after mom",
-"Siddhartha"]
-print(sort_title(alist))
-should return
-["Siddhartha", "Please look after mom", "For whom the bell tolls",
-"The old man and the sea"].
-'''
-
-def getLength(title):
-        return len(title.split())
-
-def sortTitle(lst):
-    return sorted(lst, key = getLength)
-
-
-## Problem 6
-'''
-Write a function named choose best book(books and ratings) that takes a
-list of tuples, where each tuple contains a book title and its rating. The function should
-return the name of the book with the highest rating. For simplicity, assume that all the
-ratings are different. For example
-books_and_ratings = [
-("Siddhartha", 4.9),
-("The Old Man and the Sea", 4.7),
-("For Whom the Bell Tolls", 4.8),
-("Please Look After Mom", 4.6)
-]
-print(choose_best_book(books_and_ratings))
-should return ”Siddhartha”
-'''
-
-def getRating(book):
-        return book[1]
-
-def bestBook(books):
-    return max(books, key = getRating)[0]
-
-
-## Problem 7
 '''
 (1) Write a function named recursive sum(alist) that takes a list of numbers as input
 and returns the sum of the squares of all elements in the list. For example
@@ -147,7 +27,7 @@ def nonRecursiveSum(lst):
     return sum
 
 
-## Problem 8
+## Problem 2
 '''
 (1) Write a function name recursive sum power of two(n) that takes a positive integer
 n as an input and returns the sum of the first n-powers of 2
@@ -173,7 +53,7 @@ def nonRecursiveSumPowerOfTwo(n):
     return sum
 
 
-### Remark 2.1 ###
+### Remark 1.1 ###
 '''
 By geometric series:
 S_n = a * (1 - r ** n) / (1 - r)
@@ -186,7 +66,7 @@ So the general formula is:
 '''
 
 
-## Problem 9
+## Problem 3  
 '''
 (1) Write a recursive function recursive count vowels(s) that takes a string s as input
 and returns the number of vowels (a, e, i, o, u) in s, ignoring case.
@@ -211,7 +91,7 @@ def nonRecursiveCountVowels(s):
     return count
 
 
-## Problem 10
+## Problem 4
 '''
 (1) Write a recursive function recurive sum of powers(n, k) that computes the sum of
 the first n integers raised to the power of k.
@@ -236,29 +116,8 @@ def nonRecursiveSumOfPowers(n, k):
         sum += i ** k
     return sum
 
-'''
-(3) Use list comprehension and one of your functions to calculate the ratio
-1^k+ 2^k+ . . . + n^k / n^(k+1),
-for k = 3 and n ∈[10, 10^2, 10^3, 10^4, 10^5, 10^6]
-'''
-A = [10, 10**2, 10**3, 10**4, 10**5, 10**6]
-def ratio(n_values = A, k = 3):
-    ratios = []
-    for n in n_values:
-        ratios.append(nonRecursiveSumOfPowers(n, k) / n ** (k + 1))
-    return ratios
 
-### Remark 2.2 ###
-'''
-The sum and denominator both grow at the same rate, (n ∈ A) ** (3 + 1), so the ratio converges to 1/4.
-
-By calculus (limits):
-lim n -> ∞ [(1^k + 2^k + ... + n^k) / n^(k + 1)] = 1 / (k + 1)
-
-So the ratio converges to 1 / (k + 1) but never reaches it.
-'''
-
-## Problem 11
+## Problem 5
 '''
 An arithmetic progression is a sequence of numbers such that the difference
 from any succeeding term to its preceding term remains constant throughout the sequence.
@@ -291,7 +150,7 @@ def nonRecursiveArithmeticSequence(a, d, n):
     return a + n * d
 
 
-## Problem 12
+## Problem 6
 '''
 The Lucas sequence is defined as follows, L_0 = 2, L_1 = 1 and for n ≥2:
 L(n) = L(n − 1) + L(n − 2).
@@ -327,7 +186,7 @@ def nonRecursiveLucas(n):
     return ln
 
 
-## Problem 13
+## Problem 7
 '''
 Let anbe the sequence defined as follows
 a(0) = 1, a(n) = a(n − 1)2 + 1.
@@ -353,7 +212,7 @@ def nonRecursiveSequenceA(n):
     return a
 
 
-## Problem 14
+## Problem 8
 '''
 Let anbe the sequence defined as follows: b0 = b1 = 1 and
 b_n = (b_{n−1}^2 + 2) / b_{n−2}
@@ -380,3 +239,88 @@ def nonRecursiveSequenceB(n):
         b0 = b1 # b_{n−2} = b_{n−1}
         b1 = b # b_{n−1} = b_n
     return b
+
+## USING LIST COMPREHENSION
+
+## Problem 9
+'''
+(1) Given a list of numbers, create a new list containing the squares of these numbers.
+For example
+numbers = [1, 2, 3, 4, 5]
+# Output: [1, 4, 9, 16, 25]
+'''
+
+def squares(numbers):
+    return [x ** 2 for x in numbers]
+    
+'''
+(2) From a list of integers, create a new list that contains only the even numbers. For
+example
+numbers = [1, 2, 11, 4, 9, 6]
+# Output: [2, 4, 6]
+'''
+
+def evenNumbers(numbers):
+    return [x for x in numbers if x % 2 == 0]
+
+'''
+(3) Given a list of strings, generate a new list where all the strings are in uppercase.
+For example
+words = ["hello", "world", "python"]
+# Output: [" HELLO", "WORLD", "PYTHON "]
+'''
+
+def upperCase(words):
+    return [x.upper() for x in words]
+
+'''
+(4) From a list of strings, create a new list that contains the first letter of each string.
+For example
+words = ["apple", "banana", "cherry"]
+# Output: ["a", "b", "c"]
+'''
+
+def firstLetter(words):
+    return [x[0] for x in words]
+
+
+## Problem 10
+'''
+(1) Given a list of prices, create a new list that includes prices greater than $20. For
+example
+prices = [10, 25, 30, 5, 15]
+# Output: [25, 30]
+'''
+
+def greaterThan20(prices):
+    return [x for x in prices if x > 20]
+
+'''
+(2) Given a string, create a new list containing only the lowercase letters. For example
+mixed_string = "HelloWorld"
+# Output: ["e", "l", "l", "o", "o"]
+'''
+
+def lowerCase(mixed_string):
+    return [x for x in mixed_string if x.islower()]
+
+'''
+(3) Given a list of integers, create a new list that includes only the negative numbers.
+For example
+numbers = [-10, 15, 0, -5, 20]
+# Output: [-10, -5]
+'''
+
+def negativeNumbers(numbers):
+    return [x for x in numbers if x < 0]
+
+'''
+(4) Given a list of strings, create a new list that contains only the strings that contain
+the letter e. For example
+words = ["apple", "banana", "cherry", "date", "fig"]
+# Output: [" apple", "cherry", "date"]
+For this problem, you might need to use the in operator.
+'''
+
+def containLetterE(words):
+    return [x for x in words if 'e' in x]
