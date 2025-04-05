@@ -15,6 +15,7 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 - [CS 250: Programming for Data Applications](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-250)
 - [CS 270: Web Development](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-270)
 - [CS 317: Data Structures and Algorithms](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-317) 
+- [CS 323: Cryptography](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-323)
 - [CS 327: Database Systems](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-327) 
 - [CS 450: Computer Vision & Machine Learning](https://github.com/SepehrAkbari/LFC-courses/tree/main/CSCI-450) 
 
@@ -27,6 +28,7 @@ I am a Computer Science major, with minors in Data Science and Mathematics, at L
 - [MATH 231: Linear Algebra](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-231) 
 - [MATH 240: Computational Math](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-240) 
 - [MATH 250: Statistical Programming](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-250)
+- [MATH 323: Cryptography](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-323)
 - [MATH 350: Mathematical Probability](https://github.com/SepehrAkbari/LFC-courses/tree/main/MATH-350)
 
 ---
