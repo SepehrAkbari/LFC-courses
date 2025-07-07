@@ -1,6 +1,6 @@
 # Lake Forest College — Courses
 
-![Frame](./LFC-Frame.png)
+![Frame](/LFC-Frame.png)
 
 ---
 
@@ -46,7 +46,7 @@ During my time, I've also had multiple teaching assistant (TA) positions:
 - [TA - CS 112: Functional Programming (Fall 2024)](/TA/TA-112-F24/)
 - [TA - CS 112: Functional Programming (Spring 2024)](/TA/TA-112-S24/)
 
-(the TA directory is hidden)
+*(the TA directory is hidden)*
 
 ---
 
