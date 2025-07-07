@@ -3,9 +3,18 @@
 .Rhistory
 .RData
 .Ruserdata
+.Rprofile
+.Rproj
+*.Rproj
+
+# setup files
+MATH-250/setup.R
+MATH-250/MATH_250.Rproj
 
 # VSC connection
 .vscode
+bin
+lib
 
 # No need for actual data here
 CSCI-250/Data/main/
@@ -18,11 +27,9 @@ CSCI-450/Data/playing-cards.zip
 CSCI-450/Data/bloodcells.zip
 CSCI-450/Blood-Cells/Data/
 CSCI-450/Project-1/features-old/
+
 # Repository Preview
 LFC-Frame.jpg
-
-## Other
-CSCI-327/Project/videostore-maria
 
 ## TA Materials
 TA
