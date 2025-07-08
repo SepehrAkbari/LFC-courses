@@ -42,16 +42,27 @@ These are some of the relevant courses I've taken/taking so far:
 #### Math Courses
  
 - [MATH 110: Calculus I](/MATH-110/) 
+    * *Introduction to single-variable calculus, including limits, differentiation, optimization, integration and some applications.*
 - [MATH 111: Calculus II](/MATH-111/)
-- [MATH 150: Probability & Statistics](/MATH-150/) 
+    * *Continued single-variable calculus with advanced integration techniques, sequences and series, and more advanced applications.*
+- [MATH 150: Probability & Statistics](/MATH-150/)
+    * *Covered discrete probability, distributions, sampling, and inferential statistics, emphasizing computational usage and application in R.*
 - [MATH 230: Abstract & Discrete Mathematics](/MATH-230/)
-- [MATH 231: Linear Algebra](/MATH-231/) 
+    * *Focused on rigorous proof techniques in logic, set theory, relations, cardinality, counting and combinatorics, group theory, number theory, and functions.*
+- [MATH 231: Linear Algebra](/MATH-231/)
+    * *Explored linear algebra theory with a strong emphasis on mathematical modeling and computational applications.*
 - [MATH 240: Computational Math](/MATH-240/) 
+    * *Explored mathematical data modeling, numerical methods, loss functions, and optimization techniques, foundational for ML and scientific computing.*
 - [MATH 250: Statistical Programming](/MATH-250/)
+    * *Statistical data analysis in R, covering data manipulation, visualization, hypothesis testing, regression analysis, and data-driven inference.*
 - [MATH 323: Cryptography](/MATH-323/)
+    * *Focused on ciphers, hash functions, digital signatures, with an emphasis on their security analyses and essential number theory concepts.*
 - [MATH 350: Mathematical Probability](/MATH-350/)
+    * *Delved into discrete and continuous probability theory, including random variables, distributions, central limit theorem, and generating functions.*
 - [MATH 450: Mathematical Statistics](/MATH-450/)
+    * *Advanced study of statistical inference, covering parameter estimation, hypothesis testing, decision theory, regression, ANOVA, and an introduction to a range of ML-related topics.*
 - [MATH 499: Great Theorems of Mathematics](/MATH-499/)
+    * *Exploring historically significant proofs, logical arguments, through student-led presentations, and writing research papers on advanced, intersecting mathematical topics of choice.*
 
 ---
 
