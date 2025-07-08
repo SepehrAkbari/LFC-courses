@@ -39,7 +39,7 @@ These are some of the relevant courses I've taken/taking so far:
 - [CS 450: Computer Vision & Machine Learning](/CSCI-450/)
     * *Delved into advanced CV, covered classical feature extraction, segmentation and classification with ML, deep learning architectures (CNNs, RNNs), transfer learning, GANs and hallucinations, and RCNNs.*
 
-### Math Courses
+### Mathematics Courses
  
 - [MATH 110: Calculus I](/MATH-110/) 
     * *Introduction to single-variable calculus, including limits, differentiation, optimization, integration and some applications.*
