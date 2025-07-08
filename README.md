@@ -68,6 +68,8 @@ These are some of the relevant courses I've taken/taking so far:
 
 During my time, I've also had multiple teaching assistant (TA) positions:
 
+## TA Positions
+
 - [TA - MATH 150: Probability & Statistics (Summer 2025)](/TA/TA-150-S25/)
 - [TA - CS/MATH 240: Computational Math (Spring 2025)](/TA/TA-240-S25/)
 - [TA - CS 112: Functional Programming (Spring 2025)](/TA/TA-112-S25/)
