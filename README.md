@@ -12,7 +12,7 @@ I am pursuing a Bachelor of Arts degree, with major in Computer Science, and min
 
 These are some of the relevant courses I've taken/taking so far:
 
-## Computer Science Courses
+### Computer Science Courses
 
 - [CS 107: Web Programming](/CSCI-107/)
     * *Introduced basic web technologies and client-side development.*
@@ -39,7 +39,7 @@ These are some of the relevant courses I've taken/taking so far:
 - [CS 450: Computer Vision & Machine Learning](/CSCI-450/)
     * *Delved into advanced CV, covered classical feature extraction, segmentation and classification with ML, deep learning architectures (CNNs, RNNs), transfer learning, GANs and hallucinations, and RCNNs.*
 
-## Math Courses
+### Math Courses
  
 - [MATH 110: Calculus I](/MATH-110/) 
     * *Introduction to single-variable calculus, including limits, differentiation, optimization, integration and some applications.*
