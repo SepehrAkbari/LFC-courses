@@ -15,18 +15,29 @@ These are some of the relevant courses I've taken/taking so far:
 #### Computer Science Courses
 
 - [CS 107: Web Programming](/CSCI-107/)
+    * *Introduced basic web technologies and client-side development.*
 - [CS 212: Object Oriented Programming](/CSCI-212/)
-- [CS 212: Object Oriented Programming](/CSCI-212/)
+    * *Focused on core OOP principles and software design patterns for robust system development.*
 - [CS 231: Linear Algebra](/MATH-231/)
-- [CS 240: Computational Math](/MATH-240/) 
+    * *Explored linear algebra theory with a strong emphasis on mathematical modeling and computational applications.*
+- [CS 240: Computational Math](/MATH-240/)
+    * *Explored mathematical data modeling, numerical methods, loss functions, and optimization techniques, foundational for ML and scientific computing.*
 - [CS 250: Programming for Data Applications](/CSCI-250/)
+    * *Covered fundamental supervised and unsupervised machine learning concepts and their practical implementation for data analysis.*
 - [CS 270: Web Development](/CSCI-270/)
+    * *Delved into full-stack web application development, integrating front-end frameworks with back-end and server-side technologies.*
 - [CS 317: Data Structures and Algorithms](/CSCI-317/)
+    * *Design, implementation, and rigorous asymptotic analysis of data structures, algorithms, and optimizing efficiency and scalability.*
 - [CS 323: Cryptography](/MATH-323/)
+    * *Focused on ciphers, hash functions, digital signatures, with an emphasis on their security analyses and essential number theory concepts.*
 - [CS 325: Artificial Intelligence](/CSCI-325/)
+    * *Explored AI paradigms such as state-space search, NLP, deep learning techniques with a focus on NN, intro to RL, and Latent Dirichlet Allocation.*
 - [CS 327: Database Systems](/CSCI-327/)
+    * *Study of relational databases, normalization, query optimization, transaction management, and utilizing SQL, PHP, JS, developing a complete DBMS.*
 - [CS 417: Algorithms and Algorithm Analysis](/CSCI-417/)
+    * *Advanced algorithms and mathematical analysis, such as D&C, dynamic programming, graphs, and emphasizing complexity, amortized analysis, and optimization.*
 - [CS 450: Computer Vision & Machine Learning](/CSCI-450/)
+    * *Delved into advanced CV, covered classical feature extraction, segmentation and classification with ML, deep learning architectures (CNNs, RNNs), transfer learning, GANs and hallucinations, and RCNNs.*
 
 #### Math Courses
  
