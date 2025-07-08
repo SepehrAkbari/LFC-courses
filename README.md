@@ -15,7 +15,9 @@ These are some of the relevant courses I've taken/taking so far:
 #### Computer Science Courses
 
 - [CS 107: Web Programming](/CSCI-107/)
+
 *Introduced fundamental web technologies and client-side development.*
+
 - [CS 212: Object Oriented Programming](/CSCI-212/)
 *Introduced fundamental web technologies and client-side development.*
 - [CS 231: Linear Algebra](/MATH-231/)
