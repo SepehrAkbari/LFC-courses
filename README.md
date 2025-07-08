@@ -52,7 +52,7 @@ During my time, I've also had multiple teaching assistant (TA) positions:
 - [TA - CS 112: Functional Programming (Fall 2024)](/TA/TA-112-F24/)
 - [TA - CS 112: Functional Programming (Spring 2024)](/TA/TA-112-S24/)
 
-*(the TA directory is hidden)*
+*Detailed content for TA materials is available upon request (provided the use aligns with academic integrity) due to privacy considerations. The linked directory serves as an organizational placeholder for these roles.*
 
 ---
 
