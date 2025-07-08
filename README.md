@@ -2,6 +2,8 @@
 
 ![Frame](/LFC-Frame.png)
 
+###### Expected to graduate Spring 2027.
+
 ---
 
 I am a Computer Science major, with minors in Data Science and Mathematics, at Lake Forest College. These are some of the courses I've taken so far:
@@ -50,9 +52,6 @@ During my time, I've also had multiple teaching assistant (TA) positions:
 
 ---
 
-###### Expected to graduate Spring 2027.
-
-<br>
 <br>
 
 ## test
