@@ -52,8 +52,6 @@ During my time, I've also had multiple teaching assistant (TA) positions:
 
 ---
 
-<br>
-
 ## test
 
 lorem ipsum
