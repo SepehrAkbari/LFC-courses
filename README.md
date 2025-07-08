@@ -52,6 +52,8 @@ During my time, I've also had multiple teaching assistant (TA) positions:
 
 ---
 
-## test
+## Academic Integrity & Responsible Use
 
-lorem ipsum
+This repository serves as a personal record of my academic journey at Lake Forest College, encompassing coursework materials such as exams, homework, projects, and readings. It's here for both my **personal documentation and notes**, and as a **reference for others**.
+
+While these materials can be a helpful guide for your own learning, it's crucial to use them ethically. **Do not** submit any content from this repository as your own work, copy it verbatim, or use it in any way that violates your institution's academic integrity policies. Always refer to your university's guidelines on plagiarism and academic misconduct to ensure responsible and appropriate use.
