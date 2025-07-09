@@ -4,13 +4,13 @@
 
 <br>
 
-I am pursuing a Bachelor of Arts degree, with major in Computer Science, and minors in Data Science and Mathematics, at Lake Forest College. 
+I am pursuing a Bachelor of Arts degree, with a major in Computer Science, and minors in Data Science and Mathematics, at [Lake Forest College](https://www.lakeforest.edu/).
 
 ###### Expected to graduate Spring 2027.
 
 ---
 
-These are some of the relevant courses I've taken/taking so far:
+These are some of the relevant courses I've taken or am currently taking, along with brief descriptions of their content:
 
 ### Computer Science Courses
 
