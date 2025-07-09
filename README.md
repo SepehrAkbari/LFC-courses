@@ -62,7 +62,7 @@ These are some of the relevant courses I've taken or am currently taking, along 
 - [MATH 450: Mathematical Statistics](/MATH-450/)
     * *Advanced study of statistical inference, covering parameter estimation, hypothesis testing, decision theory, regression, ANOVA, and an introduction to a range of ML-related topics.*
 - [MATH 499: Great Theorems of Mathematics](/MATH-499/)
-    * *Exploring historically significant proofs, logical arguments, through student-led presentations, and writing research papers on advanced, intersecting mathematical topics of choice.*
+    * *Exploring historically significant proofs, logical arguments, through student-led presentations, and writing academic papers on advanced, intersecting mathematical topics of choice.*
 
 ---
 
