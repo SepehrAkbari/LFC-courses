@@ -16,6 +16,9 @@ MATH-250/MATH_250.Rproj
 bin
 lib
 
+# MacOS
+*.DS_Store
+
 # No need for actual data here
 CSCI-250/Data/main/
 CSCI-450/Data/main/
