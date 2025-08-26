@@ -18,6 +18,7 @@ lib
 
 # MacOS
 *.DS_Store
+.DS_Store
 
 # No need for actual data here
 CSCI-250/Data/main/
@@ -31,8 +32,24 @@ CSCI-450/Data/bloodcells.zip
 CSCI-450/Blood-Cells/Data/
 CSCI-450/Project-1/features-old/
 
+MATH-323/ciphers/caesar-cipher/words.txt
+
 # Repository Preview
 LFC-Frame.jpg
 
 ## TA Materials
 TA
+
+## LaTeX
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+
+## Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
