@@ -25,6 +25,29 @@ def decrypt(ciphered_text: str, key: str) -> str:
             plain_text += char
     return plain_text
 
+def generateRandomKey() -> str:
+    return ''.join(random.sample(ALPHABET, ALPHABET_LENGTH))
+
+def generatePasswordKey(password: str) -> str:
+    password = ''.join(filter(str.isalpha, password))
+    password = password.upper()
+    password = password.replace(" ", "")
+    seen = set()
+    password = ''.join([char for char in password if not (char in seen or seen.add(char))])
+
+    key = ""
+    for char in password:
+        if char not in key and char in ALPHABET:
+            key += char
+    
+    idx_current = ALPHABET.index(key[-1]) + 1 if key else 0
+    for i in range(ALPHABET_LENGTH):
+        idx = (idx_current + i) % ALPHABET_LENGTH
+        if ALPHABET[idx] not in key:
+            key += ALPHABET[idx]
+
+    return key
+
 def returnCiphered(ciphered: str) -> str:
     ciphered = ''.join(filter(str.isalpha, ciphered))
     ciphered = ciphered.upper()
@@ -34,7 +57,8 @@ def returnCiphered(ciphered: str) -> str:
     return ' '.join(chunked)
 
 if __name__ == "__main__":
-    text = "This is a, substitution cipher!"
-    key = ''.join(random.sample(ALPHABET, ALPHABET_LENGTH))
-    
-    print(f"Original Text: {text}\nEncrypted: {returnCiphered(encrypt(text, key))}\nDecrypted: {decrypt(encrypt(text, key), key)}")
+    text = ""
+    enc = ""
+    key = ""
+
+    # print(f"Original Text: {text}\nEncrypted: {returnCiphered(encrypt(text, key))}\nDecrypted: {decrypt(encrypt(text, key), key)}")

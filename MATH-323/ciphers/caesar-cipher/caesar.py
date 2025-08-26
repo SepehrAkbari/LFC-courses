@@ -1,7 +1,7 @@
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".upper()
 ALPHABET_LENGTH = len(ALPHABET)
 
-def encrypt(plain_text, shift):
+def encrypt(plain_text: str, shift: int) -> str:
     ciphered = ""
     for char in plain_text.upper():
         if char in ALPHABET:
@@ -12,7 +12,7 @@ def encrypt(plain_text, shift):
             ciphered += char
     return ciphered
 
-def decrypt(ciphered_text, shift):
+def decrypt(ciphered_text: str, shift: int) -> str:
     plain_text = ""
     for char in ciphered_text.upper():
         if char in ALPHABET:
@@ -23,7 +23,13 @@ def decrypt(ciphered_text, shift):
             plain_text += char
     return plain_text
 
-def returnCiphered(ciphered):
+def decryptWithoutShift(ciphered_text: str) -> list[str]:
+    possibilities = []
+    for shift in range(1, ALPHABET_LENGTH):
+        possibilities.append((shift, decrypt(ciphered_text, shift)))
+    return possibilities
+
+def returnCiphered(ciphered: str) -> str:
     ciphered = ''.join(filter(str.isalpha, ciphered))
     ciphered = ciphered.upper()
     ciphered = ciphered.replace(" ", "")
@@ -32,7 +38,10 @@ def returnCiphered(ciphered):
     return ' '.join(chunked)
 
 if __name__ == "__main__":
-    text = "This is a, ceaser cipher!"
-    shift = 3
+    text = "For duty, duty must be done; the rule applies to everyone."
+    shift = 6
     
-    print(f"Original Text: {text}\nEncrypted: {returnCiphered(encrypt(text, shift))}\nDecrypted: {decrypt(encrypt(text, shift), shift)}")
+    # print(f"Original Text: {text}\nEncrypted: {returnCiphered(encrypt(text, shift))}\nDecrypted: {decrypt(encrypt(text, shift), shift)}")
+    ciphered = "ESTYRD LCP DPWOZX LD ESPJ DPPX"
+    for s, possibility in decryptWithoutShift(ciphered):
+        print(f"Shift {s}: {possibility}")
