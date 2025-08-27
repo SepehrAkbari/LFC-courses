@@ -55,8 +55,6 @@ These are some of the relevant courses I've taken or am currently taking, along 
     * *Explored mathematical data modeling, numerical methods, loss functions, and optimization techniques, foundational for ML and scientific computing.*
 - [MATH 250: Statistical Programming](/MATH-250/)
     * *Statistical data analysis in R, covering data manipulation, visualization, hypothesis testing, regression analysis, and data-driven inference.*
-- [MATH 323: Cryptography](/MATH-323/)
-    * *Focused on ciphers, hash functions, digital signatures, with an emphasis on their security analyses and essential number theory concepts.*
 - [MATH 350: Mathematical Probability](/MATH-350/)
     * *Delved into discrete and continuous probability theory, including random variables, distributions, central limit theorem, and generating functions.*
 - [MATH 450: Mathematical Statistics](/MATH-450/)
@@ -70,6 +68,10 @@ During my time, I've also had multiple teaching assistant (TA) positions:
 
 ### TA Positions
 
+- [TA - CSCI 317: Data Structures & Algorithms (Fall 2025)](/TA/TA-317-F25/)
+- [TA - CSCI 250: Programming for Data Applications (Fall 2025)](/TA/TA-C250-F25/)
+- [TA - MATH 250: Statistical Programming (Fall 2025)](/TA/TA-M250-F25/)
+- [TA - MATH 230: Discrete & Abstract Mathematics (Fall 2025)](/TA/TA-230-F25/)
 - [TA - MATH 150: Probability & Statistics (Summer 2025)](/TA/TA-150-S25/)
 - [TA - CS/MATH 240: Computational Math (Spring 2025)](/TA/TA-240-S25/)
 - [TA - CS 112: Functional Programming (Spring 2025)](/TA/TA-112-S25/)
